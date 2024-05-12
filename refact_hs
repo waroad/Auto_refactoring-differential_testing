@@ -1,0 +1,65 @@
+import ast
+
+class CodeTF(ast.NodeTransformer):
+
+    def visit_If(self, node):
+        if len(node.body)==1:
+            if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse: # 2. nestedIf
+                # print('here1')
+                new_test = ast.BoolOp(op=ast.And(), values=[node.test, node.body[0].test])
+                new_node = ast.If(test=new_test, body=node.body[0].body, orelse=node.body[0].orelse)
+                ast.copy_location(new_node, node)
+                node=new_node
+
+            elif isinstance(node.body[0], ast.Assign) and node.orelse: # 3. ifExpression
+                # print('here2')
+                if isinstance(node.orelse[0], ast.Assign):
+                    print(node.body[0].targets, node.orelse[0].targets)
+                    if len(node.body[0].targets)==1 and len(node.orelse[0].targets)==1 and isinstance(node.body[0].targets[0], ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name):
+                        # print('h;s3')
+                        if node.body[0].targets[0].id == node.orelse[0].targets[0].id:
+                            new_exp = ast.IfExp(test=node.test, body=node.body[0].value, orelse=node.orelse[0].value)
+                            new_node = ast.Assign(targets=node.body[0].targets, value=new_exp)
+                            ast.copy_location(new_node, node)
+                            node=new_node
+                    
+        return self.generic_visit(node)
+    
+    def visit_Compare(self, node): # 1. compareEmpty
+        comparator = node.comparators[0]
+        if isinstance(node.ops[0], ast.Eq): # A==(empty) -> not A
+            if isinstance(comparator, (ast.List, ast.Tuple)) and not comparator.elts: # [list] , (tuple)
+                node = ast.UnaryOp(op=ast.Not(), operand=node.left)
+            elif isinstance(comparator, ast.Dict) and not comparator.keys: # {dict}
+                node = ast.UnaryOp(op=ast.Not(), operand=node.left)
+            elif isinstance(comparator, ast.Constant) and not comparator.value: # 'string'
+                node = ast.UnaryOp(op=ast.Not(), operand=node.left)
+
+        elif isinstance(node.ops[0], ast.NotEq): # A!=(empty) -> A
+            if isinstance(comparator, (ast.List, ast.Tuple)) and not comparator.elts: # [list] , (tuple)
+                node = node.left
+            elif isinstance(comparator, ast.Dict) and not comparator.keys: # {dict}
+                node = node.left
+            elif isinstance(comparator, ast.Constant) and not comparator.value: # 'string'
+                node = node.left
+
+        return self.generic_visit(node)
+
+code ='''
+if a==[]:
+    if b==():
+        x=1
+    else:
+        x=2
+'''
+# condition=1
+# (a,b,c)=(1,2,3) if condition else (3,2,1)
+# print(a,b,c)
+# print('code0 :')
+# print(code)
+tree = ast.parse(code)
+# print(ast.dump(tree, indent=2))
+tree1 = CodeTF().visit(tree)
+code1 = ast.unparse(tree1)
+print('code1 :')
+print(code1)
