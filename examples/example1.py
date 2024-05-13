@@ -1,10 +1,15 @@
 list_1 = []
+list_2 = ["ha", "haha"]
 dict_1={}
 set_1=set()
-for i in range(10):
-    list_1.append(i)
-    dict_1[str(i)]=i
-    set_1.add(i)
+temp=14
+for j in range(9):
+    dict_1[str(j)]=j
+for k in range(8):
+    set_1.add(k)
+    list_1.append(k*temp)
+for i in range(12):
+    list_2.append(i*temp)
 
 print(list_1, "sum:",sum(list_1))
 print(dict_1)
