@@ -2,19 +2,22 @@ import ast
 
 class CodeTF(ast.NodeTransformer):
 
+    def __init__(self):
+        self.toItem={} # (4)
+
     def visit_If(self, node):
         if len(node.body)==1:
             if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse: # 2. nestedIf
+                self.generic_visit(node)
                 # print('here1')
                 new_test = ast.BoolOp(op=ast.And(), values=[node.test, node.body[0].test])
                 new_node = ast.If(test=new_test, body=node.body[0].body, orelse=node.body[0].orelse)
                 ast.copy_location(new_node, node)
                 node=new_node
-
-            elif isinstance(node.body[0], ast.Assign) and node.orelse: # 3. ifExpression
-                # print('here2')
-                if isinstance(node.orelse[0], ast.Assign):
-                    print(node.body[0].targets, node.orelse[0].targets)
+            elif node.orelse:
+                if isinstance(node.body[0], ast.Assign) and isinstance(node.orelse[0], ast.Assign): # 3. ifExpression - Assign
+                    # print('here2')
+                    # print(node.body[0].targets, node.orelse[0].targets)
                     if len(node.body[0].targets)==1 and len(node.orelse[0].targets)==1 and isinstance(node.body[0].targets[0], ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name):
                         # print('h;s3')
                         if node.body[0].targets[0].id == node.orelse[0].targets[0].id:
@@ -22,7 +25,14 @@ class CodeTF(ast.NodeTransformer):
                             new_node = ast.Assign(targets=node.body[0].targets, value=new_exp)
                             ast.copy_location(new_node, node)
                             node=new_node
-                    
+                elif isinstance(node.body[0], ast.Expr) and isinstance(node.orelse[0], ast.Expr): # 3. ifExpression - print
+                    if isinstance(node.body[0].value, ast.Call) and isinstance(node.orelse[0].value, ast.Call):
+                        if isinstance(node.body[0].value.func, ast.Name) and isinstance(node.orelse[0].value.func, ast.Name):
+                            if node.body[0].value.func.id=='print' and node.orelse[0].value.func.id=='print':
+                                new_exp = ast.IfExp(test=node.test, body=node.body[0].value.args[0], orelse=node.orelse[0].value.args[0])
+                                new_node = ast.Expr(value=ast.Call(func = node.body[0].value.func, args=[new_exp], keywords=[]))
+                            ast.copy_location(new_node, node)
+                            node=new_node
         return self.generic_visit(node)
     
     def visit_Compare(self, node): # 1. compareEmpty
@@ -34,7 +44,6 @@ class CodeTF(ast.NodeTransformer):
                 node = ast.UnaryOp(op=ast.Not(), operand=node.left)
             elif isinstance(comparator, ast.Constant) and not comparator.value: # 'string'
                 node = ast.UnaryOp(op=ast.Not(), operand=node.left)
-
         elif isinstance(node.ops[0], ast.NotEq): # A!=(empty) -> A
             if isinstance(comparator, (ast.List, ast.Tuple)) and not comparator.elts: # [list] , (tuple)
                 node = node.left
@@ -42,15 +51,60 @@ class CodeTF(ast.NodeTransformer):
                 node = node.left
             elif isinstance(comparator, ast.Constant) and not comparator.value: # 'string'
                 node = node.left
-
+        return self.generic_visit(node)
+    
+    def visit_For(self, node): # 4. toEnumerate
+        list_id=''
+        if isinstance(node.iter, ast.Call):
+            if isinstance(node.iter.func, ast.Name):
+                if node.iter.func.id=='range':
+                    if isinstance(node.iter.args[0], ast.Call):
+                        if isinstance(node.iter.args[0].func, ast.Name):
+                            if node.iter.args[0].func.id=='len':
+                                if isinstance(node.iter.args[0].args[0], ast.Name):
+                                    list_id=node.iter.args[0].args[0].id
+                                    self.toItem[list_id]=node.target.id
+                                    new_target = ast.Tuple(elts=[node.target, ast.Name(id='item', ctx=ast.Store())])
+                                    ast.copy_location(new_target, node.target)
+                                    new_iter = node.iter.args[0]
+                                    new_iter.func=ast.Name(id='enumerate', ctx=ast.Load())
+                                    new_node = ast.For(target=new_target, iter=new_iter, body=node.body, orelse=node.orelse)
+                                    ast.copy_location(new_node, node)
+                                    node = new_node
+        if list_id:
+            self.generic_visit(node)
+            del(self.toItem[list_id])
+            return node
+        return self.generic_visit(node)
+    
+    def visit_Assign(self, node): # handle exception (4). 
+        if isinstance(node.targets[0], ast.Subscript):
+            if node.targets[0].value.id in self.toItem and isinstance(node.targets[0].slice, ast.Name):
+                if node.targets[0].slice.id==self.toItem[node.targets[0].value.id]:
+                    return node
+        return self.generic_visit(node)
+    
+    def visit_Subscript(self, node): # change body (4)
+        if node.value.id in self.toItem and isinstance(node.slice, ast.Name):
+            if node.slice.id==self.toItem[node.value.id]:
+                new_node = ast.Name(id='item', ctx=ast.Store())
+                ast.copy_location(new_node, node)
+                node = new_node
         return self.generic_visit(node)
 
+
 code ='''
-if a==[]:
-    if b==():
-        x=1
-    else:
-        x=2
+A=[1, 2]
+
+if A!=[]:
+    x=1
+else:
+    x=2
+
+if A:
+    print(1)
+else:
+    print(2)
 '''
 # condition=1
 # (a,b,c)=(1,2,3) if condition else (3,2,1)
@@ -58,7 +112,9 @@ if a==[]:
 # print('code0 :')
 # print(code)
 tree = ast.parse(code)
-# print(ast.dump(tree, indent=2))
+file=ast.dump(tree, indent=2)
+with open ('hs_tree.txt', 'w') as result:
+    result.write(file)
 tree1 = CodeTF().visit(tree)
 code1 = ast.unparse(tree1)
 print('code1 :')
