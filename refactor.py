@@ -72,7 +72,7 @@ def perform_comprehension(body, lineno=1):
     return updated_body
 
 
-def transform_comparisons(node):
+def transform_chaining_comparisons(node):
     map1= {
         ast.Lt: ast.Gt,
         ast.LtE: ast.GtE,
@@ -130,6 +130,40 @@ def transform_comparisons(node):
     return node
 
 
+def transform_equality_comparisons(node):
+    if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
+        equalities = []
+        left_name = None
+
+        for value in node.values:
+            if (isinstance(value, ast.Compare) and
+                    len(value.ops) == 1 and
+                    isinstance(value.ops[0], ast.Eq) and
+                    isinstance(value.left, ast.Name)):
+
+                if left_name is None:
+                    left_name = value.left.id
+                elif left_name != value.left.id:
+                    return node  # Different left values, do not transform
+
+                equalities.append(value.comparators[0])
+            else:
+                return node  # Not a valid equality chain, do not transform
+
+        if not equalities:
+            return node
+
+        # Create a new 'in' comparison
+        in_comparison = ast.Compare(
+            left=ast.Name(id=left_name, ctx=ast.Load()),
+            ops=[ast.In()],
+            comparators=[ast.List(elts=equalities, ctx=ast.Load())]
+        )
+        return in_comparison
+
+    return node
+
+
 class CodeReplacer(ast.NodeTransformer):
     def visit_FunctionDef(self, node):
         node.body = perform_comprehension(node.body)
@@ -142,8 +176,8 @@ class CodeReplacer(ast.NodeTransformer):
         return node
 
     def visit_If(self, node):
-        print(ast.unparse(node.test))
-        node.test = transform_comparisons(node.test)
+        node.test = transform_equality_comparisons(node.test)
+        node.test = transform_chaining_comparisons(node.test)
         self.generic_visit(node)
         return node
 
