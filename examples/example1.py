@@ -8,6 +8,8 @@ for j in range(9):
 for k in range(8):
     set_1.add(k)
     list_1.append(k*temp)
+    dict_1["kk"]=10
+    print("h")
 for i in range(12):
     list_2.append(i*temp)
 
