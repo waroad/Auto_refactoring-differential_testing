@@ -164,14 +164,58 @@ def transform_equality_comparisons(node):
     return node
 
 
+def transform_list_appends(body):
+    updated_body = []
+    i = 0
+    while i < len(body):
+        stmt = body[i]
+        if (isinstance(stmt, ast.Expr) and isinstance(stmt.value, ast.Call) and
+                isinstance(stmt.value.func, ast.Attribute) and stmt.value.func.attr == 'append'):
+
+            list_name = stmt.value.func.value.id
+            appends = [stmt.value.args[0]]
+
+            j = i + 1
+            while j < len(body):
+                next_stmt = body[j]
+                if (isinstance(next_stmt, ast.Expr) and isinstance(next_stmt.value, ast.Call) and
+                        isinstance(next_stmt.value.func, ast.Attribute) and
+                        next_stmt.value.func.attr == 'append' and
+                        next_stmt.value.func.value.id == list_name):
+
+                    appends.append(next_stmt.value.args[0])
+                    j += 1
+                else:
+                    break
+
+            if len(appends) > 1:
+                new_stmt = ast.AugAssign(
+                    target=ast.Name(id=list_name, ctx=ast.Store()),
+                    op=ast.Add(),
+                    value=ast.List(elts=appends, ctx=ast.Load())
+                )
+                updated_body.append(new_stmt)
+                i = j
+            else:
+                updated_body.append(stmt)
+                i += 1
+        else:
+            updated_body.append(stmt)
+            i += 1
+
+    return updated_body
+
+
 class CodeReplacer(ast.NodeTransformer):
     def visit_FunctionDef(self, node):
         node.body = perform_comprehension(node.body)
+        node.body = transform_list_appends(node.body)
         self.generic_visit(node)
         return node
 
     def visit_Module(self, node):
         node.body = perform_comprehension(node.body)
+        node.body = transform_list_appends(node.body)
         self.generic_visit(node)
         return node
 
