@@ -1,44 +1,22 @@
 Module(
   body=[
-    Assign(
-      targets=[
-        Name(id='A', ctx=Store())],
-      value=List(
-        elts=[
-          Constant(value=1),
-          Constant(value=2)],
-        ctx=Load())),
-    If(
-      test=Compare(
-        left=Name(id='A', ctx=Load()),
-        ops=[
-          NotEq()],
-        comparators=[
-          List(elts=[], ctx=Load())]),
+    FunctionDef(
+      name='func',
+      args=arguments(
+        posonlyargs=[],
+        args=[
+          arg(arg='A')],
+        kwonlyargs=[],
+        kw_defaults=[],
+        defaults=[]),
       body=[
-        Assign(
-          targets=[
-            Name(id='x', ctx=Store())],
-          value=Constant(value=1))],
-      orelse=[
-        Assign(
-          targets=[
-            Name(id='x', ctx=Store())],
-          value=Constant(value=2))]),
-    If(
-      test=Name(id='A', ctx=Load()),
-      body=[
-        Expr(
-          value=Call(
-            func=Name(id='print', ctx=Load()),
-            args=[
-              Constant(value=1)],
-            keywords=[]))],
-      orelse=[
-        Expr(
-          value=Call(
-            func=Name(id='print', ctx=Load()),
-            args=[
-              Constant(value=2)],
-            keywords=[]))])],
+        If(
+          test=Name(id='A', ctx=Load()),
+          body=[
+            Return(
+              value=Constant(value=True))],
+          orelse=[
+            Return(
+              value=Constant(value=False))])],
+      decorator_list=[])],
   type_ignores=[])
