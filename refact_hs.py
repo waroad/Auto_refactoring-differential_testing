@@ -3,11 +3,11 @@ import ast
 class CodeTF(ast.NodeTransformer):
 
     def __init__(self):
-        self.toItem={} # (4)
+        self.toItem={} # (8)
 
     def visit_If(self, node):
         if len(node.body)==1:
-            if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse: # 2. NestedIf
+            if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse: # 6. NestedIf
                 self.generic_visit(node)
                 # print('here1')
                 new_test = ast.BoolOp(op=ast.And(), values=[node.test, node.body[0].test])
@@ -15,7 +15,7 @@ class CodeTF(ast.NodeTransformer):
                 ast.copy_location(new_node, node)
                 node = new_node
             elif node.orelse:
-                if isinstance(node.body[0], ast.Assign) and isinstance(node.orelse[0], ast.Assign): # 3. IfExp - Assign
+                if isinstance(node.body[0], ast.Assign) and isinstance(node.orelse[0], ast.Assign): # 7. IfExp - Assign
                     # print('here2')
                     # print(node.body[0].targets, node.orelse[0].targets)
                     if len(node.body[0].targets)==1 and len(node.orelse[0].targets)==1 and isinstance(node.body[0].targets[0], ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name):
@@ -25,7 +25,7 @@ class CodeTF(ast.NodeTransformer):
                             new_node = ast.Assign(targets=node.body[0].targets, value=new_exp)
                             ast.copy_location(new_node, node)
                             node = new_node
-                elif isinstance(node.body[0], ast.Expr) and isinstance(node.orelse[0], ast.Expr): # 3. IfExp - print
+                elif isinstance(node.body[0], ast.Expr) and isinstance(node.orelse[0], ast.Expr): # 7. IfExp - print
                     if isinstance(node.body[0].value, ast.Call) and isinstance(node.orelse[0].value, ast.Call):
                         if isinstance(node.body[0].value.func, ast.Name) and isinstance(node.orelse[0].value.func, ast.Name):
                             if node.body[0].value.func.id=='print' and node.orelse[0].value.func.id=='print':
@@ -33,7 +33,7 @@ class CodeTF(ast.NodeTransformer):
                                 new_node = ast.Expr(value=ast.Call(func = node.body[0].value.func, args=[new_exp], keywords=[]))
                                 ast.copy_location(new_node, node)
                                 node = new_node
-                elif isinstance(node.body[0], ast.Return) and isinstance(node.orelse[0], ast.Return): # 5. Return Boolean Statement / so many variations.
+                elif isinstance(node.body[0], ast.Return) and isinstance(node.orelse[0], ast.Return): # 9. Return Boolean Statement / so many variations.
                     if isinstance(node.body[0].value, ast.Constant) and isinstance(node.orelse[0].value, ast.Constant):
                         if node.body[0].value.value==True and node.orelse[0].value.value==False:
                             new_node = ast.Return(value=node.test)
@@ -41,7 +41,7 @@ class CodeTF(ast.NodeTransformer):
                             node = new_node
         return self.generic_visit(node)
     
-    def visit_Compare(self, node): # 1. Truth Value Test
+    def visit_Compare(self, node): # 5. Truth Value Test
         comparator = node.comparators[0]
         if isinstance(node.ops[0], ast.Eq): # A==(empty) -> not A
             if isinstance(comparator, (ast.List, ast.Tuple)) and not comparator.elts: # [list] , (tuple)
@@ -59,7 +59,7 @@ class CodeTF(ast.NodeTransformer):
                 node = node.left
         return self.generic_visit(node)
     
-    def visit_For(self, node): # 4. toEnumerate
+    def visit_For(self, node): # 8. toEnumerate
         list_id=''
         if isinstance(node.iter, ast.Call):
             if isinstance(node.iter.func, ast.Name):
@@ -83,14 +83,14 @@ class CodeTF(ast.NodeTransformer):
             return node
         return self.generic_visit(node)
     
-    def visit_Assign(self, node): # handle exception (4). 
+    def visit_Assign(self, node): # handle exception (8). 
         if isinstance(node.targets[0], ast.Subscript):
             if node.targets[0].value.id in self.toItem and isinstance(node.targets[0].slice, ast.Name):
                 if node.targets[0].slice.id==self.toItem[node.targets[0].value.id]:
                     return node
         return self.generic_visit(node)
     
-    def visit_Subscript(self, node): # change body (4)
+    def visit_Subscript(self, node): # change body (8)
         if node.value.id in self.toItem and isinstance(node.slice, ast.Name):
             if node.slice.id==self.toItem[node.value.id]:
                 new_node = ast.Name(id='item', ctx=ast.Store())
