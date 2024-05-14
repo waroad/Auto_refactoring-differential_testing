@@ -73,6 +73,14 @@ def perform_comprehension(body, lineno=1):
 
 
 def transform_comparisons(node):
+    map1= {
+        ast.Lt: ast.Gt,
+        ast.LtE: ast.GtE,
+        ast.Gt: ast.Lt,
+        ast.GtE: ast.LtE,
+        ast.Eq: ast.Eq,
+        ast.NotEq: ast.NotEq
+    }
     if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.And):
         comparisons = []
         rest=[]
@@ -86,30 +94,38 @@ def transform_comparisons(node):
             return node
 
         # Initialize the left part and gather all ops and comparators
-        left = comparisons[0].left
-        ops = []
-        comparators = []
-        print(ast.unparse(left))
-        for c in comparisons:
-            print(ast.unparse(c))
-        for c in rest:
-            print(ast.unparse(c))
-        for comp in comparisons:
-            # Ensure that the current comparison's left side matches the previous comparator
-            if ops and comparators and comparators[-1] != comp.left:
-                return node  # Return as is if the chain is broken
-
-            ops.append(comp.ops[0])
-            comparators.append(comp.comparators[0])
-
-        # Create a single chained comparison
-        chained_comp = ast.Compare(
-            left=left,
-            ops=ops,
-            comparators=comparators
-        )
-        print(ast.unparse(chained_comp))
-        return chained_comp
+        for cur_comp in comparisons:
+            for comp in comparisons:
+                if comp==cur_comp:
+                    continue
+                if ast.unparse(cur_comp.left)==ast.unparse(comp.left):
+                    chained_comp = ast.Compare(
+                        left=cur_comp.comparators[0],
+                        ops=[map1[type(cur_comp.ops[0])](),comp.ops[0]],
+                        comparators=[cur_comp.left, comp.comparators[0]]
+                    )
+                    return chained_comp
+                elif ast.unparse(cur_comp.left)==ast.unparse(comp.comparators[0]):
+                    chained_comp = ast.Compare(
+                        left=cur_comp.comparators[0],
+                        ops=[map1[type(cur_comp.ops[0])](),map1[type(comp.ops[0])]()],
+                        comparators=[cur_comp.left, comp.left]
+                    )
+                    return chained_comp
+                elif ast.unparse(cur_comp.comparators[0])==ast.unparse(comp.left):
+                    chained_comp = ast.Compare(
+                        left=cur_comp.left,
+                        ops=[cur_comp.ops[0],comp.ops[0]],
+                        comparators=[cur_comp.comparators[0], comp.comparators[0]]
+                    )
+                    return chained_comp
+                elif ast.unparse(cur_comp.comparators[0])==ast.unparse(comp.comparators[0]):
+                    chained_comp = ast.Compare(
+                        left=cur_comp.left,
+                        ops=[cur_comp.ops[0],map1[type(comp.ops[0])]()],
+                        comparators=[cur_comp.comparators[0], comp.left]
+                    )
+                    return chained_comp
 
     return node
 
@@ -129,16 +145,6 @@ class CodeReplacer(ast.NodeTransformer):
         print(ast.unparse(node.test))
         node.test = transform_comparisons(node.test)
         self.generic_visit(node)
-        return node
-
-
-class CodeReplacer(ast.NodeTransformer):
-    def visit_FunctionDef(self, node):
-        node.body = perform_comprehension(node.body)
-        return node
-
-    def visit_Module(self, node):
-        node.body = perform_comprehension(node.body)
         return node
 
 
