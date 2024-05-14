@@ -2,7 +2,7 @@ import argparse
 import ast
 
 
-def replace_loops_and_declarations(body, lineno=1):
+def perform_comprehension(body, lineno=1):
     comprehension_map={"append":[ast.ListComp, ast.Add()], "add":[ast.SetComp, ast.BitOr()]}
     updated_body = []
     for stmt in body:
@@ -72,13 +72,73 @@ def replace_loops_and_declarations(body, lineno=1):
     return updated_body
 
 
+def transform_comparisons(node):
+    if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.And):
+        comparisons = []
+        rest=[]
+        for value in node.values:
+            if isinstance(value, ast.Compare) and len(value.ops) == 1:
+                comparisons.append(value)
+            else:
+                rest.append(value)
+
+        if not comparisons:
+            return node
+
+        # Initialize the left part and gather all ops and comparators
+        left = comparisons[0].left
+        ops = []
+        comparators = []
+        print(ast.unparse(left))
+        for c in comparisons:
+            print(ast.unparse(c))
+        for c in rest:
+            print(ast.unparse(c))
+        for comp in comparisons:
+            # Ensure that the current comparison's left side matches the previous comparator
+            if ops and comparators and comparators[-1] != comp.left:
+                return node  # Return as is if the chain is broken
+
+            ops.append(comp.ops[0])
+            comparators.append(comp.comparators[0])
+
+        # Create a single chained comparison
+        chained_comp = ast.Compare(
+            left=left,
+            ops=ops,
+            comparators=comparators
+        )
+        print(ast.unparse(chained_comp))
+        return chained_comp
+
+    return node
+
+
 class CodeReplacer(ast.NodeTransformer):
     def visit_FunctionDef(self, node):
-        node.body = replace_loops_and_declarations(node.body)
+        node.body = perform_comprehension(node.body)
+        self.generic_visit(node)
         return node
 
     def visit_Module(self, node):
-        node.body = replace_loops_and_declarations(node.body)
+        node.body = perform_comprehension(node.body)
+        self.generic_visit(node)
+        return node
+
+    def visit_If(self, node):
+        print(ast.unparse(node.test))
+        node.test = transform_comparisons(node.test)
+        self.generic_visit(node)
+        return node
+
+
+class CodeReplacer(ast.NodeTransformer):
+    def visit_FunctionDef(self, node):
+        node.body = perform_comprehension(node.body)
+        return node
+
+    def visit_Module(self, node):
+        node.body = perform_comprehension(node.body)
         return node
 
 
