@@ -1,6 +1,6 @@
 import argparse
 import sys
-
+import path_list
 from z3 import *
 
 # 1. Implement peer lightweight symbolic execution engine
@@ -15,12 +15,6 @@ class IntegerProxy:
     def __abs__(self):
         return IntegerProxy(Abs(self.term))
     # def __invert__(self):
-
-    def __bool__(self):
-        if self.__eq__(self.term, Int(0)):
-            return BoolProxy(True)
-        else:
-            return BoolProxy(False)
 
     def __add__(self, other):
         if isinstance(other, IntegerProxy):
@@ -234,11 +228,10 @@ class BoolProxy:
     def __not__(self):
         return BoolProxy(Not(self.formula))
     def __bool__(self):
-        global __path__, __pathcondition__
         s_true = Solver()
-        s_true.add(__pathcondition__ + [self.formula])
+        s_true.add(path_list.__pathcondition__ + [self.formula])
         s_false = Solver()
-        s_false.add(__pathcondition__ + [Not(self.formula)])
+        s_false.add(path_list.__pathcondition__ + [Not(self.formula)])
 
         true_cond = True if s_true.check() == sat else False
         false_cond = True if s_false.check() == sat else False
@@ -247,15 +240,10 @@ class BoolProxy:
         if false_cond and not true_cond: 
             return False
 
-        if len(__path__) > len(__pathcondition__):
-            branch = __path__[len(__pathcondition__)]
-            __pathcondition__.append(self.formula if branch else Not(self.formula))
+        if len(path_list.__path__) > len(path_list.__pathcondition__):
+            branch = path_list.__path__[len(path_list.__pathcondition__)]
+            path_list.__pathcondition__.append(self.formula if branch else Not(self.formula))
             return branch
-        
-        __path__.append(True)
-        __pathcondition__.append(self.formula)
+        path_list.__path__.append(True)
+        path_list.__pathcondition__.append(self.formula)
         return True
-
-print((Int))
-
-print(math.floor(3))
