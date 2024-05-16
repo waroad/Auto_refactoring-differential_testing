@@ -1,22 +1,39 @@
 Module(
   body=[
-    FunctionDef(
-      name='func',
-      args=arguments(
-        posonlyargs=[],
-        args=[
-          arg(arg='A')],
-        kwonlyargs=[],
-        kw_defaults=[],
-        defaults=[]),
+    Assign(
+      targets=[
+        Tuple(
+          elts=[
+            Name(id='A', ctx=Store()),
+            Name(id='B', ctx=Store())],
+          ctx=Store())],
+      value=Tuple(
+        elts=[
+          Constant(value=2),
+          Constant(value=3)],
+        ctx=Load())),
+    Assign(
+      targets=[
+        Name(id='C', ctx=Store())],
+      value=Constant(value=4)),
+    If(
+      test=Name(id='A', ctx=Load()),
       body=[
-        If(
-          test=Name(id='A', ctx=Load()),
-          body=[
-            Return(
-              value=Constant(value=True))],
-          orelse=[
-            Return(
-              value=Constant(value=False))])],
-      decorator_list=[])],
+        Assign(
+          targets=[
+            Name(id='a', ctx=Store())],
+          value=Constant(value=4)),
+        Assign(
+          targets=[
+            Name(id='b', ctx=Store())],
+          value=Constant(value=5))],
+      orelse=[]),
+    Assign(
+      targets=[
+        Name(id='B', ctx=Store())],
+      value=Constant(value=5)),
+    Assign(
+      targets=[
+        Name(id='C', ctx=Store())],
+      value=Constant(value=6))],
   type_ignores=[])

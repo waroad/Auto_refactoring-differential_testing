@@ -1,8 +1,14 @@
 # assign multiple targets
-a=2
-b=3
-c=4
-d=5
+A,B=2,3
+C=4
+if A:
+    a=4
+    b=5
+B=5
+C=6
     
 # changed
-a,b,c,d=2,3,4,5
+A, B, C = 2, 3, 4
+if A:
+    a, b = 4, 5
+B, C = 5, 6

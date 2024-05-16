@@ -5,6 +5,38 @@ class CodeTF(ast.NodeTransformer):
     def __init__(self):
         self.toItem={} # (8)
 
+    def generic_visit(self, node):
+        new_stmts, temp_targets, temp_values, first_node = [], [], [], None # (10)
+        if hasattr(node, 'body'):
+            for stmt in node.body:
+                if isinstance(stmt, ast.Assign) and len(stmt.targets)==1:
+                    if first_node is None:
+                        first_node=stmt
+                    temp_targets.append(stmt.targets[0])
+                    # print('hs', temp_targets)
+                    temp_values.append(stmt.value)
+                else:
+                    if temp_targets:
+                        new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
+                        if len(temp_targets)==1:
+                            new_assign = ast.Assign(targets=[temp_targets[0]], value=temp_values[0])
+                        print('hs2', ast.dump(new_assign))
+                        ast.copy_location(new_assign, first_node)
+                        new_stmts.append(new_assign)
+                        temp_targets=[]
+                        temp_values=[]
+                        first_node=None
+                    new_stmts.append(stmt)
+            if temp_targets:
+                new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
+                if len(temp_targets)==1:
+                    new_assign = ast.Assign(targets=[temp_targets[0]], value=temp_values[0])
+                print('hs3', ast.dump(new_assign))
+                ast.copy_location(new_assign, first_node)
+                new_stmts.append(new_assign)
+            node.body = new_stmts
+        return super().generic_visit(node)
+
     def visit_If(self, node):
         if len(node.body)==1:
             if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse: # 6. NestedIf
@@ -100,11 +132,13 @@ class CodeTF(ast.NodeTransformer):
 
 
 code ='''
-def func(A):
-    if A:
-        return True
-    else:
-        return False
+A,B=2,3
+C=4
+if A:
+    a=4
+    b=5
+B=5
+C=6
 '''
 # condition=1
 # (a,b,c)=(1,2,3) if condition else (3,2,1)
