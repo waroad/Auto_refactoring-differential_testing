@@ -13,14 +13,12 @@ class CodeTF(ast.NodeTransformer):
                     if first_node is None:
                         first_node=stmt
                     temp_targets.append(stmt.targets[0])
-                    # print('hs', temp_targets)
                     temp_values.append(stmt.value)
                 else:
                     if temp_targets:
                         new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
                         if len(temp_targets)==1:
                             new_assign = ast.Assign(targets=[temp_targets[0]], value=temp_values[0])
-                        print('hs2', ast.dump(new_assign))
                         ast.copy_location(new_assign, first_node)
                         new_stmts.append(new_assign)
                         temp_targets=[]
@@ -31,7 +29,6 @@ class CodeTF(ast.NodeTransformer):
                 new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
                 if len(temp_targets)==1:
                     new_assign = ast.Assign(targets=[temp_targets[0]], value=temp_values[0])
-                print('hs3', ast.dump(new_assign))
                 ast.copy_location(new_assign, first_node)
                 new_stmts.append(new_assign)
             node.body = new_stmts
