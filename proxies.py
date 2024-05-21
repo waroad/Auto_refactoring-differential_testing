@@ -14,7 +14,12 @@ class IntegerProxy:
         return IntegerProxy(- self.term)
     def __abs__(self):
         return IntegerProxy(Abs(self.term))
-    # def __invert__(self):
+    
+    def __bool__(self):
+        if self.__eq__(self.term, Int(0)):
+            return BoolProxy(True)
+        else:
+            return BoolProxy(False)
 
     def __add__(self, other):
         if isinstance(other, IntegerProxy):
@@ -75,34 +80,34 @@ class IntegerProxy:
     def __rmod__(self, other):
         return self.__mod__(other)
     def __gt__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term > other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term > other)
     def __ge__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term >= other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term >= other)
     def __lt__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term < other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term < other)
     def __le__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term <= other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term <= other)
     def __eq__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term == other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term == other)
     def __ne__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term != other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term != other)
 
 class FloatProxy:
@@ -115,13 +120,9 @@ class FloatProxy:
         return FloatProxy(- self.term)
     def __abs__(self):
         return FloatProxy(Abs(self.term))
-    # def __invert__(self):
 
     def __bool__(self):
-        if self.__eq__(self.term, Real(0)):
-            return BoolProxy(True)
-        else:
-            return BoolProxy(False)
+        return BoolProxy(self.term == Real(0))
 
     def __add__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
@@ -184,33 +185,119 @@ class FloatProxy:
     def __gt__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term > other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term > other)
     def __ge__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term >= other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term >= other)
     def __lt__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term < other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term < other)
     def __le__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term <= other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term <= other)
     def __eq__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term == other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term == other)
     def __ne__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term != other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return BoolProxy(self.term != other)
+        
+class StringProxy:
+    def __init__(self, term):
+        self.term = term
+    def __add__(self, other):
+        if isinstance(other, StringProxy):
+            return StringProxy(self.term + other.term)
+        elif isinstance(other, str):
+            return StringProxy(self.term + other)
+        else:
+            raise TypeError(0)
+    def __gt__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(self.term > other.term)
+        elif isinstance(other, str):
+            return BoolProxy(self.term > other)
+    def __ge__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(self.term >= other.term)
+        elif isinstance(other, str):
+            return BoolProxy(self.term >= other)
+    def __lt__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(self.term < other.term)
+        elif isinstance(other, str):
+            return BoolProxy(self.term < other)
+    def __le__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(self.term <= other.term)
+        elif isinstance(other, str):
+            return BoolProxy(self.term <= other)
+    def __eq__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(self.term == other.term)
+        elif isinstance(other, str):
+            return BoolProxy(self.term == other)
+        else:
+            return BoolProxy(False)
+    def __contains__(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(Contains(self.term, other.term))
+        elif isinstance(other, str):
+            return BoolProxy(Contains(self.term, other))
+        else:
+            return BoolProxy(False)
+        
+    def startswith(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(PrefixOf(other.term, self.term))
+        elif isinstance(other, str):
+            return BoolProxy(PrefixOf(other, self.term))
+        else:
+            raise TypeError('startswith first arg must be str or a tuple of str, not int')
+    def endswith(self, other):
+        if isinstance(other, StringProxy):
+            return BoolProxy(SuffixOf(other.term, self.term))
+        elif isinstance(other, str):
+            return BoolProxy(SuffixOf(other, self.term))
+        else:
+            raise TypeError('endswith first arg must be str or a tuple of str, not int')
+    
+    def __len__(self):
+        return IntegerProxy(Length(self.term))
+
+class ListProxy:
+    def __init__(self, type):
+        self.lst = []
+        self.type = type
+    def __eq__(self, other):
+        if isinstance(other, ListProxy):
+            if len(self.lst) != len(other.lst):
+                return BoolProxy(False)
+            for i in range(len(self.lst)):
+                if self.lst[i] != other.lst[i]:
+                    return BoolProxy(False)
+            return BoolProxy(True)
+        elif isinstance(other, list):
+            if len(self.lst) != len(other):
+                return BoolProxy(False)
+            for i in range(len(self.lst)):
+                if self.lst[i] != other[i]:
+                    return BoolProxy(False)
+            return BoolProxy(True)
+    def __getitem__(self, index):
+        return self.lst[index]
+
 
 class BoolProxy:
     def __init__(self, formula):
@@ -247,3 +334,11 @@ class BoolProxy:
         path_list.__path__.append(True)
         path_list.__pathcondition__.append(self.formula)
         return True
+
+print(dir(list))
+
+# print(math.floor(3))
+
+x = String('x')
+# y = String('y')
+solve(x[0] == StringVal('a'))
