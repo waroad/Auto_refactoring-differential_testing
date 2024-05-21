@@ -6,7 +6,7 @@ if A:
     b=5
 B=5
 C=6
-    
+
 # changed
 A, B, C = 2, 3, 4
 if A:
