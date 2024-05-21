@@ -3,7 +3,7 @@ if name == "Casey" or name == "Joe" or name == "Mike":
     print("yes")
 
 
-# 변환 후
+# changed
 #
 # name = "Joe"
 # if name in ["Casey", "Joe", "Mike"]:
