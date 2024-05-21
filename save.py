@@ -26,10 +26,8 @@ def transform_If(node): # (6, 7, 9)
         if isinstance(node.body[0], ast.If) and not node.orelse and not node.body[0].orelse:
             node = transform_nestedIf(node) # 6. NestedIf
         elif node.orelse:
-            if isinstance(node.body[0], ast.Assign) or isinstance(node.body[0], ast.Expr):
-                node = transform_Ifexp(node) # 7. Ifexp
-            elif isinstance(node.body[0], ast.Return):
-                node = transform_return_boolean(node) # 9. Return Boolean Statement 
+            node = transform_Ifexp(node) # 7. Ifexp
+            node = transform_return_boolean(node) # 9. Return Boolean Statement 
     return node
 
 def transform_nestedIf(node): # (6)
@@ -129,17 +127,20 @@ class CodeTF(ast.NodeTransformer):
         self.toItem={} # (8)
 
     def generic_visit(self, node):
-        if hasattr(node, 'body') and isinstance(node.body, list):
-            # print('hs', node, ast.unparse(node))
+        if hasattr(node, 'body'):
             node.body = transform_multi_assign(node.body)
         return super().generic_visit(node)
 
     def visit_If(self, node):
+        # node.body = transform_multi_assign(node.body)
         node = transform_If(node) # 6, 7, 9
+        print('hs1', ast.unparse(node))
         self.generic_visit(node)
+        print('hs2', ast.unparse(node))
         return node
     
     def visit_Module(self, node):
+        # node.body = transform_multi_assign(node.body)
         self.generic_visit(node)
         return node
 
@@ -167,14 +168,10 @@ class CodeTF(ast.NodeTransformer):
 
 
 code ='''
-A=[1, 2]
-if A:
-    x=1
-else:
-    x=2
-if A:
+A, B = (1, 2), [1, 2]
+if A==[]:
     print(1)
-else:
+elif B!=():
     print(2)
 '''
 # condition=1

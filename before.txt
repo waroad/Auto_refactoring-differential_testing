@@ -1,0 +1,39 @@
+Module(
+  body=[
+    Assign(
+      targets=[
+        Name(id='A', ctx=Store())],
+      value=List(
+        elts=[
+          Constant(value=1),
+          Constant(value=2)],
+        ctx=Load())),
+    If(
+      test=Name(id='A', ctx=Load()),
+      body=[
+        Assign(
+          targets=[
+            Name(id='x', ctx=Store())],
+          value=Constant(value=1))],
+      orelse=[
+        Assign(
+          targets=[
+            Name(id='x', ctx=Store())],
+          value=Constant(value=2))]),
+    If(
+      test=Name(id='A', ctx=Load()),
+      body=[
+        Expr(
+          value=Call(
+            func=Name(id='print', ctx=Load()),
+            args=[
+              Constant(value=1)],
+            keywords=[]))],
+      orelse=[
+        Expr(
+          value=Call(
+            func=Name(id='print', ctx=Load()),
+            args=[
+              Constant(value=2)],
+            keywords=[]))])],
+  type_ignores=[])
