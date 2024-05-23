@@ -391,5 +391,6 @@ if __name__ == '__main__':
     replacer = CodeReplacer()
     updated_root = replacer.visit(ast.parse(source_code))
     updated_code = ast.unparse(updated_root)
-    with open(updated_dir+file, "w") as new_file:
+    output_path = updated_dir+file
+    with open(output_path, "w") as new_file:
         new_file.write(updated_code)
