@@ -123,6 +123,7 @@ def transform_multi_assign(body): # (10)
             new_assign = first_node
         new_stmts.append(new_assign)
     return new_stmts
+    
 
 def perform_comprehension(body, lineno=1):
     comprehension_map={"append":[ast.ListComp, ast.Add()], "add":[ast.SetComp, ast.BitOr()]}
@@ -250,105 +251,12 @@ def transform_chaining_comparisons(node):
                     return chained_comp
 
     return node
-  
-def transform_equality_comparisons(node):
-    if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
-        equalities = []
-        left_name = None
 
-        for value in node.values:
-            if (isinstance(value, ast.Compare) and
-                    len(value.ops) == 1 and
-                    isinstance(value.ops[0], ast.Eq) and
-                    isinstance(value.left, ast.Name)):
-
-                if left_name is None:
-                    left_name = value.left.id
-                elif left_name != value.left.id:
-                    return node  # Different left values, do not transform
 
 def transform_equality_comparisons(node):
     if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
         equalities = []
         left_name = None
-                equalities.append(value.comparators[0])
-            else:
-                return node  # Not a valid equality chain, do not transform
-
-        if not equalities:
-            return node
-
-        # Create a new 'in' comparison
-        in_comparison = ast.Compare(
-            left=ast.Name(id=left_name, ctx=ast.Load()),
-            ops=[ast.In()],
-            comparators=[ast.List(elts=equalities, ctx=ast.Load())]
-        )
-        return in_comparison
-
-    return node
-
-
-def transform_list_appends(body):
-    updated_body = []
-    i = 0
-    while i < len(body):
-        stmt = body[i]
-        if (isinstance(stmt, ast.Expr) and isinstance(stmt.value, ast.Call) and
-                isinstance(stmt.value.func, ast.Attribute) and stmt.value.func.attr == 'append'):
-
-            list_name = stmt.value.func.value.id
-            appends = [stmt.value.args[0]]
-
-            j = i + 1
-            while j < len(body):
-                next_stmt = body[j]
-                if (isinstance(next_stmt, ast.Expr) and isinstance(next_stmt.value, ast.Call) and
-                        isinstance(next_stmt.value.func, ast.Attribute) and
-                        next_stmt.value.func.attr == 'append' and
-                        next_stmt.value.func.value.id == list_name):
-
-                    appends.append(next_stmt.value.args[0])
-                    j += 1
-                else:
-                    break
-
-            if len(appends) > 1:
-                new_stmt = ast.AugAssign(
-                    target=ast.Name(id=list_name, ctx=ast.Store()),
-                    op=ast.Add(),
-                    value=ast.List(elts=appends, ctx=ast.Load())
-                )
-                updated_body.append(new_stmt)
-                i = j
-            else:
-                updated_body.append(stmt)
-                i += 1
-        else:
-            updated_body.append(stmt)
-            i += 1
-
-    return updated_body
-
-
-class CodeReplacer(ast.NodeTransformer):
-    def visit_FunctionDef(self, node):
-        node.body = perform_comprehension(node.body)
-        node.body = transform_list_appends(node.body)
-        self.generic_visit(node)
-        return node
-
-    def visit_Module(self, node):
-        node.body = perform_comprehension(node.body)
-        node.body = transform_list_appends(node.body)
-        self.generic_visit(node)
-        return node
-
-    def visit_If(self, node):
-        node.test = transform_equality_comparisons(node.test)
-        node.test = transform_chaining_comparisons(node.test)
-        self.generic_visit(node)
-        return node
 
         for value in node.values:
             if (isinstance(value, ast.Compare) and
@@ -476,13 +384,15 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--target', required=True)
     parser.add_argument("remaining", nargs="*")
     args = parser.parse_args()
-    ex_dir, file = tuple(args.target.split('/'))
+    file = args.target.split('/')[1]
+    ex_dir = 'examples/'
     updated_dir = 'updated/'
     with open(ex_dir+file, "r") as target:
         source_code = target.read()
     replacer = CodeReplacer()
+    # print(source_code)
     updated_root = replacer.visit(ast.parse(source_code))
     updated_code = ast.unparse(updated_root)
-    output_path = updated_dir+file
-    with open(output_path, "w") as new_file:
+    # print(updated_code)
+    with open(updated_dir+file, "w") as new_file:
         new_file.write(updated_code)
