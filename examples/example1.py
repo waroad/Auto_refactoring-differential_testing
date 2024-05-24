@@ -2,6 +2,7 @@ import time
 start_time = time.time()
 
 list_1 = []
+list_2 = ["ha", "haha"]
 dict_1={}
 set_1=set()
 for i in range(100000):
