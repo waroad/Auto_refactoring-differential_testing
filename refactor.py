@@ -138,6 +138,7 @@ def transform_multi_assign(body):  # (10)
             new_assign = first_node
         new_stmts.append(new_assign)
     return new_stmts
+    
 
 
 def perform_comprehension(body, lineno=1):
@@ -459,8 +460,9 @@ if __name__ == '__main__':
     with open(ex_dir + file, "r") as target:
         source_code = target.read()
     replacer = CodeReplacer()
+    # print(source_code)
     updated_root = replacer.visit(ast.parse(source_code))
     updated_code = ast.unparse(updated_root)
     # print(updated_code)
-    with open(updated_dir + file, "w") as new_file:
+    with open(updated_dir+file, "w") as new_file:
         new_file.write(updated_code)
