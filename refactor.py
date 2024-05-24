@@ -98,32 +98,47 @@ def transform_return_boolean(node): # (9)
     return new_node
 
 def transform_multi_assign(body): # (10)
-    new_stmts, temp_targets, temp_values, first_node = [], [], [], None
+    new_stmts, temp_targets, temp_values, first_node, prev = [], [], [], None, []
     for stmt in body:
-        if isinstance(stmt, ast.Assign) and len(stmt.targets)==1:
+        if isinstance(stmt, ast.Assign):
+            if dup_target(prev, stmt.value):
+                new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
+                temp_targets=[]
+                temp_values=[]
+                first_node, prev = stmt, []
             if first_node is None:
-                first_node=stmt
+                first_node = stmt
+            for node in ast.walk(stmt.targets[0]):
+                if hasattr(node, 'id'):
+                    prev.append(node.id)
             temp_targets.append(stmt.targets[0])
             temp_values.append(stmt.value)
         else:
             if temp_targets:
-                new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
-                ast.copy_location(new_assign, first_node)
-                if len(temp_targets)==1:
-                    new_assign = first_node
-                new_stmts.append(new_assign)
+                new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
                 temp_targets=[]
                 temp_values=[]
-                first_node=None
+                first_node, prev = None, []
             new_stmts.append(stmt)
     if temp_targets:
-        new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
-        ast.copy_location(new_assign, first_node)
-        if len(temp_targets)==1:
-            new_assign = first_node
-        new_stmts.append(new_assign)
+        new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
     return new_stmts
-    
+
+def merge_assign(first_node, temp_targets, temp_values):
+    new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
+    ast.copy_location(new_assign, first_node)
+    if len(temp_targets)==1:
+        new_assign = first_node
+    return new_assign
+
+def dup_target(prev, node):
+    for target in ast.walk(node):
+        if hasattr(target, 'id'):
+            for id in prev:
+                if target.id==id:
+                    return True
+    return False
+
 
 def perform_comprehension(body, lineno=1):
     comprehension_map={"append":[ast.ListComp, ast.Add()], "add":[ast.SetComp, ast.BitOr()]}
@@ -384,12 +399,15 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--target', required=True)
     parser.add_argument("remaining", nargs="*")
     args = parser.parse_args()
-    ex_dir, file = tuple(args.target.split('/'))
+    file = args.target.split('/')[1]
+    ex_dir = 'examples/'
     updated_dir = 'updated/'
     with open(ex_dir+file, "r") as target:
         source_code = target.read()
     replacer = CodeReplacer()
+    # print(source_code)
     updated_root = replacer.visit(ast.parse(source_code))
     updated_code = ast.unparse(updated_root)
+    # print(updated_code)
     with open(updated_dir+file, "w") as new_file:
         new_file.write(updated_code)
