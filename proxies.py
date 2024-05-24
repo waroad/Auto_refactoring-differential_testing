@@ -80,10 +80,13 @@ class IntegerProxy:
     def __rmod__(self, other):
         return self.__mod__(other)
     def __gt__(self, other):
+        print(type(other))
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term > other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term > other)
+        elif isinstance(other, str):
+            return BoolProxy(self.term > int(other))
     def __ge__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term >= other.term)
@@ -277,9 +280,10 @@ class StringProxy:
         return IntegerProxy(Length(self.term))
 
 class ListProxy:
-    def __init__(self, type):
+    def __init__(self, name):
+        self.name = name
         self.lst = []
-        self.type = type
+        # self.type = type
     def __eq__(self, other):
         if isinstance(other, ListProxy):
             if len(self.lst) != len(other.lst):
@@ -297,6 +301,10 @@ class ListProxy:
             return BoolProxy(True)
     def __getitem__(self, index):
         return self.lst[index]
+    def pop(self, index=-1):
+        return self.lst.pop(index)
+    def append(self, item):
+        self.lst.append(item)
 
 
 class BoolProxy:
@@ -335,10 +343,10 @@ class BoolProxy:
         path_list.__pathcondition__.append(self.formula)
         return True
 
-print(dir(list))
+# print(dir(list))
 
 # print(math.floor(3))
 
 x = String('x')
 # y = String('y')
-solve(x[0] == StringVal('a'))
+# solve(Int(x) == 65)

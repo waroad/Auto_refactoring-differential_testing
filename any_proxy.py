@@ -43,6 +43,18 @@ def safe_open(file_path, mode='r', context=None):
 class AnyProxy:
     def __init__(self, name):
         self.name = name
+
+    def get_proxy(self, other):
+        if isinstance(other, (int, IntegerProxy)):
+            return IntegerProxy(Int(self.name))
+        elif isinstance(other, (float, FloatProxy)):
+            return FloatProxy(Real(self.name))
+        elif isinstance(other, (str, StringProxy)):
+            return StringProxy(String(self.name))
+        # elif isinstance(other, AnyProxy):
+        #     return self.get_proxy(other)
+        else:
+            raise TypeError("Unsupported type")
     
     def __eq__(self, other):
         if callable(other):
@@ -51,10 +63,26 @@ class AnyProxy:
             # file write를 포기하면 이 부분을 안 해도 됨
             pass
         else:
-            if type(other) == int:
-                return IntegerProxy(Int(self.name)).__eq__(other)
-            elif type(other) == float:
-                return FloatProxy(Real(self.name)).__eq__(other)
+            # if type(other) == int:
+            #     return IntegerProxy(Int(self.name)).__eq__(other)
+            # elif type(other) == float:
+            #     return FloatProxy(Real(self.name)).__eq__(other)
+            # elif type(other) == str:
+            #     return StringProxy(String(self.name)).__eq__(other)
+            # elif type(other) == list:
+            #     return ListProxy().__eq__(other)
+            return self.get_proxy(other).__eq__(other)
+        
+    def __ne__(self, other):
+        return not self.__eq__(other)
+    def __gt__(self, other):
+        return self.get_proxy(other).__gt__(other)
+    def __ge__(self, other):
+        return self.get_proxy(other).__ge__(other)
+    def __lt__(self, other):
+        return self.get_proxy(other).__lt__(other)
+    def __le__(self, other):
+        return self.get_proxy(other).__le__(other)
 
     def _convert(self, other):
         pass
