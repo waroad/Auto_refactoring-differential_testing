@@ -14,7 +14,7 @@ elif b>=c and d<=c:
 else:
     print("ignore")
 
-# 변환 후
+# changed
 # 
 # a = 2
 # b = 3
