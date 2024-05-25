@@ -81,7 +81,6 @@ class IntegerProxy:
     def __rmod__(self, other):
         return self.__mod__(other)
     def __gt__(self, other):
-        print(type(other))
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term > other.term)
         elif isinstance(other, (int, float)):

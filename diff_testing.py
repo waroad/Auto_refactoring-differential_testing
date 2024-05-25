@@ -104,7 +104,7 @@ def main():
     for original_file in original_files:
         basename = os.path.basename(original_file)
         refactored_file = next((f for f in refactored_files if os.path.basename(f) == basename), None)
-        if refactored_file:
+        if refactored_file and original_file.endswith('.py'):
             with open(original_file, "r") as f:
                 original_code = f.read()
             
