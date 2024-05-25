@@ -56,10 +56,8 @@ def test(f, name, *args):
         path_list.__pathcondition__ = []
         try:
             result = f(*args)
-            print(path_list.__path__, path_list.__pathcondition__)
         except Exception as e:
             print(f"error in test {name}", e)
-            print(path_list.__path__, path_list.__pathcondition__)
             traceback.print_exc()
         solver = z3.Solver()
         solver.add(path_list.__pathcondition__)
