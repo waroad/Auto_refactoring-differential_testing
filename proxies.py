@@ -16,10 +16,11 @@ class IntegerProxy:
         return IntegerProxy(Abs(self.term))
     
     def __bool__(self):
-        if self.__eq__(Int(0)):
-            return False
-        else:
-            return True
+        return BoolProxy(self.term != 0).__bool__()
+        # if self.__eq__(Int(0)):
+        #     return False
+        # else:
+        #     return True
 
     def __add__(self, other):
         if isinstance(other, IntegerProxy):
