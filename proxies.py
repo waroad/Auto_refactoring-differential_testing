@@ -280,10 +280,10 @@ class StringProxy:
         return IntegerProxy(Length(self.term))
 
 class ListProxy:
-    def __init__(self, name):
-        self.name = name
-        self.lst = []
-        # self.type = type
+    def __init__(self, lst):
+        self.lst = lst
+    def __len__(self):
+        return len(self.term)
     def __eq__(self, other):
         if isinstance(other, ListProxy):
             if len(self.lst) != len(other.lst):
@@ -300,11 +300,98 @@ class ListProxy:
                     return BoolProxy(False)
             return BoolProxy(True)
     def __getitem__(self, index):
-        return self.lst[index]
-    def pop(self, index=-1):
-        return self.lst.pop(index)
+        if isinstance(index, int):
+            return self.term[index]
+        elif isinstance(index, slice):
+            return ListProxy(self.term[index])
+        else:
+            raise TypeError("Invalid index type")
+    def __setitem__(self, index, value):
+        if isinstance(index, int):
+            self.term[index] = value
+        elif isinstance(index, slice):
+            if isinstance(value, ListProxy):
+                self.term[index] = value.term
+            else:
+                self.term[index] = value
+        else:
+            raise TypeError("Invalid index type")
+    def __delitem__(self, index):
+        del self.term[index]
+    def __iter__(self):
+        return iter(self.term)
+    def __contains__(self, item):
+        return item in self.term
+    def __delitem__(self, index):
+        del self.term[index]
+    def __iter__(self):
+        return iter(self.term)
+    def __contains__(self, item):
+        return item in self.term
     def append(self, item):
-        self.lst.append(item)
+        self.term.append(item)
+    def extend(self, other):
+        if isinstance(other, ListProxy):
+            self.term.extend(other.term)
+        else:
+            self.term.extend(other)
+    def insert(self, index, item):
+        self.term.insert(index, item)
+    def remove(self, item):
+        self.term.remove(item)
+    def pop(self, index=-1):
+        return self.term.pop(index)
+    def clear(self):
+        self.term.clear()
+    def index(self, item, start=0, end=None):
+        return self.term.index(item, start, end)
+    def count(self, item):
+        return self.term.count(item)
+    def sort(self, key=None, reverse=False):
+        self.term.sort(key=key, reverse=reverse)
+    def reverse(self):
+        self.term.reverse()
+    def copy(self):
+        return ListProxy(self.term.copy())
+    def __add__(self, other):
+        if isinstance(other, ListProxy):
+            return ListProxy(self.term + other.term)
+        elif isinstance(other, list):
+            return ListProxy(self.term + other)
+        else:
+            raise TypeError("Unsupported type for addition")
+    def __radd__(self, other):
+        return self.__add__(other)
+    def __iadd__(self, other):
+        if isinstance(other, ListProxy):
+            self.term += other.term
+        elif isinstance(other, list):
+            self.term += other
+        else:
+            raise TypeError("Unsupported type for in-place addition")
+        return self
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return ListProxy(self.term * other)
+        else:
+            raise TypeError("Unsupported type for multiplication")
+    def __rmul__(self, other):
+        return self.__mul__(other)
+    def __imul__(self, other):
+        if isinstance(other, int):
+            self.term *= other
+        else:
+            raise TypeError("Unsupported type for in-place multiplication")
+        return self
+    def __eq__(self, other):
+        if isinstance(other, ListProxy):
+            return self.term == other.term
+        elif isinstance(other, list):
+            return self.term == other
+        else:
+            return False
+    def __ne__(self, other):
+        return not self.__eq__(other)
 
 
 class BoolProxy:
