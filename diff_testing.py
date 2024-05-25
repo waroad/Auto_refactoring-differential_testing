@@ -4,8 +4,7 @@ import path_list
 from any_proxy import AnyProxy
 import os
 import subprocess
-import sys
-
+import traceback
 
 def test_case_generate(test_cases_path, original_path, test_path, params, test_inputs, func_name):
     ori_file_name = os.path.basename(original_path)[:-3]
@@ -57,8 +56,11 @@ def test(f, name, *args):
         path_list.__pathcondition__ = []
         try:
             result = f(*args)
+            print(path_list.__path__, path_list.__pathcondition__)
         except Exception as e:
             print(f"error in test {name}", e)
+            print(path_list.__path__, path_list.__pathcondition__)
+            traceback.print_exc()
         solver = z3.Solver()
         solver.add(path_list.__pathcondition__)
         solver.check()
@@ -71,14 +73,14 @@ def test(f, name, *args):
 
         while len(path_list.__path__) > 0 and not path_list.__path__[-1]:
             path_list.__path__.pop()
-        
+        print(path_list.__path__, path_list.__pathcondition__)
         if path_list.__path__ == []:
             return
         path_list.__path__[-1] = False
 
 def main():
     global test_inputs
-    parser = argparse.ArgumentParser(description='Difference test with two files.')
+    parser = argparse.ArgumentParser(description='Difference test with two folders.')
     parser.add_argument('-t1', '--target1', required=True)
     parser.add_argument('-t2', '--target2', required=True)
     parse_args = parser.parse_args()
@@ -87,13 +89,19 @@ def main():
 
     original_files = []
     refactored_files = []
-    for root, dirs, files in os.walk(original_folder):
-        for file in files:
-            original_files.append(os.path.join(root, file))
+    if original_folder.endswith(".py"):
+        original_files.append(original_folder)
+    else:
+        for root, dirs, files in os.walk(original_folder):
+            for file in files:
+                original_files.append(os.path.join(root, file))
     
-    for root, dirs, files in os.walk(refactored_folder):
-        for file in files:
-            refactored_files.append(os.path.join(root, file))
+    if refactored_folder.endswith(".py"):
+        refactored_files.append(refactored_folder)
+    else:
+        for root, dirs, files in os.walk(refactored_folder):
+            for file in files:
+                refactored_files.append(os.path.join(root, file))
     
     original_files.sort()
     refactored_files.sort()

@@ -417,7 +417,6 @@ class BoolProxy:
 
         true_cond = True if s_true.check() == sat else False
         false_cond = True if s_false.check() == sat else False
-
         if true_cond and not false_cond: return True
         if false_cond and not true_cond: 
             return False
@@ -429,11 +428,3 @@ class BoolProxy:
         path_list.__path__.append(True)
         path_list.__pathcondition__.append(self.formula)
         return True
-
-# print(dir(list))
-
-# print(math.floor(3))
-
-x = String('x')
-# y = String('y')
-# solve(Int(x) == 65)

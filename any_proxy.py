@@ -73,7 +73,7 @@ class AnyProxy:
             # elif type(other) == list:
             #     return ListProxy().__eq__(other)
             s, o = self.get_proxy(other)
-            return s.__ne__(o)
+            return s.__eq__(o)
         
     def __ne__(self, other):
         s, o = self.get_proxy(other)
