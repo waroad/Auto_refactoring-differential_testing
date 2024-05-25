@@ -46,13 +46,14 @@ class AnyProxy:
 
     def get_proxy(self, other):
         if isinstance(other, (int, IntegerProxy)):
-            return IntegerProxy(Int(self.name))
+            return IntegerProxy(Int(self.name)), other
         elif isinstance(other, (float, FloatProxy)):
-            return FloatProxy(Real(self.name))
+            return FloatProxy(Real(self.name)), other
         elif isinstance(other, (str, StringProxy)):
-            return StringProxy(String(self.name))
-        # elif isinstance(other, AnyProxy):
-        #     return self.get_proxy(other)
+            return StringProxy(String(self.name)), other
+        elif isinstance(other, AnyProxy):
+            other = IntegerProxy(Int(other.name))
+            return IntegerProxy(Int(self.name)), other
         else:
             raise TypeError("Unsupported type")
     
@@ -74,15 +75,23 @@ class AnyProxy:
             return self.get_proxy(other).__eq__(other)
         
     def __ne__(self, other):
-        return not self.__eq__(other)
+        s, o = self.get_proxy(other)
+        return s.__ne__(o)
     def __gt__(self, other):
-        return self.get_proxy(other).__gt__(other)
+        s, o = self.get_proxy(other)
+        return s.__gt__(o)
     def __ge__(self, other):
-        return self.get_proxy(other).__ge__(other)
+        s, o = self.get_proxy(other)
+        return s.__ge__(o)
     def __lt__(self, other):
-        return self.get_proxy(other).__lt__(other)
+        s, o = self.get_proxy(other)
+        return s.__lt__(o)
     def __le__(self, other):
-        return self.get_proxy(other).__le__(other)
+        s, o = self.get_proxy(other)
+        return s.__le__(o)
+    
+    def __bool__(self):
+        return IntegerProxy(Int(self.name)).__bool__()
 
     def _convert(self, other):
         pass

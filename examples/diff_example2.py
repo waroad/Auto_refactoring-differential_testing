@@ -4,7 +4,7 @@ def if_expression(a, b, c, d):
     elif b > a and c > b:
         return "changed"
     elif b < a and b < c:
-        return "changed"
+        return "not changed"
     elif b >= c and d <= c:
         return "changed"
     else:
