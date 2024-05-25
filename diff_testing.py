@@ -71,7 +71,6 @@ def test(f, name, *args):
 
         while len(path_list.__path__) > 0 and not path_list.__path__[-1]:
             path_list.__path__.pop()
-        print(path_list.__path__, path_list.__pathcondition__)
         if path_list.__path__ == []:
             return
         path_list.__path__[-1] = False
