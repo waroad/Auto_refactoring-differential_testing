@@ -6,41 +6,42 @@ import os
 import subprocess
 import sys
 
-def test_case_generate(original_path, test_path, params, test_inputs, func_name):
-    o_path_list = original_path.split("\\")
-    t_path_list = test_path.split("\\")
-    test_case_path = os.path.join("/".join(o_path_list[:-1]))
-    ori_file_name = o_path_list[-1][:-3]
-    test_file_name = t_path_list[-1][:-3]
-    with open(f"{test_case_path}/test_{ori_file_name}_{func_name}.py", "w") as f:
-        f.write(f"import {ori_file_name}\n")
-        f.write(f"import {test_file_name}\n\n")
 
+def test_case_generate(test_cases_path, original_path, test_path, params, test_inputs, func_name):
+    ori_file_name = os.path.basename(original_path)[:-3]
+    test_file_name = os.path.basename(test_path)[:-3]
 
+    test_case_file = os.path.join(test_cases_path, f"test_{ori_file_name}.py")
+
+    if not os.path.exists(test_case_file):
+        with open(test_case_file, "w") as f:
+            f.write("import importlib.util\n")
+            f.write("ori_module_spec = importlib.util.spec_from_file_location('ori_module', '" + original_path.replace('\\', '\\\\') + "')\n")
+            f.write("test_module_spec = importlib.util.spec_from_file_location('test_module', '" + test_path.replace('\\', '\\\\') + "')\n")
+            f.write("ori_module = importlib.util.module_from_spec(ori_module_spec)\n")
+            f.write("test_module = importlib.util.module_from_spec(test_module_spec)\n")
+            f.write("ori_module_spec.loader.exec_module(ori_module)\n")
+            f.write("test_module_spec.loader.exec_module(test_module)\n\n")
+
+    with open(test_case_file, "a") as f:
         f.write(f"def test_{func_name}():\n")
         for input_dict in test_inputs:
             input_list = [input_dict.get(name, None) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)
-            f.write(f"    assert {ori_file_name}.{func_name}({input_str}) == {test_file_name}.{func_name}({input_str})\n")
+            f.write(f"    assert ori_module.{func_name}({input_str}) == test_module.{func_name}({input_str})\n")
 
-    # original_path = os.path.join("..", original_path)
-    # with open(f"./testcases/test_{func_name}.py", "w") as f:
-    #     f.write(f"import {original_path}/{func_name}")
-    # print(original_path, test_path, params, test_inputs, func_name)
 
 def test_refactored_code(original_path, test_path):
     cur_dir = os.getcwd()
-    o_path_list = original_path.split("\\")
-    t_path_list = test_path.split("\\")
-    test_case_path = os.path.join("/".join(o_path_list[:-1]))
-    ori_file_name = o_path_list[-1]
-    test_file_name = t_path_list[-1]
+    test_case_path = os.path.dirname(original_path)
+    ori_file_name = os.path.basename(original_path)
+    test_file_name = os.path.basename(test_path)
     os.chdir(test_case_path)
     cmd1 = ['python', ori_file_name]
-    result1 = subprocess.run(cmd1, capture_output=True, text= True)
+    result1 = subprocess.run(cmd1, capture_output=True, text=True)
     cmd2 = ['python', test_file_name]
-    result2 = subprocess.run(cmd2, capture_output=True, text= True)
+    result2 = subprocess.run(cmd2, capture_output=True, text=True)
 
     os.chdir(cur_dir)
     try:
@@ -49,7 +50,7 @@ def test_refactored_code(original_path, test_path):
     except Exception as e:
         print("Error while testing stdout and stderr", e)
 
-def test(f, *args):
+def test(f, name, *args):
     global test_inputs
     path_list.__path__ = []
     while True:
@@ -57,8 +58,7 @@ def test(f, *args):
         try:
             result = f(*args)
         except Exception as e:
-            print("error in test", e)
-        #####################
+            print(f"error in test {name}", e)
         solver = z3.Solver()
         solver.add(path_list.__pathcondition__)
         solver.check()
@@ -68,7 +68,7 @@ def test(f, *args):
         for d in model.decls():
             temp_dict[d.name()] = model[d]
         test_inputs.append(temp_dict)
-        #####################
+
         while len(path_list.__path__) > 0 and not path_list.__path__[-1]:
             path_list.__path__.pop()
         
@@ -76,37 +76,56 @@ def test(f, *args):
             return
         path_list.__path__[-1] = False
 
-if __name__ == "__main__":
+def main():
+    global test_inputs
     parser = argparse.ArgumentParser(description='Difference test with two files.')
     parser.add_argument('-t1', '--target1', required=True)
     parser.add_argument('-t2', '--target2', required=True)
     parse_args = parser.parse_args()
-    original_code = parse_args.target1
-    refactored_code = parse_args.target2
+    original_folder = parse_args.target1
+    refactored_folder = parse_args.target2
 
-    original_lines = open(original_code, "r").read()
-    refactored_lines = open(refactored_code, "r").read()
-
-    ### symbolic execution으로 function test의 input 얻기 ###
-
-
-    test_inputs = []
-    functions = {}
-    global_env = {}
-    exec(original_lines, global_env)
-
-    for name, func in global_env.items():
-        if callable(func):
-            args = func.__code__.co_varnames[:func.__code__.co_argcount]
-            anyproxy_args = [AnyProxy(arg) for arg in args]
-            
-            try:
-                test(func, *anyproxy_args)
-            except Exception as e:
-                print(f"Error while executing ", e)
-            
-            test_case_generate(parse_args.target1, parse_args.target2, args, test_inputs, func.__name__)
-        ### test input으로 만든 pytest 실행 ###
+    original_files = []
+    refactored_files = []
+    for root, dirs, files in os.walk(original_folder):
+        for file in files:
+            original_files.append(os.path.join(root, file))
     
-    ### subprocess로 실행해서 print 결과 확인 ###
-    test_refactored_code(parse_args.target1, parse_args.target2)
+    for root, dirs, files in os.walk(refactored_folder):
+        for file in files:
+            refactored_files.append(os.path.join(root, file))
+    
+    original_files.sort()
+    refactored_files.sort()
+
+    test_cases_path = os.path.join(os.getcwd(), 'test_cases')
+    os.makedirs(test_cases_path, exist_ok=True)
+
+    for original_file in original_files:
+        basename = os.path.basename(original_file)
+        refactored_file = next((f for f in refactored_files if os.path.basename(f) == basename), None)
+        if refactored_file:
+            with open(original_file, "r") as f:
+                original_code = f.read()
+            
+            test_inputs = []
+            functions = {}
+            global_env = {}
+            exec(original_code, global_env)
+
+            for name, func in global_env.items():
+                if callable(func):
+                    args = func.__code__.co_varnames[:func.__code__.co_argcount]
+                    anyproxy_args = [AnyProxy(arg) for arg in args]
+
+                    try:
+                        test(func, original_file, *anyproxy_args)
+                    except Exception as e:
+                        print(f"Error while executing {original_file}", e)
+
+                    test_case_generate(test_cases_path, original_file, refactored_file, args, test_inputs, func.__name__)
+                
+            test_refactored_code(original_file, refactored_file)
+
+if __name__ == "__main__":
+    main()
