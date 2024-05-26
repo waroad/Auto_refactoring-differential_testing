@@ -25,7 +25,7 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
     with open(test_case_file, "a") as f:
         f.write(f"def test_{func_name}():\n")
         for input_dict in test_inputs:
-            input_list = [input_dict.get(name, None) for name in params]
+            input_list = [input_dict.get(name, 0) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)
             f.write(f"    assert ori_module.{func_name}({input_str}) == test_module.{func_name}({input_str})\n")

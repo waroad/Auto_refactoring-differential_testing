@@ -14,47 +14,69 @@ class IntegerProxy:
         return IntegerProxy(- self.term)
     def __abs__(self):
         return IntegerProxy(Abs(self.term))
-    
+    def __int__(self):
+        solver = Solver()
+        solver.add(path_list.__pathcondition__)
+        solver.add(self.term >= 0)
+        if solver.check() == sat:
+            model = solver.model()
+            return model.evaluate(self.term).as_long()
+        else:
+            raise ValueError("The term cannot be evaluated as an integer")
+
     def __bool__(self):
         return BoolProxy(self.term != 0).__bool__()
-        # if self.__eq__(Int(0)):
-        #     return False
-        # else:
-        #     return True
 
     def __add__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return IntegerProxy(self.term + other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return IntegerProxy(self.term + other)
+        else:
+            other = IntegerProxy(Int(other.name))
+            return IntegerProxy(self.term + other.term)
+
     def __radd__(self, other):
         return self.__add__(other)
     def __sub__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return IntegerProxy(self.term - other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return IntegerProxy(self.term - other)
+        else:
+            other = IntegerProxy(Int(other.name))
+            return IntegerProxy(self.term - other.term)
     def __rsub__(self, other):
         return self.__sub__(other)
     def __mul__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return IntegerProxy(self.term * other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return IntegerProxy(self.term * other)
+        else:
+            other = IntegerProxy(Int(other.name))
+            return IntegerProxy(self.term * other.term)
+        
     def __rmul__(self, other):
         return self.__mul__(other)
     def __div__(self, other):
-        if isinstance(other, IntegerProxy):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
             return FloatProxy(self.term / other.term)
-        elif isinstance(other, int):
+        elif isinstance(other, (int, float)):
             return FloatProxy(self.term / other)
+        else:
+            other = FloatProxy(Int(other.name))
+            return FloatProxy(self.term / other.term)
     def __rdiv__(self, other):
         return self.__div__(other)
     def __truediv__(self, other):
-        if isinstance(other, IntegerProxy):
-            return IntegerProxy(self.term / other.term)
-        elif isinstance(other, int):
-            return IntegerProxy(self.term / other)
+        if isinstance(other, (IntegerProxy, FloatProxy)):
+            return FloatProxy(self.term / other.term)
+        elif isinstance(other, (int, float)):
+            return FloatProxy(self.term / other)
+        else:
+            other = FloatProxy(Int(other.name))
+            return FloatProxy(self.term / other.term)
     def __rtruediv__(self, other):
         return self.__truediv__(other)
 
@@ -63,6 +85,8 @@ class IntegerProxy:
             return IntegerProxy(self.term / other.term), IntegerProxy(self.term % other.term)
         elif isinstance(other, int):
             return IntegerProxy(self.term / other), IntegerProxy(self.term % other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rdivmod__(self, other):
         return self.__divmod__(other)
     
@@ -71,6 +95,8 @@ class IntegerProxy:
             return IntegerProxy(self.term ** other.term)
         elif isinstance(other, int):
             return IntegerProxy(self.term ** other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rpow__(self, other):
         return self.__pow__(other)
     def __mod__(self, other):
@@ -78,6 +104,8 @@ class IntegerProxy:
             return IntegerProxy(self.term % other.term)
         elif isinstance(other, int):
             return IntegerProxy(self.term % other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rmod__(self, other):
         return self.__mod__(other)
     def __gt__(self, other):
@@ -87,31 +115,43 @@ class IntegerProxy:
             return BoolProxy(self.term > other)
         elif isinstance(other, str):
             return BoolProxy(self.term > int(other))
+        else:
+            raise TypeError("divmod anyproxy")
     def __ge__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term >= other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term >= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __lt__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term < other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term < other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __le__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term <= other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term <= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __eq__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term == other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term == other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __ne__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term != other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term != other)
+        else:
+            raise TypeError("divmod anyproxy")
 
 class FloatProxy:
     def __init__(self, term):
@@ -123,7 +163,6 @@ class FloatProxy:
         return FloatProxy(- self.term)
     def __abs__(self):
         return FloatProxy(Abs(self.term))
-
     def __bool__(self):
         return BoolProxy(self.term == Real(0))
 
@@ -132,6 +171,8 @@ class FloatProxy:
             return FloatProxy(self.term + other.term)
         elif isinstance(other, (int, float)):
             return FloatProxy(self.term + other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __radd__(self, other):
         return self.__add__(other)
     def __sub__(self, other):
@@ -139,6 +180,8 @@ class FloatProxy:
             return FloatProxy(self.term - other.term)
         elif isinstance(other, (int, float)):
             return FloatProxy(self.term - other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rsub__(self, other):
         return self.__sub__(other)
     def __mul__(self, other):
@@ -146,6 +189,8 @@ class FloatProxy:
             return FloatProxy(self.term * other.term)
         elif isinstance(other, (int, float)):
             return FloatProxy(self.term * other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rmul__(self, other):
         return self.__mul__(other)
     def __div__(self, other):
@@ -153,6 +198,8 @@ class FloatProxy:
             return FloatProxy(self.term / other.term)
         elif isinstance(other, (int, float)):
             return FloatProxy(self.term / other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rdiv__(self, other):
         return self.__div__(other)
     def __truediv__(self, other):
@@ -160,6 +207,8 @@ class FloatProxy:
             return FloatProxy(self.term / other.term)
         elif isinstance(other, (int, float)):
             return FloatProxy(self.term / other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rtruediv__(self, other):
         return self.__truediv__(other)
 
@@ -168,6 +217,8 @@ class FloatProxy:
             return FloatProxy(self.term / other.term), FloatProxy(self.term % other.term)
         elif isinstance(other, int):
             return FloatProxy(self.term / other), FloatProxy(self.term % other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rdivmod__(self, other):
         return self.__divmod__(other)
     
@@ -176,6 +227,8 @@ class FloatProxy:
             return FloatProxy(self.term ** other.term)
         elif isinstance(other, int):
             return FloatProxy(self.term ** other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rpow__(self, other):
         return self.__pow__(other)
     def __mod__(self, other):
@@ -183,6 +236,8 @@ class FloatProxy:
             return FloatProxy(self.term % other.term)
         elif isinstance(other, int):
             return FloatProxy(self.term % other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __rmod__(self, other):
         return self.__mod__(other)
     def __gt__(self, other):
@@ -190,31 +245,43 @@ class FloatProxy:
             return BoolProxy(self.term > other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term > other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __ge__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term >= other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term >= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __lt__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term < other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term < other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __le__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term <= other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term <= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __eq__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term == other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term == other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __ne__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return BoolProxy(self.term != other.term)
         elif isinstance(other, (int, float)):
             return BoolProxy(self.term != other)
+        else:
+            raise TypeError("divmod anyproxy")
         
 class StringProxy:
     def __init__(self, term):
@@ -231,21 +298,29 @@ class StringProxy:
             return BoolProxy(self.term > other.term)
         elif isinstance(other, str):
             return BoolProxy(self.term > other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __ge__(self, other):
         if isinstance(other, StringProxy):
             return BoolProxy(self.term >= other.term)
         elif isinstance(other, str):
             return BoolProxy(self.term >= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __lt__(self, other):
         if isinstance(other, StringProxy):
             return BoolProxy(self.term < other.term)
         elif isinstance(other, str):
             return BoolProxy(self.term < other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __le__(self, other):
         if isinstance(other, StringProxy):
             return BoolProxy(self.term <= other.term)
         elif isinstance(other, str):
             return BoolProxy(self.term <= other)
+        else:
+            raise TypeError("divmod anyproxy")
     def __eq__(self, other):
         if isinstance(other, StringProxy):
             return BoolProxy(self.term == other.term)

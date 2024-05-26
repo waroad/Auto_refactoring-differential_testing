@@ -51,13 +51,18 @@ class AnyProxy:
             return FloatProxy(Real(self.name)), other
         elif isinstance(other, (str, StringProxy)):
             return StringProxy(String(self.name)), other
+        elif isinstance(other, (bool, BoolProxy)):
+            return BoolProxy(Int(self.name) != 0), other
         elif isinstance(other, (list, ListProxy)):
             return ListProxy([]), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
         else:
-            raise TypeError("Unsupported type")
+            raise TypeError(f"Unsupported type {type(other)}")
+    
+    def __neg__(self):
+        return IntegerProxy(Int(self.name)).__neg__()
     
     def __add__(self, other):
         s, o = self.get_proxy(other)
@@ -65,59 +70,49 @@ class AnyProxy:
     def __radd__(self, other):
         return self.__add__(other)
     def __sub__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__sub__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__sub__(o)
     def __rsub__(self, other):
         return self.__sub__(other)
     def __mul__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__mul__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__mul__(o)
     def __rmul__(self, other):
         return self.__mul__(other)
     def __div__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__div__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__div__(o)
     def __rdiv__(self, other):
         return self.__div__(other)
     def __truediv__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__truediv__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__truediv__(o)
     def __rtruediv__(self, other):
         return self.__truediv__(other)
     def __divmod__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__rdivmod__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__rdivmod__(o)
     def __rdivmod__(self, other):
         return self.__divmod__(other)
     
     def __pow__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__pow__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__pow__(o)
     def __rpow__(self, other):
         return self.__pow__(other)
     def __mod__(self, other):
-        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
-            s, o = self.get_proxy(other)
-            return s.__mod__(o)
-        return TypeError("Unsupported type")
+        s, o = self.get_proxy(other)
+        return s.__mod__(o)
     def __rmod__(self, other):
         return self.__mod__(other)
     
     def __len__(self):
         return len(ListProxy([]))
     
+    def __getitem__(self, index):
+        print("getitem")
+        # return ListProxy([]).__getitem__(index)
+
     def __eq__(self, other):
         if callable(other):
             pass
@@ -140,6 +135,24 @@ class AnyProxy:
         s, o = self.get_proxy(other)
         return s.__le__(o)
     
+    def __and__(self, other):
+        s, o = self.get_proxy(other)
+        if isinstance(s, IntegerProxy):
+            s = BoolProxy(s.term != 0)
+        if isinstance(o, IntegerProxy):
+            o = BoolProxy(o.term != 0)
+        
+        return BoolProxy(And(s.formula, o.formula))
+
+    def __or__(self, other):
+        s, o = self.get_proxy(other)
+        if isinstance(s, IntegerProxy):
+            s = BoolProxy(s.term != 0)
+        if isinstance(o, IntegerProxy):
+            o = BoolProxy(o.term != 0)
+        
+        return BoolProxy(Or(s.formula, o.formula))
+
     def __bool__(self):
         return IntegerProxy(Int(self.name)).__bool__()
 
