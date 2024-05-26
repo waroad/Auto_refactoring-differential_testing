@@ -368,19 +368,15 @@ class ListProxy:
         return len(self.term)
     def __eq__(self, other):
         if isinstance(other, ListProxy):
-            if len(self.term) != len(other.term):
-                return BoolProxy(False)
+            condition_list = [len(self.term) == len(other.term)]
             for i in range(len(self.term)):
-                if self.term[i] != other.term[i]:
-                    return BoolProxy(False)
-            return BoolProxy(True)
+                condition_list.append(self.term[i] == other.term[i])
+            return BoolProxy(And(*condition_list))
         elif isinstance(other, list):
-            if len(self.term) != len(other):
-                return BoolProxy(False)
+            condition_list = [len(self.term) == len(other)]
             for i in range(len(self.term)):
-                if self.term[i] != other[i]:
-                    return BoolProxy(False)
-            return BoolProxy(True)
+                condition_list.append(self.term[i] == other[i])
+            return BoolProxy(And(*condition_list))
         else:
             return BoolProxy(False)
     def __getitem__(self, index):
@@ -495,7 +491,6 @@ class BoolProxy:
         if true_cond and not false_cond: return True
         if false_cond and not true_cond: 
             return False
-
         if len(path_list.__path__) > len(path_list.__pathcondition__):
             branch = path_list.__path__[len(path_list.__pathcondition__)]
             path_list.__pathcondition__.append(self.formula if branch else Not(self.formula))
