@@ -9,3 +9,24 @@ test_module_spec.loader.exec_module(test_module)
 def test_check():
     assert ori_module.check(1, 0) == test_module.check(1, 0)
     assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)
+def test_check():
+    assert ori_module.check(1, 0) == test_module.check(1, 0)
+    assert ori_module.check(0, 0) == test_module.check(0, 0)

@@ -8,3 +8,17 @@ test_module_spec.loader.exec_module(test_module)
 
 def test_truth_value():
     assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)
+def test_truth_value():
+    assert ori_module.truth_value(None, None) == test_module.truth_value(None, None)

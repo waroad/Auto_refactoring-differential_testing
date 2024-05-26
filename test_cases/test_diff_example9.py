@@ -9,3 +9,24 @@ test_module_spec.loader.exec_module(test_module)
 def test_return_bool():
     assert ori_module.return_bool(1) == test_module.return_bool(1)
     assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)
+def test_return_bool():
+    assert ori_module.return_bool(1) == test_module.return_bool(1)
+    assert ori_module.return_bool(0) == test_module.return_bool(0)

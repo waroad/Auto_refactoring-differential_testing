@@ -54,7 +54,7 @@ class AnyProxy:
         elif isinstance(other, (bool, BoolProxy)):
             return BoolProxy(Int(self.name) != 0), other
         elif isinstance(other, (list, ListProxy)):
-            return ListProxy([]), other
+            return ListProxy(Array(self.name, IntSort(), IntSort()), 10), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
@@ -107,11 +107,10 @@ class AnyProxy:
         return self.__mod__(other)
     
     def __len__(self):
-        return len(ListProxy([]))
+        return ListProxy(Array(self.name, IntSort(), IntSort()), 10).__len__()
     
     def __getitem__(self, index):
-        print("getitem")
-        # return ListProxy([]).__getitem__(index)
+        return ListProxy(Array(self.name, IntSort(), IntSort()), 10).__getitem__(index)
 
     def __eq__(self, other):
         if callable(other):

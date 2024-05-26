@@ -10,3 +10,31 @@ def test_nested_if():
     assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
     assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
     assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)
+def test_nested_if():
+    assert ori_module.nested_if(1, 1) == test_module.nested_if(1, 1)
+    assert ori_module.nested_if(1, 0) == test_module.nested_if(1, 0)
+    assert ori_module.nested_if(0, None) == test_module.nested_if(0, None)

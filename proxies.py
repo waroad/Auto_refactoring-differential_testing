@@ -335,6 +335,13 @@ class StringProxy:
             return BoolProxy(Contains(self.term, other))
         else:
             return BoolProxy(False)
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            return self.term[index]
+        elif isinstance(index, slice):
+            return StringProxy(self.term[index])
+        else:
+            raise TypeError("Invalid index type")
         
     def startswith(self, other):
         if isinstance(other, StringProxy):
@@ -355,10 +362,11 @@ class StringProxy:
         return IntegerProxy(Length(self.term))
 
 class ListProxy:
-    def __init__(self, term):
+    def __init__(self, term, length):
         self.term = term
+        self.length = length
     def __len__(self):
-        return len(self.term)
+        return self.length
     def __eq__(self, other):
         if isinstance(other, ListProxy):
             return BoolProxy(self.term == other.term)
@@ -368,9 +376,9 @@ class ListProxy:
             return BoolProxy(False)
     def __getitem__(self, index):
         if isinstance(index, int):
-            return self.term[index]
-        elif isinstance(index, slice):
-            return ListProxy(self.term[index])
+            return IntegerProxy(Select(self.term, index))
+        # elif isinstance(index, slice):
+        #     return ListProxy(self.term[index])
         else:
             raise TypeError("Invalid index type")
     def __setitem__(self, index, value):
@@ -486,3 +494,57 @@ class BoolProxy:
         path_list.__path__.append(True)
         path_list.__pathcondition__.append(self.formula)
         return True
+
+# Y = Int('y')
+# Z = Int('z')
+# X = Array('x', IntSort(), IntSort())
+
+I = IntSort()
+# A is an array from integer to integer
+A = Array('A', I, I)
+x = Int('x')
+print (A[x])
+print (Select(A, x))
+print (Store(A, x, 10))
+print (simplify(Select(Store(A, 2, x+1), 2)))
+
+# print(type(Select(X, 2)))
+
+# 배열의 최대 크기 설정
+# n = 10
+
+# # 배열 선언 (인덱스 타입: Int, 원소 타입: Int)
+# X = Array('X', IntSort(), IntSort())
+
+# # 배열의 길이를 나타내는 변수 선언
+# Y = Int('Y')
+
+# # 제약 조건 리스트 초기화
+# constraints = []
+
+# # Y는 0 이상 n 이하의 값을 가져야 함
+# constraints.append(Y >= 0)
+# constraints.append(Y <= n)
+
+# # 배열의 유효한 길이와 관련된 제약 조건 추가
+# for i in range(n):
+#     # 유효하지 않은 인덱스는 특정 값 (예: -1)으로 설정
+#     constraints.append(Implies(i >= Y, X[i] == -1))
+
+# # 배열이 빈 리스트와 같아야 한다는 제약 조건 추가
+# constraints.append(Y == 0)
+# print(constraints)
+
+# # 솔버 생성 및 제약 조건 추가
+# solver = Solver()
+# solver.add(constraints)
+
+# # 문제 해결
+# if solver.check() == sat:
+#     model = solver.model()
+#     y_val = model.evaluate(Y).as_long()
+#     x_vals = [model.evaluate(X[i]).as_long() for i in range(n)]
+#     print(f"Y (length): {y_val}")
+#     print(f"X (array): {x_vals[:y_val]}")
+# else:
+#     print("No solution exists")
