@@ -362,23 +362,32 @@ class StringProxy:
         return IntegerProxy(Length(self.term))
 
 class ListProxy:
-    def __init__(self, term, length):
+    def __init__(self, term):
         self.term = term
-        self.length = length
     def __len__(self):
-        return self.length
+        return len(self.term)
     def __eq__(self, other):
         if isinstance(other, ListProxy):
-            return BoolProxy(self.term == other.term)
+            if len(self.term) != len(other.term):
+                return BoolProxy(False)
+            for i in range(len(self.term)):
+                if self.term[i] != other.term[i]:
+                    return BoolProxy(False)
+            return BoolProxy(True)
         elif isinstance(other, list):
-            return BoolProxy(self.term == other)
+            if len(self.term) != len(other):
+                return BoolProxy(False)
+            for i in range(len(self.term)):
+                if self.term[i] != other[i]:
+                    return BoolProxy(False)
+            return BoolProxy(True)
         else:
             return BoolProxy(False)
     def __getitem__(self, index):
         if isinstance(index, int):
-            return IntegerProxy(Select(self.term, index))
-        # elif isinstance(index, slice):
-        #     return ListProxy(self.term[index])
+            return self.term[index]
+        elif isinstance(index, slice):
+            return ListProxy(self.term[index])
         else:
             raise TypeError("Invalid index type")
     def __setitem__(self, index, value):
@@ -499,14 +508,14 @@ class BoolProxy:
 # Z = Int('z')
 # X = Array('x', IntSort(), IntSort())
 
-I = IntSort()
-# A is an array from integer to integer
-A = Array('A', I, I)
-x = Int('x')
-print (A[x])
-print (Select(A, x))
-print (Store(A, x, 10))
-print (simplify(Select(Store(A, 2, x+1), 2)))
+# I = IntSort()
+# # A is an array from integer to integer
+# A = Array('A', I, I)
+# x = Int('x')
+# print (A[x])
+# print (Select(A, x))
+# print (Store(A, x, 10))
+# print (simplify(Select(Store(A, 2, x+1), 2)))
 
 # print(type(Select(X, 2)))
 

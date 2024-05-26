@@ -43,6 +43,7 @@ def safe_open(file_path, mode='r', context=None):
 class AnyProxy:
     def __init__(self, name):
         self.name = name
+        self.length = 0
 
     def get_proxy(self, other):
         if isinstance(other, (int, IntegerProxy)):
@@ -54,7 +55,8 @@ class AnyProxy:
         elif isinstance(other, (bool, BoolProxy)):
             return BoolProxy(Int(self.name) != 0), other
         elif isinstance(other, (list, ListProxy)):
-            return ListProxy(Array(self.name, IntSort(), IntSort()), 10), other
+            self.length = len(other)
+            return ListProxy(IntVector(self.name, self.length)), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
@@ -107,7 +109,7 @@ class AnyProxy:
         return self.__mod__(other)
     
     def __len__(self):
-        return ListProxy(Array(self.name, IntSort(), IntSort()), 10).__len__()
+        return ListProxy(IntVector(self.name, self.length)).__len__()
     
     def __getitem__(self, index):
         return ListProxy(Array(self.name, IntSort(), IntSort()), 10).__getitem__(index)
