@@ -51,30 +51,79 @@ class AnyProxy:
             return FloatProxy(Real(self.name)), other
         elif isinstance(other, (str, StringProxy)):
             return StringProxy(String(self.name)), other
+        elif isinstance(other, (list, ListProxy)):
+            return ListProxy([]), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
         else:
             raise TypeError("Unsupported type")
     
+    def __add__(self, other):
+        s, o = self.get_proxy(other)
+        return s.__add__(o)
+    def __radd__(self, other):
+        return self.__add__(other)
+    def __sub__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__sub__(o)
+        return TypeError("Unsupported type")
+    def __rsub__(self, other):
+        return self.__sub__(other)
+    def __mul__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__mul__(o)
+        return TypeError("Unsupported type")
+    def __rmul__(self, other):
+        return self.__mul__(other)
+    def __div__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__div__(o)
+        return TypeError("Unsupported type")
+    def __rdiv__(self, other):
+        return self.__div__(other)
+    def __truediv__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__truediv__(o)
+        return TypeError("Unsupported type")
+    def __rtruediv__(self, other):
+        return self.__truediv__(other)
+    def __divmod__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__rdivmod__(o)
+        return TypeError("Unsupported type")
+    def __rdivmod__(self, other):
+        return self.__divmod__(other)
+    
+    def __pow__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__pow__(o)
+        return TypeError("Unsupported type")
+    def __rpow__(self, other):
+        return self.__pow__(other)
+    def __mod__(self, other):
+        if isinstance(other, (int, IntegerProxy, float, FloatProxy)):
+            s, o = self.get_proxy(other)
+            return s.__mod__(o)
+        return TypeError("Unsupported type")
+    def __rmod__(self, other):
+        return self.__mod__(other)
+    
+    def __len__(self):
+        return len(ListProxy([]))
+    
     def __eq__(self, other):
         if callable(other):
-            # other이 callable로 평가되지 않고 바로 evaluate되어서 이 부분을 사용할 수 없는 상태
-            # python function defer 하는 방법을 참고해서 수정해야 할 듯
-            # file write를 포기하면 이 부분을 안 해도 됨
             pass
         else:
-            # if type(other) == int:
-            #     return IntegerProxy(Int(self.name)).__eq__(other)
-            # elif type(other) == float:
-            #     return FloatProxy(Real(self.name)).__eq__(other)
-            # elif type(other) == str:
-            #     return StringProxy(String(self.name)).__eq__(other)
-            # elif type(other) == list:
-            #     return ListProxy().__eq__(other)
             s, o = self.get_proxy(other)
             return s.__eq__(o)
-        
     def __ne__(self, other):
         s, o = self.get_proxy(other)
         return s.__ne__(o)

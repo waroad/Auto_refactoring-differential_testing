@@ -280,25 +280,17 @@ class StringProxy:
         return IntegerProxy(Length(self.term))
 
 class ListProxy:
-    def __init__(self, lst):
-        self.lst = lst
+    def __init__(self, term):
+        self.term = term
     def __len__(self):
         return len(self.term)
     def __eq__(self, other):
         if isinstance(other, ListProxy):
-            if len(self.lst) != len(other.lst):
-                return BoolProxy(False)
-            for i in range(len(self.lst)):
-                if self.lst[i] != other.lst[i]:
-                    return BoolProxy(False)
-            return BoolProxy(True)
+            return BoolProxy(self.term == other.term)
         elif isinstance(other, list):
-            if len(self.lst) != len(other):
-                return BoolProxy(False)
-            for i in range(len(self.lst)):
-                if self.lst[i] != other[i]:
-                    return BoolProxy(False)
-            return BoolProxy(True)
+            return BoolProxy(self.term == other)
+        else:
+            return BoolProxy(False)
     def __getitem__(self, index):
         if isinstance(index, int):
             return self.term[index]
@@ -383,15 +375,6 @@ class ListProxy:
         else:
             raise TypeError("Unsupported type for in-place multiplication")
         return self
-    def __eq__(self, other):
-        if isinstance(other, ListProxy):
-            return self.term == other.term
-        elif isinstance(other, list):
-            return self.term == other
-        else:
-            return False
-    def __ne__(self, other):
-        return not self.__eq__(other)
 
 
 class BoolProxy:
