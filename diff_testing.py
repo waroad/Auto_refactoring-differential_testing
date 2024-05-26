@@ -25,6 +25,16 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
     with open(test_case_file, "a") as f:
         f.write(f"def test_{func_name}():\n")
         for input_dict in test_inputs:
+            for key, val in path_list.__typedict__.items():
+                if val == list:
+                    list1 = []
+                    for input_key, input_val in input_dict.items():
+                        if input_key.startswith(key + "__"):
+                            index = int(input_key.split("__")[1])
+                            while len(list1) <= index:
+                                list1.append(0)
+                            list1[index] = input_val
+                    input_dict[key] = list1
             input_list = [input_dict.get(name, 0) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)
@@ -68,7 +78,6 @@ def test(f, name, *args):
         for d in model.decls():
             temp_dict[d.name()] = model[d]
         test_inputs.append(temp_dict)
-
         while len(path_list.__path__) > 0 and not path_list.__path__[-1]:
             path_list.__path__.pop()
         if path_list.__path__ == []:

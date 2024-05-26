@@ -7,6 +7,7 @@ from z3 import *
 class IntegerProxy:
     def __init__(self, term):
         self.term = term
+        path_list.__typedict__[term.decl().name()] = int
     
     def __pos__(self):
         return IntegerProxy(+ self.term)
@@ -156,6 +157,7 @@ class IntegerProxy:
 class FloatProxy:
     def __init__(self, term):
         self.term = term
+        path_list.__typedict__[term.decl().name()] = float
     
     def __pos__(self):
         return FloatProxy(+ self.term)
@@ -286,6 +288,8 @@ class FloatProxy:
 class StringProxy:
     def __init__(self, term):
         self.term = term
+        path_list.__typedict__[term.decl().name()] = str
+
     def __add__(self, other):
         if isinstance(other, StringProxy):
             return StringProxy(self.term + other.term)
@@ -381,14 +385,14 @@ class ListProxy:
             return BoolProxy(False)
     def __getitem__(self, index):
         if isinstance(index, int):
-            return self.term[index]
+            return IntegerProxy(Int(self.term[index].decl().name()))
         elif isinstance(index, slice):
             return ListProxy(self.term[index])
         else:
             raise TypeError("Invalid index type")
     def __setitem__(self, index, value):
         if isinstance(index, int):
-            self.term[index] = value
+            self.term[index] = IntegerProxy(value.term)
         elif isinstance(index, slice):
             if isinstance(value, ListProxy):
                 self.term[index] = value.term

@@ -2,6 +2,7 @@ import os
 import contextlib
 from proxies import *
 from z3 import *
+import path_list
 
 class ExecutionContext(contextlib.ContextDecorator):
     def __init__(self):
@@ -43,7 +44,7 @@ def safe_open(file_path, mode='r', context=None):
 class AnyProxy:
     def __init__(self, name):
         self.name = name
-        self.length = 0
+        self.length = 5
 
     def get_proxy(self, other):
         if isinstance(other, (int, IntegerProxy)):
@@ -56,6 +57,7 @@ class AnyProxy:
             return BoolProxy(Int(self.name) != 0), other
         elif isinstance(other, (list, ListProxy)):
             self.length = len(other)
+            path_list.__typedict__[self.name] = list
             return ListProxy(IntVector(self.name, self.length)), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
@@ -109,10 +111,11 @@ class AnyProxy:
         return self.__mod__(other)
     
     def __len__(self):
+        path_list.__typedict__[self.name] = list
         return ListProxy(IntVector(self.name, self.length)).__len__()
     
     def __getitem__(self, index):
-        return ListProxy(Array(self.name, IntSort(), IntSort()), 10).__getitem__(index)
+        return ListProxy(IntVector(self.name, self.length)).__getitem__(index)
 
     def __eq__(self, other):
         if callable(other):
@@ -157,5 +160,8 @@ class AnyProxy:
     def __bool__(self):
         return IntegerProxy(Int(self.name)).__bool__()
 
+    def __setitem__(self, index, value):
+        return ListProxy(IntVector(self.name, self.length)).__setitem__(index, value)
+    
     def _convert(self, other):
         pass
