@@ -1,7 +1,6 @@
 # return boolean statement
 def func(A, B):
     if A:
-        print(1)
         return True
     # elif B:
     #     return False
@@ -10,6 +9,7 @@ def func(A, B):
     
 A, B = 1, 1
 func(1,1)
+
 # changed
 def func(A):
     return A
