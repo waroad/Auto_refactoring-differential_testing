@@ -571,6 +571,88 @@ class TupleProxy:
             raise TypeError("Unsupported type for in-place multiplication")
         return self
 
+class SetProxy:
+    def __init__(self, term):
+        self.term = term
+    
+    def __contains__(self, item):
+        return IsMember(item, self.term)
+    
+    def __eq__(self, other):
+        if isinstance(other, SetProxy):
+            return BoolProxy(self.term == other.term)
+        elif isinstance(other, set):
+            condition_list = [IsMember(element, self.term) for element in other]
+            condition_list.append(self.term == SetSort(*other))
+            return BoolProxy(And(*condition_list))
+        else:
+            return BoolProxy(False)
+
+    def add(self, item):
+        self.term = SetAdd(self.term, item)
+
+    def remove(self, item):
+        raise NotImplementedError("Z3 SetSort does not support removing elements directly.")
+    
+    def clear(self):
+        self.term = EmptySet(IntSort())
+    
+    def union(self, other):
+        if isinstance(other, SetProxy):
+            return SetProxy(SetUnion(self.term, other.term))
+        elif isinstance(other, set):
+            new_set = self.term
+            for element in other:
+                new_set = SetAdd(new_set, element)
+            return SetProxy(new_set)
+        else:
+            raise TypeError("Unsupported type for union")
+    
+    def intersection(self, other):
+        if isinstance(other, SetProxy):
+            return SetProxy(Intersect(self.term, other.term))
+        elif isinstance(other, set):
+            other_set = SetSort(*other)
+            return SetProxy(Intersect(self.term, other_set))
+        else:
+            raise TypeError("Unsupported type for intersection")
+    
+    def difference(self, other):
+        if isinstance(other, SetProxy):
+            return SetProxy(SetDifference(self.term, other.term))
+        elif isinstance(other, set):
+            other_set = SetSort(*other)
+            return SetProxy(SetDifference(self.term, other_set))
+        else:
+            raise TypeError("Unsupported type for difference")
+    
+    def issubset(self, other):
+        if isinstance(other, SetProxy):
+            return BoolProxy(IsSubset(self.term, other.term))
+        elif isinstance(other, set):
+            other_set = SetSort(*other)
+            return BoolProxy(IsSubset(self.term, other_set))
+        else:
+            raise TypeError("Unsupported type for issubset")
+    
+    def issuperset(self, other):
+        if isinstance(other, SetProxy):
+            return BoolProxy(IsSubset(other.term, self.term))
+        elif isinstance(other, set):
+            other_set = SetSort(*other)
+            return BoolProxy(IsSubset(other_set, self.term))
+        else:
+            raise TypeError("Unsupported type for issuperset")
+    
+    def __len__(self):
+        raise NotImplementedError("Z3 SetSort does not support direct length calculation.")
+    
+    def __iter__(self):
+        raise NotImplementedError("Iteration over Z3 sets is not directly supported.")
+    
+    def to_z3(self):
+        return self.term
+
 class BoolProxy:
     def __init__(self, formula):
         self.formula = formula

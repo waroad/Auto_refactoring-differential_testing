@@ -66,6 +66,10 @@ class AnyProxy:
             self.length = len(other)
             path_list.__typedict__[self.name] = tuple
             return TupleProxy(IntVector(self.name, self.length)), other
+        elif isinstance(other, (set, SetProxy)):
+            self.length = len(other)
+            path_list.__typedict__[self.name] = set
+            return SetProxy(SetSort(IntSort())), other
         else:
             raise TypeError(f"Unsupported type {type(other)}")
     
