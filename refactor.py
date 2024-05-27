@@ -1,6 +1,5 @@
 import argparse
 import ast
-import copy
 import time
 import os
 
@@ -234,25 +233,13 @@ def transform_chaining_comparisons(node):
         ast.NotEq: ast.NotEq
     }
     if isinstance(node, ast.BoolOp):
-        comparisons = []
-        rest = []
-        new_node=copy.deepcopy(node)
-        for i in range(len(node.values)):
-            if isinstance(node.values[i],ast.BoolOp):
-                node.values[i]=transform_chaining_comparisons(node.values[i])
-            if isinstance(node.values[i],ast.Compare):
-                comparisons.append(node.values[i])
-            else:
-                rest.append(node.values[i])
-        if not comparisons:
-            return node
-
-        # Initialize the left part and gather all ops and comparators
         for i in range(len(node.values)):
             if isinstance(node.values[i],ast.BoolOp):
                 node.values[i]=transform_chaining_comparisons(node.values[i])
         while True:
             broken=False
+            if type(node.op).__name__!="And":
+                break
             for i,cur_comp in enumerate(node.values):
                 for j,comp in enumerate(node.values):
                     if i >= j or not isinstance(node.values[i],ast.Compare) or not isinstance(node.values[j],ast.Compare):
