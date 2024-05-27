@@ -62,6 +62,10 @@ class AnyProxy:
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
+        elif isinstance(other, (tuple, TupleProxy)):
+            self.length = len(other)
+            path_list.__typedict__[self.name] = tuple
+            return TupleProxy(IntVector(self.name, self.length)), other
         else:
             raise TypeError(f"Unsupported type {type(other)}")
     

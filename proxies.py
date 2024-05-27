@@ -468,6 +468,108 @@ class ListProxy:
             raise TypeError("Unsupported type for in-place multiplication")
         return self
 
+class TupleProxy:
+    def __init__(self, term):
+        self.term = term
+    def __len__(self):
+        return len(self.term)
+    def __eq__(self, other):
+        if isinstance(other, TupleProxy):
+            condition_list = [len(self.term) == len(other.term)]
+            for i in range(len(self.term)):
+                condition_list.append(self.term[i] == other.term[i])
+            return BoolProxy(And(*condition_list))
+        elif isinstance(other, tuple):
+            condition_list = [len(self.term) == len(other)]
+            for i in range(len(self.term)):
+                condition_list.append(self.term[i] == other[i])
+            return BoolProxy(And(*condition_list))
+        else:
+            return BoolProxy(False)
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            return IntegerProxy(Int(self.term[index].decl().name()))
+        elif isinstance(index, slice):
+            return TupleProxy(self.term[index])
+        else:
+            raise TypeError("Invalid index type")
+    def __setitem__(self, index, value):
+        if isinstance(index, int):
+            self.term[index] = IntegerProxy(value.term)
+        elif isinstance(index, slice):
+            if isinstance(value, TupleProxy):
+                self.term[index] = value.term
+            else:
+                self.term[index] = value
+        else:
+            raise TypeError("Invalid index type")
+    def __delitem__(self, index):
+        del self.term[index]
+    def __iter__(self):
+        return iter(self.term)
+    def __contains__(self, item):
+        return item in self.term
+    def __delitem__(self, index):
+        del self.term[index]
+    def __iter__(self):
+        return iter(self.term)
+    def __contains__(self, item):
+        return item in self.term
+    def append(self, item):
+        self.term.append(item)
+    def extend(self, other):
+        if isinstance(other, TupleProxy):
+            self.term.extend(other.term)
+        else:
+            self.term.extend(other)
+    def insert(self, index, item):
+        self.term.insert(index, item)
+    def remove(self, item):
+        self.term.remove(item)
+    def pop(self, index=-1):
+        return self.term.pop(index)
+    def clear(self):
+        self.term.clear()
+    def index(self, item, start=0, end=None):
+        return self.term.index(item, start, end)
+    def count(self, item):
+        return self.term.count(item)
+    def sort(self, key=None, reverse=False):
+        self.term.sort(key=key, reverse=reverse)
+    def reverse(self):
+        self.term.reverse()
+    def copy(self):
+        return TupleProxy(self.term.copy())
+    def __add__(self, other):
+        if isinstance(other, TupleProxy):
+            return TupleProxy(self.term + other.term)
+        elif isinstance(other, tuple):
+            return TupleProxy(self.term + other)
+        else:
+            raise TypeError("Unsupported type for addition")
+    def __radd__(self, other):
+        return self.__add__(other)
+    def __iadd__(self, other):
+        if isinstance(other, TupleProxy):
+            self.term += other.term
+        elif isinstance(other, tuple):
+            self.term += other
+        else:
+            raise TypeError("Unsupported type for in-place addition")
+        return self
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return TupleProxy(self.term * other)
+        else:
+            raise TypeError("Unsupported type for multiplication")
+    def __rmul__(self, other):
+        return self.__mul__(other)
+    def __imul__(self, other):
+        if isinstance(other, int):
+            self.term *= other
+        else:
+            raise TypeError("Unsupported type for in-place multiplication")
+        return self
 
 class BoolProxy:
     def __init__(self, formula):
