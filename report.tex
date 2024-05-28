@@ -1,0 +1,202 @@
+% TO COMPILE:
+% > pdflatex report.tex
+
+\documentclass[11pt]{article}
+\usepackage{enumitem}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[colorlinks = true,
+linkcolor = blue,
+urlcolor  = blue]{hyperref}
+\usepackage[a4paper,margin=1.5in]{geometry}
+\usepackage{stackengine,graphicx}
+\usepackage{fancyhdr}
+% \usepackage{sectsty}
+% \sectionfont{\noindent}
+\setlength{\headheight}{15pt}
+\usepackage{microtype}
+\usepackage{times}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{xcolor}
+\lstdefinestyle{codestyle}{
+	frame=single,
+	basicstyle=\ttfamily\footnotesize,
+	keywordstyle=\bfseries\color{magenta},
+	commentstyle=\itshape\color{gray},
+	stringstyle=\color{orange},
+	numberstyle=\sffamily\scriptsize\color{gray},
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=4,
+	breakatwhitespace=false,
+	breaklines=true,
+	keepspaces=true,
+	captionpos=b,
+	numbers=left,
+	numbersep=5pt}
+\lstset{style=codestyle}
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CS453}
+\rhead{team 1}
+\rfoot{\thepage}
+
+\date{}
+
+\title{Automated Refactoring\\for Pythonic Idioms\\with Differential Testing}
+
+\begin{document}
+
+\maketitle
+\vspace{-2cm}
+\thispagestyle{fancy}
+
+\section{Introduction}
+Python is widely used across various domains due to its rich libraries and flexible syntax. However, many developers struggle with writing \textbf{idiomatic} Python code, which can compromise readability, make maintenance more challenging, and sometimes even degrade performance. To address these issues, we have developed an \textbf{automated refactoring} technology. This technology transforms Python code into more \textbf{Pythonic} code, enhancing both readability and performance. To verify that the refactoring does not alter the functionality of the code, we have implemented \textbf{differential testing}. This method confirms that the code behaves the same before and after refactoring, thus securing the stability of the refactoring process. This report will discuss the necessity and effectiveness of this approach and examine how automated refactoring can improve the quality of Python code.\\
+
+\section{Related Work}
+\subsection{Making Python Code Idiomatic by Automatic Refactoring Non-idiomatic Python Code with Pythonic Idioms - Zhang et al. (2022)}
+This study presented the first tool to automatically transform non-idiomatic Python code into idiomatic Python code. They analyzed 7,638 Python projects on GitHub, identifying \textbf{9 types} of 'Pythonic Idioms' that frequently occurred and could be converted from non-idiomatic code. Based on this, they defined specific syntactic patterns and developed a method of refactoring code through \textbf{abstract syntax tree (AST)} rewriting operations. Moreover, they applied these refactorings to actual code to verify the accuracy and usefulness of their tool. This research provides an essential foundation for our study, inspiring the design and implementation of our refactoring tool.\\
+\subsection{title2 - author}
+...\\
+
+\section{Method?}
+\subsection{Automated Refactoring}
+In this project, we laid the groundwork for the implementation of our refactoring tool by referencing the study of Zhang et al. and various literatures on Python idioms. Specifically, we selected \textbf{10 types} of refactorings that could enhance the performance and readability of Python code. These refactorings were implemented using the \textbf{Abstract Syntax Tree (AST)}, which provides a structural representation of source code. The AST is an ideal tool for systematically analyzing and modifying each element of the code. Through this, we developed a methodology that could automatically improve the code into a more Pythonic form.\\
+Details of this part are all on \textbf{refactor.py}. For better understanding, we will write the (relevant code line) after the description of each part. For example, we inherited the NodeTransformer class and performed automated refactoring.\textbf{(413)}\\
+When developing our automated refactoring tool, we assumed that the \textbf{source code is free of any errors}. This assumption allows us to focus solely on the refactoring process without the need to address or correct pre-existing code errors.\\ \\
+(a) Collection Comprehension
+\begin{lstlisting}[language=python]
+# Python codes
+\end{lstlisting}
+...\\ \\
+(b) Chaining Comparisons
+...\\ \\
+(c) ??
+...\\ \\
+(d) Merge Append
+...\\ \\
+(e) Test Empty Collection
+\begin{lstlisting}[language=python]
+# original
+if A==[]:
+    print(1)
+elif B!=():
+    print(2)
+# refactored
+if not A:
+    print(1)
+elif B:
+    print(2)
+\end{lstlisting}
+\textbf{Test collection} changes a comparison with Eq(==) or NEq(!=) which one side is empty collections (list, tuple, dictionary) or empty string to a form without a comparison. Therefore, we overwrite \textbf{visit\_Compare}, and change the content of the node to \#refactored in code snippet when the above conditions are satisfied.(7)\\ \\
+(f) Merge If
+\begin{lstlisting}[language=python]
+# original
+if A:
+    if B:
+		if C:
+        	print(2)
+		else:
+			print(3)
+# refactored
+if A and B:
+	if C:
+    	print(2)
+	else:
+		print(3)
+\end{lstlisting}
+\textbf{Merge If} combines multiple If statements into one using the and operator when they appear consecutively. Therefore, we overwrite \textbf{visit\_If} and change the content of the node to \#refactored in code snippet when the above conditions are satisfied.\\
+However, it is crucial to consider cases where the if statement \textbf{appears with else} together, which would make merging inappropriate. For example, consider the lines 2, 3 and 5 of the code snippet. To handle this case, when a If node has \textbf{node.orelse}, we don't apply the merge.(30)\\
+Also, to merge 3 or more mergeable If statements, we first implement \textbf{generic\_visit}.(459)\\ \\
+(g) If Expression
+\begin{lstlisting}[language=python]
+# original
+if A:
+    x=1
+else:
+    x=2
+if A:
+    print(1)
+else:
+    print(2)
+# refactored
+x = 1 if A else 2
+print(1 if A else 2)
+\end{lstlisting}
+\textbf{If Expression} changes a general If-else syntax to IfExpression when the contents of the If-else are \textbf{different only in value and perform the same function (assignment, print)}. Therefore, we overwrite \textbf{visit\_If} and change the content of the node when the above conditions are satisfied.(47)\\ \\
+(h) to Enumerate
+\begin{lstlisting}[language=python]
+# original
+for i in range(len(players)):
+    print(i, players[i])
+    print(players[i-1])
+    players[i] = 1
+# refactored
+for i, item in enumerate(players):
+    print(i, item)
+    print(players[i - 1])
+    players[i] = 1
+\end{lstlisting}
+\textbf{to Enumerate} always changes the form of the range (len(list or tuple)) in the for statement to enumerate (list or tuple). Therefore, we overwrite \textbf{visit\_For}.(67)\\
+For convenience, we unify the variable to store the element of the list as \textbf{item}. In addition, by overwriting \textbf{visit\_Subscript}, we use \textbf{item} instead of the list \textbf{element by using current index} inside the for statement in the source code.(87) To implement this function, we defined a dictionary called \textbf{self.toItem}.(415) At the beginning of the visit of the for statement, add \textbf{(list name):(index)} to the self.toItem(77), and pop when all the visit of the for statement is over.(430)\\
+However, it is crucial to consider cases where accessing an element of an index \textbf{different from the current index} of the list or assigning a new value \textbf{to the current index element} of the list. To handle these cases, we check that each node satisfies the above state in visit\_Assign and visit\_Subscript, and if so, we did not proceed with the change to item.(89, 439)\\ \\
+(i) Return Boolean Statement
+\begin{lstlisting}[language=python]
+# original
+def func(A):
+    if A:
+        return True
+    else:
+        return False
+# refactored
+def func(A):
+    return A
+\end{lstlisting}
+\textbf{Return Boolean Statement} is possible only when returning a Boolean value with different internal branches with if-else statement. Therefore, we overwrite \textbf{visit\_If}, and change the content of the node when the above conditions are satisfied.(104)\\ \\
+(j) Multiple Assign
+\begin{lstlisting}[language=python]
+# original
+a=2
+b=3
+c=4
+d=c+1
+# refactored
+a,b,c=2,3,4
+d=c+1
+\end{lstlisting}
+\textbf{Multiple assistance} can occur in any part of the Python code. The strategy involves modifying the \textbf{generic\_visit} method to find out all nodes that contain a 'body' attribute, and \textbf{traverse node.body} which includes the potential for multiple assignments.(417)\\
+However, it is crucial to consider cases where variables from previous assignments are used in subsequent ones, which would make merging inappropriate. For example, consider the \textbf{c} and \textbf{d} on the lines 4 and 5 of a code snippet. To handle this case, we apply always storing the previous element and comparing it with the current element while traverse all node.body.(147)\\
+
+\subsection{Differential Testing}
+...\\
+\begin{lstlisting}[language=python]
+# Python codes
+\end{lstlisting}
+...\\
+
+\section{Evaluation}
+\subsection{Efficiency}
+...\\
+
+\subsection{Readability?}
+...\\
+
+\subsection{Differential Testing}
+...\\
+
+\section{Threat to Validity}
+\subsection{Handling Corner Cases in Automated Refactoring}
+One of the threats to validity in the development of our automated refactoring tool is the \textbf{potential failure to perfectly handle specific corner cases}. Although we attempted to cover all conceivable counterexamples theoretically, it is practically challenging to anticipate every scenario due to the limits of imagination. To overcome this limitation, we adopted an approach of applying automated refactoring to \textbf{existing Python codes}, examining the outcomes to identify and modify counterexamples. In particular, we utilized various code examples from programming problem platforms like \textbf{Baekjoon} to assess the applicability and usefulness of our tool. This process has allowed us to enhance the robustness of our refactoring tool in handling diverse real-world use cases.\\
+
+\subsection{Hmm}
+...\\
+
+\section{Discussion \& Conclusion}
+...\\
+
+
+\end{document}

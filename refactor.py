@@ -414,12 +414,12 @@ class CodeReplacer(ast.NodeTransformer):
     def __init__(self):
         self.toItem = {}  # (8)
 
-    def generic_visit(self, node):
+    def generic_visit(self, node): # 10. transform multiple assign
         if hasattr(node, 'body') and isinstance(node.body, list):
             node.body = transform_multi_assign(node.body)
         return super().generic_visit(node)
 
-    def visit_Compare(self, node):  # 5. Truth Value Test
+    def visit_Compare(self, node):  # 5. Test Empty Collection
         node = transform_empty_test(node)
         self.generic_visit(node)
         return node
@@ -456,8 +456,8 @@ class CodeReplacer(ast.NodeTransformer):
     def visit_If(self, node):
         node.test = transform_equality_comparisons(node.test)
         node.test = transform_chaining_comparisons(node.test)
+        self.generic_visit(node) # to handle merge If over 3
         node = transform_If(node)  # 6, 7, 9
-        self.generic_visit(node)
         return node
 
 
