@@ -123,6 +123,8 @@ class AnyProxy:
         return ListProxy(IntVector(self.name, self.length), self.name).__len__()
     
     def __getitem__(self, index):
+        if isinstance(index, AnyProxy):
+            index = IntegerProxy(Int(index.name))
         return ListProxy(IntVector(self.name, self.length), self.name).__getitem__(index)
 
     def __eq__(self, other):
