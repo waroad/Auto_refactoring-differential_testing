@@ -55,7 +55,15 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
             input_list = [input_dict.get(name, 0) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)
-            f.write(f"    assert ori_module.{func_name}({input_str}) == test_module.{func_name}({input_str})\n")
+            f.write("    try:\n")
+            f.write(f"        ori_result = ori_module.{func_name}({input_str})\n")
+            f.write(f"    except Exception as e:\n")
+            f.write(f"        ori_result = str(e)\n")
+            f.write("    try:\n")
+            f.write(f"        test_result = test_module.{func_name}({input_str})\n")
+            f.write(f"    except Exception as e:\n")
+            f.write(f"        test_result = str(e)\n")
+            f.write(f"    assert ori_result == test_result\n")
 
 
 def test_refactored_code(original_path, test_path):
