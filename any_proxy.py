@@ -65,7 +65,7 @@ class AnyProxy:
         elif isinstance(other, (tuple, TupleProxy)):
             self.length = len(other)
             path_list.__typedict__[self.name] = tuple
-            return TupleProxy(IntVector(self.name, self.length)), other
+            return TupleProxy(IntVector(self.name, self.length), self.name), other
         elif isinstance(other, (set, SetProxy)):
             self.length = len(other)
             path_list.__typedict__[self.name] = set

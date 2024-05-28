@@ -384,6 +384,8 @@ class ListProxy:
             return BoolProxy(And(*condition_list))
         else:
             return BoolProxy(False)
+    def __ne__(self, other):
+        return not self.__eq__(other)
     def __getitem__(self, index):
         if isinstance(index, int):
             return IntegerProxy(Int(self.term[index].decl().name()))
@@ -401,12 +403,6 @@ class ListProxy:
                 self.term[index] = value
         else:
             raise TypeError("Invalid index type")
-    def __delitem__(self, index):
-        del self.term[index]
-    def __iter__(self):
-        return iter(self.term)
-    def __contains__(self, item):
-        return item in self.term
     def __delitem__(self, index):
         del self.term[index]
     def __iter__(self):
@@ -445,8 +441,6 @@ class ListProxy:
             return ListProxy(self.term + other, self.name)
         else:
             raise TypeError("Unsupported type for addition")
-    def __radd__(self, other):
-        return self.__add__(other)
     def __iadd__(self, other):
         if isinstance(other, ListProxy):
             self.term += other.term
@@ -468,8 +462,65 @@ class ListProxy:
         else:
             raise TypeError("Unsupported type for in-place multiplication")
         return self
-
-
+    
+class TupleProxy:
+    def __init__(self, term, name):
+        self.term = term
+        self.name = name
+    def __len__(self):
+        return len(self.term)
+    def __eq__(self, other):
+        if isinstance(other, TupleProxy):
+            condition_list = [len(self.term) == len(other.term)]
+            for i in range(len(self.term)):
+                condition_list.append(self.term[i] == other.term[i])
+            return BoolProxy(And(*condition_list))
+        elif isinstance(other, tuple):
+            condition_list = [Int(f'{self.name}_length') == len(other)]
+            for i in range(len(self.term)):
+                condition_list.append(self.term[i] == other[i])
+            return BoolProxy(And(*condition_list))
+        else:
+            return BoolProxy(False)
+    def __ne__(self, other):
+        return not self.__eq__(other)
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            return IntegerProxy(Int(self.term[index].decl().name()))
+        elif isinstance(index, slice):
+            return TupleProxy(self.term[index], self.name)
+        else:
+            raise TypeError("Invalid index type")
+    def __iter__(self):
+        return iter(self.term)
+    def __contains__(self, item):
+        return item in self.term
+    def __iter__(self):
+        return iter(self.term)
+    def append(self, item):
+        self.term.append(item)
+    def clear(self):
+        self.term.clear()
+    def index(self, item, start=0, end=None):
+        return self.term.index(item, start, end)
+    def count(self, item):
+        return self.term.count(item)
+    def reverse(self):
+        self.term.reverse()
+    def __add__(self, other):
+        if isinstance(other, TupleProxy):
+            return TupleProxy(self.term + other.term, self.name)
+        elif isinstance(other, tuple):
+            return TupleProxy(self.term + other, self.name)
+        else:
+            raise TypeError("Unsupported type for addition")
+    def __mul__(self, other):
+        if isinstance(other, int):
+            return TupleProxy(self.term * other, self.name)
+        else:
+            raise TypeError("Unsupported type for multiplication")
+    def __rmul__(self, other):
+        return self.__mul__(other)
 
 class SetProxy:
     def __init__(self, term):
@@ -586,57 +637,3 @@ class BoolProxy:
         path_list.__path__.append(True)
         path_list.__pathcondition__.append(self.formula)
         return True
-
-# Y = Int('y')
-# Z = Int('z')
-# X = Array('x', IntSort(), IntSort())
-
-# I = IntSort()
-# # A is an array from integer to integer
-# A = Array('A', I, I)
-# x = Int('x')
-# print (A[x])
-# print (Select(A, x))
-# print (Store(A, x, 10))
-# print (simplify(Select(Store(A, 2, x+1), 2)))
-
-# print(type(Select(X, 2)))
-
-# 배열의 최대 크기 설정
-# n = 10
-
-# # 배열 선언 (인덱스 타입: Int, 원소 타입: Int)
-# X = Array('X', IntSort(), IntSort())
-
-# # 배열의 길이를 나타내는 변수 선언
-# Y = Int('Y')
-
-# # 제약 조건 리스트 초기화
-# constraints = []
-
-# # Y는 0 이상 n 이하의 값을 가져야 함
-# constraints.append(Y >= 0)
-# constraints.append(Y <= n)
-
-# # 배열의 유효한 길이와 관련된 제약 조건 추가
-# for i in range(n):
-#     # 유효하지 않은 인덱스는 특정 값 (예: -1)으로 설정
-#     constraints.append(Implies(i >= Y, X[i] == -1))
-
-# # 배열이 빈 리스트와 같아야 한다는 제약 조건 추가
-# constraints.append(Y == 0)
-# print(constraints)
-
-# # 솔버 생성 및 제약 조건 추가
-# solver = Solver()
-# solver.add(constraints)
-
-# # 문제 해결
-# if solver.check() == sat:
-#     model = solver.model()
-#     y_val = model.evaluate(Y).as_long()
-#     x_vals = [model.evaluate(X[i]).as_long() for i in range(n)]
-#     print(f"Y (length): {y_val}")
-#     print(f"X (array): {x_vals[:y_val]}")
-# else:
-#     print("No solution exists")
