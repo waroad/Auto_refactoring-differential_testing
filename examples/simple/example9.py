@@ -1,9 +1,7 @@
 # return boolean statement
-def func(A, B):
+def func(A):
     if A:
         return True
-    # elif B:
-    #     return False
     else:
         return False
     
