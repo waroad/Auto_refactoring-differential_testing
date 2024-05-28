@@ -143,7 +143,7 @@ for i, item in enumerate(players):
 \end{lstlisting}
 \textbf{to Enumerate} always changes the form of the range (len(list or tuple)) in the for statement to enumerate (list or tuple). Therefore, we overwrite \textbf{visit\_For}.(67)\\
 For convenience, we unify the variable to store the element of the list as \textbf{item}. In addition, by overwriting \textbf{visit\_Subscript}, we use \textbf{item} instead of the list \textbf{element by using current index} inside the for statement in the source code.(87) To implement this function, we defined a dictionary called \textbf{self.toItem}.(415) At the beginning of the visit of the for statement, add \textbf{(list name):(index)} to the self.toItem(77), and pop when all the visit of the for statement is over.(430)\\
-However, it is crucial to consider cases where accessing an element of an index \textbf{different from the current index} of the list or assigning a new value \textbf{to the current index element} of the list. To handle these cases, we check that each node satisfies the above state in visit\_Assign and visit\_Subscript, and if so, we did not proceed with the change to item.(89, 439)\\ \\
+However, it is crucial to consider cases where accessing an element of an index \textbf{different from the current index} of the list or assigning a new value \textbf{to the current index element} of the list. For example, the lines 9 and 10 in code snippet. To handle these cases, we check that each node satisfies the above state in visit\_Assign and visit\_Subscript, and if so, we did not proceed with the change to item.(89, 439)\\ \\
 (i) Return Boolean Statement
 \begin{lstlisting}[language=python]
 # original

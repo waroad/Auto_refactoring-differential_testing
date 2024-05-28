@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  28 MAY 2024 23:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  28 MAY 2024 23:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -679,15 +679,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 199--200
  []
 
 [5] [6] (report.aux)
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: E5C97D7C2BD9E48E22AEAE21CC6B84D1;2637.
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: C2BF34C481881D4F838B7137E51E9C62;2652
+(rerunfilecheck)             After:  E5C97D7C2BD9E48E22AEAE21CC6B84D1;2637.
  ) 
 Here is how much of TeX's memory you used:
- 15547 strings out of 476331
- 246276 string characters out of 5788709
+ 15544 strings out of 476331
+ 246246 string characters out of 5788709
  2026660 words of memory out of 5000000
  35534 multiletter control sequences out of 15000+600000
- 534563 words of font info for 158 fonts, out of 8000000 for 9000
+ 534447 words of font info for 156 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,76p,1005b,2050s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/ucrb8a.pf
@@ -697,7 +703,7 @@ fb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.
 pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pf
 b><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a.pfb>
 
-Output written on report.pdf (6 pages, 106081 bytes).
+Output written on report.pdf (6 pages, 106111 bytes).
 PDF statistics:
  214 PDF objects out of 1000 (max. 8388607)
  94 named destinations out of 1000 (max. 500000)
