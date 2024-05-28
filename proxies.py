@@ -388,11 +388,16 @@ class ListProxy:
         return not self.__eq__(other)
     def __getitem__(self, index):
         if isinstance(index, int):
-            return IntegerProxy(Int(self.term[index].decl().name()))
+            if isinstance(self.term[index], ArithRef):
+                return IntegerProxy(Int(self.term[index].decl().name()))
+            elif isinstance(self.term[index], IntegerProxy):
+                return IntegerProxy(Int(self.term[index].term.decl().name()))
+            else:
+                raise TypeError(f"type is {type(self.term[index])}")
         elif isinstance(index, slice):
             return ListProxy(self.term[index], self.name)
         else:
-            raise TypeError("Invalid index type")
+            raise TypeError(f"Invalid index type {type(index)}")
     def __setitem__(self, index, value):
         if isinstance(index, int):
             self.term[index] = IntegerProxy(value.term)
