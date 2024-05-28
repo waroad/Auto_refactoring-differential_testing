@@ -30,6 +30,7 @@ def sort2(arr):
             j += 1
             k += 1
 
+
 # def get_pivot(arr, low, high):
 #     i = low - 1
 #     pivot = arr[high]
