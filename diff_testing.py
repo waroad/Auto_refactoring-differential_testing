@@ -29,12 +29,29 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
                 if val == list:
                     list1 = []
                     for input_key, input_val in input_dict.items():
+                        if input_key == key + "_length":
+                            while len(list1) < input_val.as_long():
+                                list1.append(0)
                         if input_key.startswith(key + "__"):
                             index = int(input_key.split("__")[1])
                             while len(list1) <= index:
                                 list1.append(0)
                             list1[index] = input_val
                     input_dict[key] = list1
+                elif val == tuple:
+                    tuple1 = []
+                    for input_key, input_val in input_dict.items():
+                        if input_key == key + "_length":
+                            while len(list1) < input_val.as_long():
+                                list1.append(0)
+                        if input_key.startswith(key + "__"):
+                            index = int(input_key.split("__")[1])
+                            while len(tuple1) <= index:
+                                tuple1.append(0)
+                            tuple1[index] = input_val
+                    input_dict[key] = tuple(tuple1)
+                elif val == set:
+                    pass
             input_list = [input_dict.get(name, 0) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)

@@ -58,7 +58,7 @@ class AnyProxy:
         elif isinstance(other, (list, ListProxy)):
             self.length = len(other)
             path_list.__typedict__[self.name] = list
-            return ListProxy(IntVector(self.name, self.length)), other
+            return ListProxy(IntVector(self.name, self.length), self.name), other
         elif isinstance(other, AnyProxy):
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(Int(self.name)), other
@@ -120,10 +120,10 @@ class AnyProxy:
     
     def __len__(self):
         path_list.__typedict__[self.name] = list
-        return ListProxy(IntVector(self.name, self.length)).__len__()
+        return ListProxy(IntVector(self.name, self.length), self.name).__len__()
     
     def __getitem__(self, index):
-        return ListProxy(IntVector(self.name, self.length)).__getitem__(index)
+        return ListProxy(IntVector(self.name, self.length), self.name).__getitem__(index)
 
     def __eq__(self, other):
         if callable(other):
@@ -169,7 +169,7 @@ class AnyProxy:
         return IntegerProxy(Int(self.name)).__bool__()
 
     def __setitem__(self, index, value):
-        return ListProxy(IntVector(self.name, self.length)).__setitem__(index, value)
+        return ListProxy(IntVector(self.name, self.length), self.name).__setitem__(index, value)
     
     def _convert(self, other):
         pass
