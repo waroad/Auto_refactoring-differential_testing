@@ -42,8 +42,8 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
                     tuple1 = []
                     for input_key, input_val in input_dict.items():
                         if input_key == key + "_length":
-                            while len(list1) < input_val.as_long():
-                                list1.append(0)
+                            while len(tuple1) < input_val.as_long():
+                                tuple1.append(0)
                         if input_key.startswith(key + "__"):
                             index = int(input_key.split("__")[1])
                             while len(tuple1) <= index:
