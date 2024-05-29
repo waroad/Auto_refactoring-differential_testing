@@ -57,7 +57,14 @@ class IntegerProxy:
         else:
             other = IntegerProxy(Int(other.name))
             return IntegerProxy(self.term * other.term)
-        
+    def __floordiv__(self, other):
+        if isinstance(other, (IntegerProxy, FloatProxy)):
+            return IntegerProxy(self.term / other.term)
+        elif isinstance(other, (int, float)):
+            return IntegerProxy(self.term / other)
+        else:
+            other = IntegerProxy(Int(other.name))
+            return IntegerProxy(self.term / other.term)
     def __rmul__(self, other):
         return self.__mul__(other)
     def __div__(self, other):
@@ -153,6 +160,44 @@ class IntegerProxy:
             return BoolProxy(self.term != other)
         else:
             raise TypeError("divmod anyproxy")
+    
+    def __index__(self):
+        solver = Solver()
+        solver.add(path_list.__pathcondition__ + [self.term > 0])
+        if solver.check() == sat:
+            m = solver.model()
+            # Evaluate the term with the model values
+            return self.evaluate_term(m, self.term)
+        else:
+            raise ValueError("Solver could not find a solution that satisfies the conditions.")
+    
+    def evaluate_term(self, model, term):
+        # print(term.decl().kind(), term)
+        # return term.decl().kind(), [arg for arg in term.children()]
+        if term.decl().kind() == Z3_OP_ADD:
+            return sum(self.evaluate_term(model, arg) for arg in term.children())
+        elif term.decl().kind() == Z3_OP_SUB:
+            return self.evaluate_term(model, term.arg(0)) - self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_MUL:
+            return self.evaluate_term(model, term.arg(0)) * self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_DIV:
+            return self.evaluate_term(model, term.arg(0)) // self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_IDIV:
+            return self.evaluate_term(model, term.arg(0)) / self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_UNINTERPRETED:
+            return model[term].as_long()
+        elif term.decl().kind() == Z3_OP_ANUM:
+            return int(term.as_long())
+        elif term.decl().kind() == Z3_OP_GE:  # Greater than or equal
+            return self.evaluate_term(model, term.arg(0)) >= self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_GT:  # Greater than
+            return self.evaluate_term(model, term.arg(0)) > self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_LE:  # Less than or equal
+            return self.evaluate_term(model, term.arg(0)) <= self.evaluate_term(model, term.arg(1))
+        elif term.decl().kind() == Z3_OP_LT:  # Less than
+            return self.evaluate_term(model, term.arg(0)) < self.evaluate_term(model, term.arg(1))
+        else:
+            raise NotImplementedError(f"Unsupported operation: {term.decl().kind()}")
 
 class FloatProxy:
     def __init__(self, term):
@@ -167,7 +212,15 @@ class FloatProxy:
         return FloatProxy(Abs(self.term))
     def __bool__(self):
         return BoolProxy(self.term == Real(0))
-
+    def __int__(self):
+        solver = Solver()
+        solver.add(path_list.__pathcondition__)
+        solver.add(self.term >= 0)
+        if solver.check() == sat:
+            model = solver.model()
+            return model.evaluate(self.term).as_long()
+        else:
+            raise ValueError("The term cannot be evaluated as an integer")
     def __add__(self, other):
         if isinstance(other, (IntegerProxy, FloatProxy)):
             return FloatProxy(self.term + other.term)
@@ -393,21 +446,35 @@ class ListProxy:
             elif isinstance(self.term[index], IntegerProxy):
                 return IntegerProxy(Int(self.term[index].term.decl().name()))
             else:
-                raise TypeError(f"type is {type(self.term[index])}")
+                raise TypeError(f"Unsupported type is {type(self.term[index])}")
         elif isinstance(index, slice):
             return ListProxy(self.term[index], self.name)
+        elif isinstance(index, IntegerProxy):
+            index = index.__index__()
+            if isinstance(self.term[index], ArithRef):
+                return IntegerProxy(Int(self.term[index].decl().name()))
+            elif isinstance(self.term[index], IntegerProxy):
+                return IntegerProxy(Int(self.term[index].term.decl().name()))
+            else:
+                raise TypeError(f"type is {type(self.term[index])}")
         else:
             raise TypeError(f"Invalid index type {type(index)}")
     def __setitem__(self, index, value):
         if isinstance(index, int):
-            self.term[index] = IntegerProxy(value.term)
+            if isinstance(value, int):
+                self.term[index] = value
+            else:
+                self.term[index] = IntegerProxy(value.term)
         elif isinstance(index, slice):
             if isinstance(value, ListProxy):
                 self.term[index] = value.term
             else:
                 self.term[index] = value
+        elif isinstance(index, IntegerProxy):
+            index = index.__index__()
+            self.term[index] = IntegerProxy(value.term)
         else:
-            raise TypeError("Invalid index type")
+            raise TypeError(f"Invalid index type {type(index)}")
     def __delitem__(self, index):
         del self.term[index]
     def __iter__(self):
@@ -633,7 +700,7 @@ class BoolProxy:
         true_cond = True if s_true.check() == sat else False
         false_cond = True if s_false.check() == sat else False
         if true_cond and not false_cond: return True
-        if false_cond and not true_cond: 
+        if false_cond and not true_cond or len(path_list.__path__) >= 10: 
             return False
         if len(path_list.__path__) > len(path_list.__pathcondition__):
             branch = path_list.__path__[len(path_list.__pathcondition__)]

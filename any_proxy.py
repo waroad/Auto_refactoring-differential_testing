@@ -127,6 +127,9 @@ class AnyProxy:
             index = IntegerProxy(Int(index.name))
         return ListProxy(IntVector(self.name, self.length), self.name).__getitem__(index)
 
+    def __index__(self):
+        return IntegerProxy(Int(self.name)).__index__()
+    
     def __eq__(self, other):
         if callable(other):
             pass
@@ -148,7 +151,6 @@ class AnyProxy:
     def __le__(self, other):
         s, o = self.get_proxy(other)
         return s.__le__(o)
-    
     def __and__(self, other):
         s, o = self.get_proxy(other)
         if isinstance(s, IntegerProxy):
@@ -171,6 +173,8 @@ class AnyProxy:
         return IntegerProxy(Int(self.name)).__bool__()
 
     def __setitem__(self, index, value):
+        if isinstance(index, AnyProxy):
+            index = IntegerProxy(Int(index.name))
         return ListProxy(IntVector(self.name, self.length), self.name).__setitem__(index, value)
     
     def _convert(self, other):

@@ -1,4 +1,4 @@
-list_1, list_2, temp = ([], [], 14)
+(list_1, list_2, temp) = ([], [], 14)
 list_2.append(3)
 for i in range(12):
     list_2.append(i * temp)

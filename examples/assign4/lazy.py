@@ -31,23 +31,23 @@ def sort2(arr):
             k += 1
 
 
-# def get_pivot(arr, low, high):
-#     i = low - 1
-#     pivot = arr[high]
-#     for j in range(low, high):
-#         if arr[j] <= pivot:
-#             i = i + 1
-#             (arr[i], arr[j]) = (arr[j], arr[i])
-#     (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])
-#     return i + 1
+def get_pivot(arr, low, high):
+    i = low - 1
+    pivot = arr[high]
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i = i + 1
+            (arr[i], arr[j]) = (arr[j], arr[i])
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])
+    return i + 1
 
-# def help_sort3(arr, low, high):
-#     if len(arr) == 1:
-#         return arr
-#     if low < high:
-#         pivot = get_pivot(arr, low, high)
-#         help_sort3(arr, low, pivot - 1)
-#         help_sort3(arr, pivot + 1, high)
+def help_sort3(arr, low, high):
+    if len(arr) == 1:
+        return arr
+    if low < high:
+        pivot = get_pivot(arr, low, high)
+        help_sort3(arr, low, pivot - 1)
+        help_sort3(arr, pivot + 1, high)
 
-# def sort3(arr):
-#     return help_sort3(arr, 0, len(arr) - 1)
+def sort3(arr):
+    return help_sort3(arr, 0, len(arr) - 1)

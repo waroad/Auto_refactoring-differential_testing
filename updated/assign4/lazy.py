@@ -3,12 +3,12 @@ def sort1(arr):
     for i in range(n - 1):
         for j in range(0, n - i - 1):
             if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = (arr[j + 1], arr[j])
+                (arr[j], arr[j + 1]) = (arr[j + 1], arr[j])
 
 def sort2(arr):
     if len(arr) > 1:
         mid = len(arr) // 2
-        left, right = (arr[:mid], arr[mid:])
+        (left, right) = (arr[:mid], arr[mid:])
         sort2(left)
         sort2(right)
         i = j = k = 0
@@ -30,12 +30,12 @@ def sort2(arr):
             k += 1
 
 def get_pivot(arr, low, high):
-    i, pivot = (low - 1, arr[high])
+    (i, pivot) = (low - 1, arr[high])
     for j in range(low, high):
         if arr[j] <= pivot:
             i = i + 1
-            arr[i], arr[j] = (arr[j], arr[i])
-    arr[i + 1], arr[high] = (arr[high], arr[i + 1])
+            (arr[i], arr[j]) = (arr[j], arr[i])
+    (arr[i + 1], arr[high]) = (arr[high], arr[i + 1])
     return i + 1
 
 def help_sort3(arr, low, high):

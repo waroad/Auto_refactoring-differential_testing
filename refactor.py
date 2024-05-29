@@ -86,18 +86,20 @@ def transform_toEnumerate(self, node):  # (8)
 
 def transform_to_item(self, node):  # (8)
     new_node = node
-    if node.value.id in self.toItem and isinstance(node.slice, ast.Name):
-        if node.slice.id == self.toItem[node.value.id]:
-            new_node = ast.Name(id='item', ctx=ast.Store())
+    if hasattr(node.value, "id"):
+        if node.value.id in self.toItem and isinstance(node.slice, ast.Name):
+            if node.slice.id == self.toItem[node.value.id]:
+                new_node = ast.Name(id='item', ctx=ast.Store())
     ast.copy_location(new_node, node)
     return new_node
 
 
 def keep_assign_left(self, targets):  # (8)
     if isinstance(targets[0], ast.Subscript):
-        if targets[0].value.id in self.toItem and isinstance(targets[0].slice, ast.Name):
-            if targets[0].slice.id == self.toItem[targets[0].value.id]:
-                return True
+        if hasattr(targets[0].value, 'id'):
+            if targets[0].value.id in self.toItem and isinstance(targets[0].slice, ast.Name):
+                if targets[0].slice.id == self.toItem[targets[0].value.id]:
+                    return True
     return False
 
 
@@ -460,29 +462,32 @@ class CodeReplacer(ast.NodeTransformer):
         self.generic_visit(node)
         return node
 
-
-if __name__ == '__main__':
-    # parser = argparse.ArgumentParser(description='Measures coverage.')
-    # parser.add_argument('-t', '--target', required=True)
-    # parser.add_argument("remaining", nargs="*")
-    # args = parser.parse_args()
-    # file = args.target.split('/')[1]
-    ex_dir = 'examples/'
-    updated_dir = 'updated/'
+def main(ex_dir, updated_dir):
     for dir in os.listdir(ex_dir):
         for file in os.listdir(os.path.join(ex_dir, dir)):
-            # print(file)
-            with open(os.path.join(ex_dir, dir, file)) as origin:
-                source_code = origin.read()
+            try:
+                with open(os.path.join(ex_dir, dir, file), encoding="utf-8") as origin:
+                    source_code = origin.read()
 
-            replacer = CodeReplacer()
-            updated_root = replacer.visit(ast.parse(source_code))
-            updated_code = ast.unparse(updated_root)
+                replacer = CodeReplacer()
+                updated_root = replacer.visit(ast.parse(source_code))
+                updated_code = ast.unparse(updated_root)
 
-            if dir not in os.listdir(updated_dir):
-                os.mkdir(os.path.join(updated_dir, dir))
+                if dir not in os.listdir(updated_dir):
+                    os.mkdir(os.path.join(updated_dir, dir))
 
-            with open(os.path.join(updated_dir, dir, file), "w") as new:
-                new.write(updated_code)
-            time.sleep(0.5)
-    
+                with open(os.path.join(updated_dir, dir, file), "w") as new:
+                    new.write(updated_code)
+                time.sleep(0.5)
+            except PermissionError:
+                print(f"Permission denied: {file}")
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Difference test with two folders.')
+    parser.add_argument('-t1', '--target1', required=True)
+    parser.add_argument('-t2', '--target2', required=True)
+    parse_args = parser.parse_args()
+    original_folder = parse_args.target1
+    refactored_folder = parse_args.target2
+    main(original_folder, refactored_folder)
