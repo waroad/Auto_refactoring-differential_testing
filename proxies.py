@@ -642,3 +642,5 @@ class BoolProxy:
         path_list.__path__.append(True)
         path_list.__pathcondition__.append(self.formula)
         return True
+
+print(dir(int))

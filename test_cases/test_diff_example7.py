@@ -9,24 +9,3 @@ test_module_spec.loader.exec_module(test_module)
 def test_if_expression():
     assert ori_module.if_expression(1) == test_module.if_expression(1)
     assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)
-def test_if_expression():
-    assert ori_module.if_expression(1) == test_module.if_expression(1)
-    assert ori_module.if_expression(0) == test_module.if_expression(0)

@@ -8,17 +8,3 @@ test_module_spec.loader.exec_module(test_module)
 
 def test_lst_append():
     assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()
-def test_lst_append():
-    assert ori_module.lst_append() == test_module.lst_append()

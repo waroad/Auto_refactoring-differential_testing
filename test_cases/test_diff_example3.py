@@ -11,38 +11,3 @@ def test_ber():
     assert ori_module.ber(2) == test_module.ber(2)
     assert ori_module.ber(3) == test_module.ber(3)
     assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)
-def test_ber():
-    assert ori_module.ber(1) == test_module.ber(1)
-    assert ori_module.ber(2) == test_module.ber(2)
-    assert ori_module.ber(3) == test_module.ber(3)
-    assert ori_module.ber(4) == test_module.ber(4)

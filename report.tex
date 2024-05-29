@@ -172,11 +172,67 @@ d=c+1
 However, it is crucial to consider cases where variables from previous assignments are used in subsequent ones, which would make merging inappropriate. For example, consider the \textbf{c} and \textbf{d} on the lines 4 and 5 of a code snippet. To handle this case, we apply always storing the previous element and comparing it with the current element while traverse all node.body.(147)\\
 
 \subsection{Differential Testing}
-...\\
+The purpose of refactoring is to improve the structure of the code, enhancing readability and performance, without changing the functional behavior of the code. If the refactored code behaves differently from the original code, it cannot be considered correctly refactored. Therefore, it is crucial to ensure that the refactored Python source code operates identically to the original code. In this section, we perform differential testing to verify this, using two methods to confirm that the refactored code operates the same as the original one. \\ \\
+
+(a) Function Test\\ \\
+The first method is to test whether the functions implemented in the code produce the same return values. Since the behavior of a function depends on the input parameters, a variety of values should be used as input parameters. We used symbolic execution to obtain the input parameters that directly execute the modified parts. The purpose of the function test is to verify whehter the return values of the functions differ by generating all possible combinations of input parameters for every conditional statement and branch within the code through symbolic execution, thus covering as much of the code as possible. If the return values differ for a specific input, it indicates that the refactoring was not performed correctly. \\
+Symbolic execution involves executing the target program not with concrete test inputs but with symbolic proxy objects set as input parameters. These proxy objects allow the symbolic engine to track and analyze the execution flow of the program. In this process, it is possible to observe how the program manipulates the input parameters and how these manipulations affect the rest of the program.
+Unlike many other programming languages, Python does not provide type hints normally, making it difficult to determine the types of input parameters based solely on the information provided by the function. In order to solve this problem, we created an 'AnyProxy' class and used it as the input parameters for the functions. This class helps to generalize input types initially, and then, based on the behavior of the program, it differentiates these inputs into specific types for further processing.
+
+\begin{center}
+\includegraphics[width = 10cm]{Anyproxy_to_proxies.PNG}
+
+{Figure 1. The proxy classes differentiated from AnyProxy class}
+\end{center}
+
+\pagebreak
+
+Figure 1 illustrates how the AnyProxy class we implemented branches into specific classes. AnyProxy is initially set as the input parameters of a function and, during the execution of program, differentiates into specific types of proxy objects through various operations and method calls. The AnyProxy object differentiates into a specific type of proxy object in the following situations. \\ \\
+1. Operation with a specific type: When the AnyProxy object performs an operation with data of a specific type, it transforms into a proxy object corresponding to that type. For example, if an AnyProxy object performs an addition operation with an int type, it differentiates into an IntegerProxy object. \\
+
 \begin{lstlisting}[language=python]
-# Python codes
+def get_proxy(self, other):
+        if isinstance(other, (int, IntegerProxy)):
+            return IntegerProxy(Int(self.name)), other
+        elif isinstance(other, (float, FloatProxy)):
+            return FloatProxy(Real(self.name)), other
+        elif isinstance(other, (str, StringProxy)):
+            return StringProxy(String(self.name)), other
+        ...
 \end{lstlisting}
-...\\
+
+2. Specific method call: When the AnyProxy object encounters a method that is unique to a specific type, it transforms into a proxy object for that type. For example, it the AnyProxy object calls 'append' method, which is unique to the list type, it differentiates into a ListProxy object. \\
+
+\begin{lstlisting}[language=python]
+def __getitem__(self, index):
+        if isinstance(index, AnyProxy):
+            index = IntegerProxy(Int(index.name))
+        return ListProxy(IntVector(self.name, self.length), self.name).__getitem__(index)
+\end{lstlisting}
+
+
+(b) Execution Test\\ \\
+
+The second method involves verifying that the refactored Python code behaves identically to the original Python code by directly executing both codes and comparing their standard stream outputs. This is achieved using the Python 'subprocess' module to compare the values output to 'stderr' and 'stdout'. If the results differ, it indicates that there were some problems during the refactoring process, and an error is returned. \\
+\begin{lstlisting}[language=python]
+def test_refactored_code(original_path, test_path):
+    cur_dir = os.getcwd()
+    test_case_path = os.path.dirname(original_path)
+    ori_file_name = os.path.basename(original_path)
+    test_file_name = os.path.basename(test_path)
+    os.chdir(test_case_path)
+    cmd1 = ['python', ori_file_name]
+    result1 = subprocess.run(cmd1, capture_output=True, text=True)
+    cmd2 = ['python', test_file_name]
+    result2 = subprocess.run(cmd2, capture_output=True, text=True)
+
+    os.chdir(cur_dir)
+    try:
+        assert result1.stdout == result2.stdout
+        assert result1.stderr == result2.stderr
+    except Exception as e:
+        print("Error while testing stdout and stderr", e)
+\end{lstlisting}
 
 \section{Evaluation}
 \subsection{Efficiency}
@@ -200,3 +256,4 @@ One of the threats to validity in the development of our automated refactoring t
 
 
 \end{document}
+
