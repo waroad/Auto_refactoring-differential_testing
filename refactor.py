@@ -448,9 +448,9 @@ class CodeReplacer(ast.NodeTransformer):
         return node
 
     def visit_Module(self, node):
+        self.generic_visit(node)
         node.body = perform_comprehension(node.body)
         node.body = transform_list_appends(node.body)
-        self.generic_visit(node)
         return node
 
     def visit_If(self, node):
