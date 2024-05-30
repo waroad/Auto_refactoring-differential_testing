@@ -1,5 +1,5 @@
 % TO COMPILE:
-% > pdflatex report.tex
+% > pdflatex
 
 \documentclass[11pt]{article}
 \usepackage{enumitem}
@@ -70,15 +70,56 @@ Details of this part are all on \textbf{refactor.py}. For better understanding, 
 When developing our automated refactoring tool, we assumed that the \textbf{source code is free of any errors}. This assumption allows us to focus solely on the refactoring process without the need to address or correct pre-existing code errors.\\ \\
 (a) Collection Comprehension
 \begin{lstlisting}[language=python]
-# Python codes
+# original
+A=[]
+for i in range(10):
+    A.append(i)
+for i in range(10):
+    A.append(i*2)
+# refactored
+A = []
+A += [i for i in range(10)]
+A += [i * 2 for i in range(10)]
 \end{lstlisting}
-...\\ \\
+\textbf{Collection comprehension} transforms the declaration of \{lists, dictionaries and sets\} into a more Pythonic and efficient style. The node transformer class \textbf{CodeReplacer} calls the function \textbf{perform\_comprehension} for each function definition and module level to perform all possible comprehensions. In the refactored code, the list A is created and extended using list comprehensions, allowing multiple comprehensions to be combined effectively.
+\\ \\
 (b) Chaining Comparisons
-...\\ \\
-(c) ??
-...\\ \\
+\begin{lstlisting}[language=python]
+# original
+if d>e or (b>=c and d<=c and b<a and e>c) or e>10 and c>e:
+    print("OK")
+# refactored
+if d > e or (e > c and a > b >= c >= d) or (c > e > 10):
+\end{lstlisting}
+\textbf {In} the refactored code, the original complex condition is broken down into more manageable parts by using Python's ability to chain comparisons directly. When \textbf{Visit\_If} is called, it invokes the function \textbf{transform\_chaining\_comparisons}, which checks all possible combinations and refactors them into the simplest equations possible.\\ \\
+(c) Multiple Equality Comparisons
+\begin{lstlisting}[language=python]
+# original
+name = "Joe"
+if name == "Casey" or name == "Joe" or name == "Mike":
+    print("yes")
+# Refactored
+name = 'Joe'
+if name in ['Casey', 'Joe', 'Mike']:
+    print('yes')
+\end{lstlisting}
+\textbf{Multiple Equality Comparisons} code auto-refactoring simplifies the process of comparing a variable against multiple values. The refactored version replaces these with a membership test using the 'in' keyword, checking if the variable is within a list of values. The node transformer class \textbf{CodeReplacer} applies the function \textbf{transform\_equality\_comparisons} for every \textbf{Visit\_If}. \\ \\
 (d) Merge Append
-...\\ \\
+\begin{lstlisting}[language=python]
+# original
+A = []
+A.append(1)
+A.append(2)
+A.pop()
+A.append(3)
+A.append(4)
+# Refactored
+A = []
+A += [1, 2]
+A.pop()
+A += [3, 4]
+\end{lstlisting}
+\textbf{Merge multiple append} optimizes the code by combining consecutive append calls into a single operation using list addition. The function \textbf{transform\_list\_appends}, which is responsible for it, checks every append call within a module and function, and merges them into a single \textbf{augAssign} when more than two appends are detected, utilizing AST. The original sequence of \textbf{A.append} calls is replaced by \textbf{A += [1, 2]} and \textbf{A += [3, 4]}, consolidating the append operations while maintaining the same functionality. \\ \\
 (e) Test Empty Collection
 \begin{lstlisting}[language=python]
 # original
