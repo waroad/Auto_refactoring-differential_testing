@@ -152,7 +152,7 @@ def dup_target(prev, node): # (10)
     return False
 
 
-def perform_comprehension(body, lineno=1):
+def perform_comprehension(body, dict_list, lineno=1):
     # 'append' for list, 'add' for set comprehension
     comprehension_map = {"append": [ast.ListComp, ast.Add()], "add": [ast.SetComp, ast.BitOr()]}
     updated_body = []
@@ -183,6 +183,9 @@ def perform_comprehension(body, lineno=1):
                     comprehensions_to_add.append(ast.unparse(comprehension_assignment))
                 elif isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Subscript):
                     dict_name = node.targets[0].value.id
+                    print(dict_name)
+                    if dict_name not in dict_list:
+                        continue
                     key = node.targets[0].slice.value if isinstance(node.targets[0].slice, ast.Index) else node.targets[
                         0].slice
                     value = node.value
@@ -391,9 +394,19 @@ def transform_list_appends(body):
     return updated_body
 
 
+def find_dict(node):
+    dict_list=[]
+    for stmt in node:
+        if isinstance(stmt, ast.Assign):
+            if isinstance(stmt.value, (ast.Set,ast.Dict)):
+                dict_list.append(stmt.targets[0].id)
+    return dict_list
+
+
 class CodeReplacer(ast.NodeTransformer):
     def __init__(self):
         self.toItem = {}  # (8)
+        self.dict_list=[]
 
     def generic_visit(self, node): # 10. transform multiple assign
         if hasattr(node, 'body') and isinstance(node.body, list):
@@ -423,14 +436,16 @@ class CodeReplacer(ast.NodeTransformer):
         return self.generic_visit(node)
 
     def visit_FunctionDef(self, node):
-        node.body = perform_comprehension(node.body)
-        node.body = transform_list_appends(node.body)
+        self.dict_list+=find_dict(node.body)
         self.generic_visit(node)
+        node.body = perform_comprehension(node.body, self.dict_list)
+        node.body = transform_list_appends(node.body)
         return node
 
     def visit_Module(self, node):
+        self.dict_list+=find_dict(node.body)
         self.generic_visit(node)
-        node.body = perform_comprehension(node.body)
+        node.body = perform_comprehension(node.body, self.dict_list)
         node.body = transform_list_appends(node.body)
         return node
 
