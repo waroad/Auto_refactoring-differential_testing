@@ -1,5 +1,5 @@
 % TO COMPILE:
-% > pdflatex report.tex
+% > pdflatex
 
 \documentclass[11pt]{article}
 \usepackage{enumitem}
@@ -60,25 +60,66 @@ Python is widely used across various domains due to its rich libraries and flexi
 \section{Related Work}
 \subsection{Making Python Code Idiomatic by Automatic Refactoring Non-idiomatic Python Code with Pythonic Idioms - Zhang et al. (2022)}
 This study presented the first tool to automatically transform non-idiomatic Python code into idiomatic Python code. They analyzed 7,638 Python projects on GitHub, identifying \textbf{9 types} of 'Pythonic Idioms' that frequently occurred and could be converted from non-idiomatic code. Based on this, they defined specific syntactic patterns and developed a method of refactoring code through \textbf{abstract syntax tree (AST)} rewriting operations. Moreover, they applied these refactorings to actual code to verify the accuracy and usefulness of their tool. This research provides an essential foundation for our study, inspiring the design and implementation of our refactoring tool.\\
-\subsection{title2 - author}
-...\\
+\subsection{A Peer Architecture for Lightweight Symbolic Execution - Alessandro Bruni, Tim Disney, Cormac Flanagan (2011)}
+This study presents a lightweight, library-based approach to symbolic execution, leveraging the dynamic dispatch capabilities of object-oriented languages like Python. Instead of creating a new interpreter or compiler, their approach embeds a symbolic execution engine within the target program's process. This engine uses proxy objects to simulate symbolic values and track program execution paths. This provided a direction on how to perform symbolic execution for testing the functionality of functions.
 
-\section{Method?}
+\section{Approach}
 \subsection{Automated Refactoring}
 In this project, we laid the groundwork for the implementation of our refactoring tool by referencing the study of Zhang et al. and various literatures on Python idioms. Specifically, we selected \textbf{10 types} of refactorings that could enhance the performance and readability of Python code. These refactorings were implemented using the \textbf{Abstract Syntax Tree (AST)}, which provides a structural representation of source code. The AST is an ideal tool for systematically analyzing and modifying each element of the code. Through this, we developed a methodology that could automatically improve the code into a more Pythonic form.\\
 Details of this part are all on \textbf{refactor.py}. For better understanding, we will write the (relevant code line) after the description of each part. For example, we inherited the NodeTransformer class and performed automated refactoring.\textbf{(413)}\\
 When developing our automated refactoring tool, we assumed that the \textbf{source code is free of any errors}. This assumption allows us to focus solely on the refactoring process without the need to address or correct pre-existing code errors.\\ \\
 (a) Collection Comprehension
 \begin{lstlisting}[language=python]
-# Python codes
+# original
+A=[]
+for i in range(10):
+    A.append(i)
+for i in range(10):
+    A.append(i*2)
+# refactored
+A = []
+A += [i for i in range(10)]
+A += [i * 2 for i in range(10)]
 \end{lstlisting}
-...\\ \\
+\textbf{Collection comprehension} transforms the declaration of \{lists, dictionaries and sets\} into a more Pythonic and efficient style. The node transformer class \textbf{CodeReplacer} calls the function \textbf{perform\_comprehension} for each function definition and module level to perform all possible comprehensions. In the refactored code, the list A is created and extended using list comprehensions, allowing multiple comprehensions to be combined effectively.
+\\ \\
 (b) Chaining Comparisons
-...\\ \\
-(c) ??
-...\\ \\
+\begin{lstlisting}[language=python]
+# original
+if d>e or (b>=c and d<=c and b<a and e>c) or e>10 and c>e:
+    print("OK")
+# refactored
+if d > e or (e > c and a > b >= c >= d) or (c > e > 10):
+\end{lstlisting}
+\textbf {In} the refactored code, the original complex condition is broken down into more manageable parts by using Python's ability to chain comparisons directly. When \textbf{Visit\_If} is called, it invokes the function \textbf{transform\_chaining\_comparisons}, which checks all possible combinations and refactors them into the simplest equations possible.\\ \\
+(c) Multiple Equality Comparisons
+\begin{lstlisting}[language=python]
+# original
+name = "Joe"
+if name == "Casey" or name == "Joe" or name == "Mike":
+    print("yes")
+# Refactored
+name = 'Joe'
+if name in ['Casey', 'Joe', 'Mike']:
+    print('yes')
+\end{lstlisting}
+\textbf{Multiple Equality Comparisons} code auto-refactoring simplifies the process of comparing a variable against multiple values. The refactored version replaces these with a membership test using the 'in' keyword, checking if the variable is within a list of values. The node transformer class \textbf{CodeReplacer} applies the function \textbf{transform\_equality\_comparisons} for every \textbf{Visit\_If}. \\ \\
 (d) Merge Append
-...\\ \\
+\begin{lstlisting}[language=python]
+# original
+A = []
+A.append(1)
+A.append(2)
+A.pop()
+A.append(3)
+A.append(4)
+# Refactored
+A = []
+A += [1, 2]
+A.pop()
+A += [3, 4]
+\end{lstlisting}
+\textbf{Merge multiple append} optimizes the code by combining consecutive append calls into a single operation using list addition. The function \textbf{transform\_list\_appends}, which is responsible for it, checks every append call within a module and function, and merges them into a single \textbf{augAssign} when more than two appends are detected, utilizing AST. The original sequence of \textbf{A.append} calls is replaced by \textbf{A += [1, 2]} and \textbf{A += [3, 4]}, consolidating the append operations while maintaining the same functionality. \\ \\
 (e) Test Empty Collection
 \begin{lstlisting}[language=python]
 # original
@@ -248,12 +289,11 @@ def test_refactored_code(original_path, test_path):
 \subsection{Handling Corner Cases in Automated Refactoring}
 One of the threats to validity in the development of our automated refactoring tool is the \textbf{potential failure to perfectly handle specific corner cases}. Although we attempted to cover all conceivable counterexamples theoretically, it is practically challenging to anticipate every scenario due to the limits of imagination. To overcome this limitation, we adopted an approach of applying automated refactoring to \textbf{existing Python codes}, examining the outcomes to identify and modify counterexamples. In particular, we utilized various code examples from programming problem platforms like \textbf{Baekjoon} to assess the applicability and usefulness of our tool. This process has allowed us to enhance the robustness of our refactoring tool in handling diverse real-world use cases.\\
 
-\subsection{Hmm}
-...\\
+\subsection{Covering other type of inputs}
+In the function testing part of the differential testing, we did not cover any type existed in Python. This is because there are limitations in the Z3 solver and challenges in type inference system of Python. The Z3 solver, while powerful, has limitations in handling complex user-defined types. Additionally, Python's dynamic typing and lack of type hints complicate accurate type inference. Therefore we were unable to implement code that covers all types. We can only create test cases for certain function which get specialized input parameters. These constraints may affect the generalizing. However, we expect that, with more cases' testing, the range of covering can be improved. \\
 
 \section{Discussion \& Conclusion}
 ...\\
 
 
 \end{document}
-
