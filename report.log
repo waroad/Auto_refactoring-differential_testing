@@ -1,66 +1,56 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.5.30)  30 MAY 2024 17:11
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  31 MAY 2024 14:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **./report.tex
 (report.tex
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/base\article.c
-ls
-Document Class: article 2023/05/17 v1.4n Standard LaTeX document class
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.cl
-o
-File: size11.clo 2023/05/17 v1.4n Standard LaTeX file (size option)
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-03-30>
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/base\article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/base\size11.clo
+File: size11.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
-\c@part=\count187
-\c@section=\count188
-\c@subsection=\count189
-\c@subsubsection=\count190
-\c@paragraph=\count191
-\c@subparagraph=\count192
-\c@figure=\count193
-\c@table=\count194
+\c@part=\count185
+\c@section=\count186
+\c@subsection=\count187
+\c@subsubsection=\count188
+\c@paragraph=\count189
+\c@subparagraph=\count190
+\c@figure=\count191
+\c@table=\count192
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen140
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumi
-tem.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/enumitem\enumitem.sty
 Package: enumitem 2019/06/20 v3.9 Customized lists
-\enitkv@toks@=\toks17
+\enitkv@toks@=\toks16
 \labelindent=\skip50
 \enit@outerparindent=\dimen141
-\enit@toks=\toks18
+\enit@toks=\toks17
 \enit@inbox=\box51
-\enit@count@id=\count195
-\enitdp@description=\count196
+\enit@count@id=\count193
+\enitdp@description=\count194
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.
-sty
-Package: babel 2024/01/07 v24.1 The Babel package
-\babel@savecnt=\count197
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/babel\babel.sty
+Package: babel 2023/03/28 3.87 The Babel package
+\babel@savecnt=\count195
 \U@D=\dimen142
 \l@unhyphenated=\language79
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbab
-el.def)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/babel\txtbabel.def)
 \bbl@readstream=\read2
-\bbl@dirlevel=\count198
+\bbl@dirlevel=\count196
 
 *************************************
 * Local config file bblopts.cfg used
 *
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.
-cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/arabi\bblopts.cfg
 File: bblopts.cfg 2005/09/08 v0.1 add Arabic and Farsi to "declared" options of
  babel
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\
-english.ldf
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/babel-english\english.ldf
 Language: english 2017/06/06 v3.3r English support from the babel system
 Package babel Info: Hyphen rules for 'canadian' set to \l@english
 (babel)             (\language0). Reported on input line 102.
@@ -69,182 +59,157 @@ Package babel Info: Hyphen rules for 'australian' set to \l@ukenglish
 Package babel Info: Hyphen rules for 'newzealand' set to \l@ukenglish
 (babel)             (\language73). Reported on input line 108.
 ))
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale
-/en\babel-english.tex
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/babel/locale/en\babel-e
+nglish.tex
 Package babel Info: Importing font and identification data for english
 (babel)             from babel-en.ini. Reported on input line 11.
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.
-sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/base\inputenc.sty
 Package: inputenc 2021/02/14 v1.3d Input encoding file
-\inpenc@prehook=\toks19
-\inpenc@posthook=\toks20
+\inpenc@prehook=\toks18
+\inpenc@posthook=\toks19
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyper
-ref.sty
-Package: hyperref 2023-11-26 v7.01g Hypertext links for LaTeX
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hyperref.sty
+Package: hyperref 2023-02-07 v7.00v Hypertext links for LaTeX
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.
-sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/iftex\iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\in
-fwarerr.sty
-Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyva
-l.sty
-Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
-\KV@toks@=\toks21
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvse
-tkeys.sty
-Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys
-\kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pd
-fescape.sty
-Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/ltxcmds\ltxc
-mds.sty
-Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\p
-dftexcmds.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/pdftexcmds\pdftexcmds.s
+ty
 Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/infwarerr\infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
-))
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolo
-r.sty
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics\keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
+\KV@toks@=\toks20
+)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/kvsetkeys\kvsetkeys.sty
+Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
+)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/kvdefinekeys\kvdefineke
+ys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/pdfescape\pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hycolor\hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\le
-tltxmacro.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/letltxmacro\letltxmacro.s
+ty
 Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhoo
-k.sty
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/auxhook\auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\namer
-ef.sty
-Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\nameref.sty
+Package: nameref 2022-05-17 v2.50 Cross-referencing by name of section
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refco
-unt.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/refcount\refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestri
-ng\gettitlestring.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/gettitlestring\gettitle
+string.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvop
-tions.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/kvoptions\kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count199
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etool
-box.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count266
+\c@section@level=\count197
 )
 \@linkdim=\dimen143
-\Hy@linkcounter=\count267
-\Hy@pagecounter=\count268
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1en
-c.def
-File: pd1enc.def 2023-11-26 v7.01g Hyperref: PDFDocEncoding definition (HO)
+\Hy@linkcounter=\count198
+\Hy@pagecounter=\count199
+ (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\pd1enc.def
+File: pd1enc.def 2023-02-07 v7.00v Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intc
-alc.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/intcalc\intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
-\Hy@SavedSpaceFactor=\count269
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/etexcmds\etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count266
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc
-.def
-File: puenc.def 2023-11-26 v7.01g Hyperref: PDF Unicode definition (HO)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\puenc.def
+File: puenc.def 2023-02-07 v7.00v Hyperref: PDF Unicode definition (HO)
 Now handling font encoding PU ...
 ... no UTF-8 mapping file for font encoding PU
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 4064.
-Package hyperref Info: Hyper figures OFF on input line 4181.
-Package hyperref Info: Link nesting OFF on input line 4186.
-Package hyperref Info: Hyper index ON on input line 4189.
-Package hyperref Info: Plain pages OFF on input line 4196.
-Package hyperref Info: Backreferencing OFF on input line 4201.
+Package hyperref Info: Option `colorlinks' set `true' on input line 4060.
+Package hyperref Info: Hyper figures OFF on input line 4177.
+Package hyperref Info: Link nesting OFF on input line 4182.
+Package hyperref Info: Hyper index ON on input line 4185.
+Package hyperref Info: Plain pages OFF on input line 4192.
+Package hyperref Info: Backreferencing OFF on input line 4197.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
-Package hyperref Info: Bookmarks ON on input line 4448.
-\c@Hy@tempcnt=\count270
+Package hyperref Info: Bookmarks ON on input line 4425.
+\c@Hy@tempcnt=\count267
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/url\url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 )
-LaTeX Info: Redefining \url on input line 4786.
+LaTeX Info: Redefining \url on input line 4763.
 \XeTeXLinkMargin=\dimen144
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitse
-t.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/bitset\bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\b
-igintcalc.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/bigintcalc\bigintcalc.s
+ty
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count271
+\Fld@menulength=\count268
 \Field@Width=\dimen145
 \Fld@charsize=\dimen146
-Package hyperref Info: Hyper figures OFF on input line 6065.
-Package hyperref Info: Link nesting OFF on input line 6070.
-Package hyperref Info: Hyper index ON on input line 6073.
-Package hyperref Info: backreferencing OFF on input line 6080.
-Package hyperref Info: Link coloring ON on input line 6083.
-Package hyperref Info: Link coloring with OCG OFF on input line 6090.
-Package hyperref Info: PDF/A mode OFF on input line 6095.
+Package hyperref Info: Hyper figures OFF on input line 6042.
+Package hyperref Info: Link nesting OFF on input line 6047.
+Package hyperref Info: Hyper index ON on input line 6050.
+Package hyperref Info: backreferencing OFF on input line 6057.
+Package hyperref Info: Link coloring ON on input line 6060.
+Package hyperref Info: Link coloring with OCG OFF on input line 6067.
+Package hyperref Info: PDF/A mode OFF on input line 6072.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-
-ltx.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/base\atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
-\Hy@abspage=\count272
-\c@Item=\count273
-\c@Hfootnote=\count274
+\Hy@abspage=\count269
+\c@Item=\count270
+\c@Hfootnote=\count271
 )
 Package hyperref Info: Driver (autodetected): hpdftex.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdft
-ex.def
-File: hpdftex.def 2023-11-26 v7.01g Hyperref driver for pdfTeX
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/hyperref\hpdftex.def
+File: hpdftex.def 2023-02-07 v7.00v Hyperref driver for pdfTeX
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend
--ltx.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/base\atveryend-ltx.sty
 Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
 kage
 with kernel methods
 )
-\Fld@listcount=\count275
-\c@bookmark@seq@number=\count276
+\Fld@listcount=\count272
+\c@bookmark@seq@number=\count273
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck
-\rerunfilecheck.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/rerunfilecheck\rerunfilec
+heck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounte
-r\uniquecounter.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/uniquecounter\uniquecou
+nter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
 Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
@@ -252,17 +217,15 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip51
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geome
-try.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex
-.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/iftex\ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
-\Gm@cnth=\count277
-\Gm@cntv=\count278
-\c@Gm@tempcnt=\count279
+\Gm@cnth=\count274
+\Gm@cntv=\count275
+\c@Gm@tempcnt=\count276
 \Gm@bindingoffset=\dimen147
 \Gm@wd@mp=\dimen148
 \Gm@odd@mp=\dimen149
@@ -271,39 +234,40 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 \Gm@layoutheight=\dimen152
 \Gm@layouthoffset=\dimen153
 \Gm@layoutvoffset=\dimen154
-\Gm@dimlist=\toks22
+\Gm@dimlist=\toks21
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geome
-try.cfg))
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/stackengine\st
-ackengine.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.cfg))
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/stackengine\stackengine.s
+ty
 Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient 
 ways
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/listofitems\li
-stofitems.sty
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/generic/listofitems\
-listofitems.tex
-\loi_cnt_foreach_nest=\count280
-\loi_nestcnt=\count281
+ (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/etoolbox\etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count277
 )
-Package: listofitems 2024/03/09 v1.65 Grab items in lists using user-specified 
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listofitems\listofitems.s
+ty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/generic/listofitems\listofitems
+.tex
+\loi_cnt_foreach_nest=\count278
+\loi_nestcnt=\count279
+)
+Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified 
 sep char (CT)
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
-Package: calc 2023/07/08 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count282
-\calc@Bcount=\count283
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/tools\calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count280
+\calc@Bcount=\count281
 \calc@Adimen=\dimen155
 \calc@Bdimen=\dimen156
 \calc@Askip=\skip52
 \calc@Bskip=\skip53
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count284
+\calc@Ccount=\count282
 \calc@Cskip=\skip54
 )
-\c@@stackindex=\count285
+\c@@stackindex=\count283
 \@boxshift=\skip55
 \stack@tmplength=\skip56
 \temp@stkl=\skip57
@@ -314,36 +278,28 @@ LaTeX Info: Redefining \addtolength on input line 81.
 \se@backgroundbox=\box55
 \stackedbox=\box56
 \@centerbox=\box57
-\c@ROWcellindex@=\count286
+\c@ROWcellindex@=\count284
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graph
-icx.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graph
-ics.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics\graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.
-sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics\trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\g
-raphics.cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\p
-dftex.def
+ (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics-def\pdftex.def
 File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
 \Gin@req@height=\dimen157
 \Gin@req@width=\dimen158
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancy
-hdr.sty
-Package: fancyhdr 2024/04/23 v4.2 Extensive control of page headers and footers
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/fancyhdr\fancyhdr.sty
+Package: fancyhdr 2022/11/09 v4.1 Extensive control of page headers and footers
 
 \f@nch@headwidth=\skip59
 \f@nch@O@elh=\skip60
@@ -354,25 +310,23 @@ Package: fancyhdr 2024/04/23 v4.2 Extensive control of page headers and footers
 \f@nch@O@erf=\skip65
 \f@nch@O@olf=\skip66
 \f@nch@O@orf=\skip67
-)
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/microtype\micr
-otype.sty
-Package: microtype 2024/03/29 v3.1b Micro-typographical refinements (RS)
-\MT@toks=\toks23
+) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.sty
+Package: microtype 2023/03/13 v3.1a Micro-typographical refinements (RS)
+\MT@toks=\toks22
 \MT@tempbox=\box58
-\MT@count=\count287
-LaTeX Info: Redefining \noprotrusionifhmode on input line 1061.
-LaTeX Info: Redefining \leftprotrusion on input line 1062.
-\MT@prot@toks=\toks24
-LaTeX Info: Redefining \rightprotrusion on input line 1081.
-LaTeX Info: Redefining \textls on input line 1392.
+\MT@count=\count285
+LaTeX Info: Redefining \noprotrusionifhmode on input line 1059.
+LaTeX Info: Redefining \leftprotrusion on input line 1060.
+\MT@prot@toks=\toks23
+LaTeX Info: Redefining \rightprotrusion on input line 1078.
+LaTeX Info: Redefining \textls on input line 1368.
 \MT@outer@kern=\dimen159
-LaTeX Info: Redefining \textmicrotypecontext on input line 2013.
-\MT@listname@count=\count288
+LaTeX Info: Redefining \textmicrotypecontext on input line 1988.
+\MT@listname@count=\count286
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/microtype\micr
-otype-pdftex.def
-File: microtype-pdftex.def 2024/03/29 v3.1b Definitions specific to pdftex (RS)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype-pdfte
+x.def
+File: microtype-pdftex.def 2023/03/13 v3.1a Definitions specific to pdftex (RS)
 
 LaTeX Info: Redefining \lsstyle on input line 902.
 LaTeX Info: Redefining \lslig on input line 902.
@@ -380,16 +334,12 @@ LaTeX Info: Redefining \lslig on input line 902.
 )
 Package microtype Info: Loading configuration file microtype.cfg.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/microtype\micr
-otype.cfg
-File: microtype.cfg 2024/03/29 v3.1b microtype main configuration file (RS)
-))
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\times.s
-ty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/microtype\microtype.cfg
+File: microtype.cfg 2023/03/13 v3.1a microtype main configuration file (RS)
+)) (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\times.sty
 Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\bookt
-abs.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/booktabs\booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen160
 \lightrulewidth=\dimen161
@@ -401,75 +351,68 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen167
 \cmidrulekern=\dimen168
 \defaultaddspace=\dimen169
-\@cmidla=\count289
-\@cmidlb=\count290
+\@cmidla=\count287
+\@cmidlb=\count288
 \@aboverulesep=\dimen170
 \@belowrulesep=\dimen171
-\@thisruleclass=\count291
-\@lastruleclass=\count292
+\@thisruleclass=\count289
+\@lastruleclass=\count290
 \@thisrulewidth=\dimen172
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/listings\listi
-ngs.sty
-\lst@mode=\count293
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.sty
+\lst@mode=\count291
 \lst@gtempboxa=\box59
-\lst@token=\toks25
-\lst@length=\count294
+\lst@token=\toks24
+\lst@length=\count292
 \lst@currlwidth=\dimen173
-\lst@column=\count295
-\lst@pos=\count296
+\lst@column=\count293
+\lst@pos=\count294
 \lst@lostspace=\dimen174
 \lst@width=\dimen175
-\lst@newlines=\count297
-\lst@lineno=\count298
+\lst@newlines=\count295
+\lst@lineno=\count296
 \lst@maxwidth=\dimen176
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmi
-sc.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstmisc.sty
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
-\c@lstnumber=\count299
-\lst@skipnumbers=\count300
+\c@lstnumber=\count297
+\lst@skipnumbers=\count298
 \lst@framebox=\box60
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/listings\listi
-ngs.cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\listings.cfg
 File: listings.cfg 2023/02/27 1.9 listings configuration
 ))
 Package: listings 2023/02/27 1.9 (Carsten Heinz)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.
-sty
-Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/xcolor\xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\c
-olor.cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics-cfg\color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
-Package xcolor Info: Driver file: pdftex.def on input line 274.
+Package xcolor Info: Driver file: pdftex.def on input line 227.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathc
-olor.ltx)
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1354.
-Package xcolor Info: Model `RGB' extended on input line 1366.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1369.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/graphics\mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
 1.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.
-fd
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3ba
-ckend-pdftex.def
-File: l3backend-pdftex.def 2024-01-04 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count301
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/l3backend\l3backend-pdfte
+x.def
+File: l3backend-pdftex.def 2023-03-30 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count299
 \l__pdf_internal_box=\box61
 ) (report.aux)
 \openout1 = `report.aux'.
@@ -533,29 +476,27 @@ Package hyperref Info: Link coloring ON on input line 51.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\su
-pp-pdf.mkii
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/context/base/mkii\supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count302
+\scratchcounter=\count300
 \scratchdimen=\dimen177
 \scratchbox=\box62
-\nofMPsegments=\count303
-\nofMParguments=\count304
-\everyMPshowfont=\toks26
-\MPscratchCnt=\count305
+\nofMPsegments=\count301
+\nofMParguments=\count302
+\everyMPshowfont=\toks25
+\MPscratchCnt=\count303
 \MPscratchDim=\dimen178
-\MPnumerator=\count306
-\makeMPintoPDFobject=\count307
-\everyMPtoPDFconversion=\toks27
+\MPnumerator=\count304
+\makeMPintoPDFobject=\count305
+\everyMPtoPDFconversion=\toks26
 )
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\e
-pstopdf-base.sty
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/epstopdf-pkg\epstopdf-bas
+e.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epsto
-pdf-sys.cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
 LaTeX Info: Redefining \microtypecontext on input line 51.
@@ -574,15 +515,12 @@ LaTeX Info: Redefining \showhyphens on input line 51.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-p
-tm.cfg
+ (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-ptm.cfg
 File: mt-ptm.cfg 2006/04/20 v1.7 microtype config. file: Times (RS)
 )
-\c@lstlisting=\count308
+\c@lstlisting=\count306
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-c
-mr.cfg
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/microtype\mt-cmr.cfg
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
@@ -612,30 +550,20 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
  []
 
+[1{C:/Users/Lee/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Lee/
+AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
-
- []
-
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstla
-ng1.sty
+]
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 Underfull \hbox (badness 10000) in paragraph at lines 68--72
 
  []
 
-[1{C:/Users/SPIRAL_DohaNam/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:
-/Users/SPIRAL_DohaNam/AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc
-}
-
-]
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
 2.
-
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.
-fd
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -645,8 +573,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 7
 3.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.
-fd
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
 )
 Package microtype Info: Loading generic protrusion settings for font family
@@ -658,8 +585,7 @@ LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
 LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 8
 4.
 
-(C:\Users\SPIRAL_DohaNam\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsptm.
-fd
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
@@ -684,12 +610,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 122--124
 
  []
 
-
+[3]
 Underfull \hbox (badness 10000) in paragraph at lines 136--138
 
  []
 
-[3]
+
 Underfull \hbox (badness 10000) in paragraph at lines 153--157
 
  []
@@ -789,37 +715,38 @@ Underfull \hbox (badness 10000) in paragraph at lines 293--294
 
  []
 
-
+[9]
 Underfull \hbox (badness 10000) in paragraph at lines 296--297
 
  []
 
-[9] [10] (report.aux)
- ***********
-LaTeX2e <2023-11-01> patch level 1
-L3 programming layer <2024-01-04>
- ***********
-Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: E5C97D7C2BD9E48E22AEAE21CC6B84D1;2637.
+[10] (report.aux)
+
+Package rerunfilecheck Warning: File `report.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `report.out':
+(rerunfilecheck)             Before: E5C97D7C2BD9E48E22AEAE21CC6B84D1;2637
+(rerunfilecheck)             After:  A718EC8841FD185848FAE3B41CDB86B8;3296.
  ) 
 Here is how much of TeX's memory you used:
- 15688 strings out of 474485
- 249294 string characters out of 5739486
- 2203542 words of memory out of 5000000
- 37426 multiletter control sequences out of 15000+600000
- 582143 words of font info for 189 fonts, out of 8000000 for 9000
+ 15735 strings out of 476331
+ 248811 string characters out of 5788709
+ 2128660 words of memory out of 5000000
+ 35604 multiletter control sequences out of 15000+600000
+ 536477 words of font info for 187 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,79p,1005b,2061s stack positions out of 10000i,1000n,20000p,200000b,200000s
-<C:/Users/SPIRAL_DohaNam/AppData/Local/Programs/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmsy10.pfb><C:/Users/SPIRAL_DohaNam/AppData/Local/Programs/MiKTeX/font
-s/type1/urw/courier/ucrb8a.pfb><C:/Users/SPIRAL_DohaNam/AppData/Local/Programs/
-MiKTeX/fonts/type1/urw/courier/ucrr8a.pfb><C:/Users/SPIRAL_DohaNam/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/urw/courier/ucrro8a.pfb><C:/Users/SPIRAL_DohaNam/
-AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/uhvr8a.pfb><C:/Users/SPI
-RAL_DohaNam/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmb8a.pfb><C:/
-Users/SPIRAL_DohaNam/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr8a
-.pfb>
-Output written on report.pdf (10 pages, 152111 bytes).
+ 75i,12n,76p,1005b,2056s stack positions out of 10000i,1000n,20000p,200000b,200000s
+<C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
+sy10.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
+rb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
+rr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
+rro8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/
+uhvr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
+mb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr
+8a.pfb>
+Output written on report.pdf (10 pages, 153359 bytes).
 PDF statistics:
  321 PDF objects out of 1000 (max. 8388607)
  165 named destinations out of 1000 (max. 500000)
