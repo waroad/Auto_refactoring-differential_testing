@@ -63,7 +63,7 @@ This study presented the first tool to automatically transform non-idiomatic Pyt
 \subsection{A Peer Architecture for Lightweight Symbolic Execution - Alessandro Bruni, Tim Disney, Cormac Flanagan (2011)}
 This study presents a lightweight, library-based approach to symbolic execution, leveraging the dynamic dispatch capabilities of object-oriented languages like Python. Instead of creating a new interpreter or compiler, their approach embeds a symbolic execution engine within the target program's process. This engine uses proxy objects to simulate symbolic values and track program execution paths. This provided a direction on how to perform symbolic execution for testing the functionality of functions.
 
-\section{Method?}
+\section{Approach}
 \subsection{Automated Refactoring}
 In this project, we laid the groundwork for the implementation of our refactoring tool by referencing the study of Zhang et al. and various literatures on Python idioms. Specifically, we selected \textbf{10 types} of refactorings that could enhance the performance and readability of Python code. These refactorings were implemented using the \textbf{Abstract Syntax Tree (AST)}, which provides a structural representation of source code. The AST is an ideal tool for systematically analyzing and modifying each element of the code. Through this, we developed a methodology that could automatically improve the code into a more Pythonic form.\\
 Details of this part are all on \textbf{refactor.py}. For better understanding, we will write the (relevant code line) after the description of each part. For example, we inherited the NodeTransformer class and performed automated refactoring.\textbf{(413)}\\
