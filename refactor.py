@@ -459,24 +459,32 @@ class CodeReplacer(ast.NodeTransformer):
         return node
 
 def main(ex_dir, updated_dir):
-    for dir in os.listdir(ex_dir):
-        for file in os.listdir(os.path.join(ex_dir, dir)):
-            try:
-                with open(os.path.join(ex_dir, dir, file), encoding="utf-8") as origin:
-                    source_code = origin.read()
+    for root, dirs, files in os.walk(ex_dir):
+        for file in files:
+            if file.endswith('.py'):
+                try:
+                    file_path = os.path.join(root, file)
+                    with open(file_path, encoding="utf-8") as origin:
+                        source_code = origin.read()
 
-                replacer = CodeReplacer()
-                updated_root = replacer.visit(ast.parse(source_code))
-                updated_code = ast.unparse(updated_root)
+                    replacer = CodeReplacer()
+                    updated_root = replacer.visit(ast.parse(source_code))
+                    updated_code = ast.unparse(updated_root)
 
-                if dir not in os.listdir(updated_dir):
-                    os.mkdir(os.path.join(updated_dir, dir))
+                    # updated_dir 하위 경로에 동일한 디렉토리 구조를 생성
+                    relative_path = os.path.relpath(root, ex_dir)
+                    target_dir = os.path.join(updated_dir, relative_path)
 
-                with open(os.path.join(updated_dir, dir, file), "w") as new:
-                    new.write(updated_code)
-                time.sleep(0.5)
-            except PermissionError:
-                print(f"Permission denied: {file}")
+                    if not os.path.exists(target_dir):
+                        os.makedirs(target_dir)
+
+                    new_file_path = os.path.join(target_dir, file)
+                    with open(new_file_path, "w") as new:
+                        new.write(updated_code)
+                    
+                    time.sleep(0.5)
+                except PermissionError:
+                    print(f"Permission denied: {file_path}")
 
 
 if __name__ == '__main__':
