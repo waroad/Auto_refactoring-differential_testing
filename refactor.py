@@ -1,5 +1,6 @@
 import argparse
 import ast
+import copy
 import time
 import os
 
@@ -153,14 +154,15 @@ def dup_target(prev, node): # (10)
 
 
 def perform_comprehension(body, lineno=1):
-    # 'append' for list, 'add' for set comprehension
     comprehension_map = {"append": [ast.ListComp, ast.Add()], "add": [ast.SetComp, ast.BitOr()]}
     updated_body = []
     for stmt in body:
         stmt.lineno = lineno
+
         if isinstance(stmt, ast.For):
             # Gather comprehensions for all lists used in the loop
             comprehensions_to_add = []
+
             for node in stmt.body:
                 node.lineno = lineno + 1
                 if (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call)
@@ -232,13 +234,25 @@ def transform_chaining_comparisons(node):
         ast.NotEq: ast.NotEq
     }
     if isinstance(node, ast.BoolOp):
+        comparisons = []
+        rest = []
+        new_node=copy.deepcopy(node)
+        for i in range(len(node.values)):
+            if isinstance(node.values[i],ast.BoolOp):
+                node.values[i]=transform_chaining_comparisons(node.values[i])
+            if isinstance(node.values[i],ast.Compare):
+                comparisons.append(node.values[i])
+            else:
+                rest.append(node.values[i])
+        if not comparisons:
+            return node
+
+        # Initialize the left part and gather all ops and comparators
         for i in range(len(node.values)):
             if isinstance(node.values[i],ast.BoolOp):
                 node.values[i]=transform_chaining_comparisons(node.values[i])
         while True:
             broken=False
-            if type(node.op).__name__!="And":
-                break
             for i,cur_comp in enumerate(node.values):
                 for j,comp in enumerate(node.values):
                     if i >= j or not isinstance(node.values[i],ast.Compare) or not isinstance(node.values[j],ast.Compare):
@@ -324,6 +338,7 @@ def transform_equality_comparisons(node):
     if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
         equalities = []
         left_name = None
+
         for value in node.values:
             if (isinstance(value, ast.Compare) and
                     len(value.ops) == 1 and
@@ -334,11 +349,14 @@ def transform_equality_comparisons(node):
                     left_name = value.left.id
                 elif left_name != value.left.id:
                     return node  # Different left values, do not transform
+
                 equalities.append(value.comparators[0])
             else:
                 return node  # Not a valid equality chain, do not transform
+
         if not equalities:
             return node
+
         # Create a new 'in' comparison
         in_comparison = ast.Compare(
             left=ast.Name(id=left_name, ctx=ast.Load()),
@@ -346,6 +364,7 @@ def transform_equality_comparisons(node):
             comparators=[ast.List(elts=equalities, ctx=ast.Load())]
         )
         return in_comparison
+
     return node
 
 
@@ -429,9 +448,9 @@ class CodeReplacer(ast.NodeTransformer):
         return node
 
     def visit_Module(self, node):
-        self.generic_visit(node)
         node.body = perform_comprehension(node.body)
         node.body = transform_list_appends(node.body)
+        self.generic_visit(node)
         return node
 
     def visit_If(self, node):

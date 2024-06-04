@@ -245,10 +245,8 @@ def get_proxy(self, other):
 2. Specific method call: When the AnyProxy object encounters a method that is unique to a specific type, it transforms into a proxy object for that type. For example, it the AnyProxy object calls 'append' method, which is unique to the list type, it differentiates into a ListProxy object. \\
 
 \begin{lstlisting}[language=python]
-def __getitem__(self, index):
-        if isinstance(index, AnyProxy):
-            index = IntegerProxy(Int(index.name))
-        return ListProxy(IntVector(self.name, self.length), self.name).__getitem__(index)
+def __setitem__(self, index, value):
+        return ListProxy(IntVector(self.name, self.length), self.name).__setitem__(index, value)
 \end{lstlisting}
 
 
