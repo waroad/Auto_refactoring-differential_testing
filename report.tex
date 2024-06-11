@@ -254,7 +254,7 @@ Symbolic execution involves executing the target program not with concrete test 
 Unlike many other programming languages, Python does not provide type hints normally, making it difficult to determine the types of input parameters based solely on the information provided by the function. In order to solve this problem, we created an 'AnyProxy' class and used it as the input parameters for the functions. This class helps to generalize input types initially, and then, based on the behavior of the program, it differentiates these inputs into specific types for further processing.
 
 \begin{center}
-\includegraphics[width = 10cm]{Anyproxy_to_proxies.PNG}
+\includegraphics[width = 10cm]{images/Anyproxy_to_proxies.PNG}
 
 {Figure 1. The proxy classes differentiated from AnyProxy class}
 \end{center}
@@ -312,7 +312,7 @@ def test_refactored_code(original_path, test_path):
 We evaluated our tool from two main perspectives. The first perspective was to determine whether the refactored code is more efficient to execute compared to the pre-refactored code. To assess this, we compared the execution times of various operations to observe any improvements in efficiency. The second perspective was to verify whether the refactored code consistently produces the same results as the original code. This aspect is crucial for ensuring the accuracy and reliability of the code. Thus, we examined whether the refactored code delivers performance enhancements while fully meeting the original functional requirements. Through this evaluation, we aimed to confirm the overall performance and reliability of our tool.
 
 \begin{center}
-\includegraphics[width = 10cm]{Evaluation.PNG}
+\includegraphics[width = 10cm]{images/Evaluation.PNG}
 
 {Figure 2. Comparing Execution Time Before and After Refactoring}
 \end{center}
@@ -321,6 +321,12 @@ Figure 2 compares the execution times of various operations before and after ref
 
 \subsection{Differential Testing}
 ...\\
+
+\begin{center}
+\includegraphics[width = 10cm]{images/diff_result.png}
+
+{Figure 3. Result of Differential Testing}
+\end{center}
 
 \section{Threat to Validity}
 \subsection{Handling Corner Cases in Automated Refactoring}
@@ -331,6 +337,10 @@ In the function testing part of the differential testing, we did not cover any t
 
 \subsection{File System Differential Testing}
 When performing differential testing to determine if program execution is identical, it is also necessary to verify that the file system used by the program is the same. This involves ensuring that the state of the files and directories accessed or modified by the program remains consistent between the original and refactored versions. If the file system differs, differences in program behavior may generate due to environmental discrepancies. However, our differential testing only verifies the consistency of function return values and standard outputs, lacking a mechanism to ensure the consistency of the file system state. We plan to implement this in the future to eliminate differences in program behavior caused by environmental inconsistencies.
+
+\section{Feedback}
+\subsection{Wild }
+...\\
 
 \section{Discussion \& Conclusion}
 ...\\
