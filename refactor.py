@@ -1,7 +1,9 @@
 import argparse
 import ast
+import copy
 import time
 import os
+
 
 def transform_empty_test(node):  # (5)
     new_node = node
@@ -46,9 +48,8 @@ def transform_nestedIf(node):  # (6)
 def transform_Ifexp(node):
     new_node = node
     if isinstance(node.body[0], ast.Assign) and isinstance(node.orelse[0], ast.Assign):  # (7) Assign
-        if len(node.body[0].targets) == 1 and len(node.orelse[0].targets) == 1 and isinstance(node.body[0].targets[0],
-                                                                                              ast.Name) and isinstance(
-                node.orelse[0].targets[0], ast.Name):
+        if (len(node.body[0].targets) == 1 and len(node.orelse[0].targets) == 1 and
+                isinstance(node.body[0].targets[0],ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name)):
             if node.body[0].targets[0].id == node.orelse[0].targets[0].id:
                 new_exp = ast.IfExp(test=node.test, body=node.body[0].value, orelse=node.orelse[0].value)
                 new_node = ast.Assign(targets=node.body[0].targets, value=new_exp)
@@ -111,14 +112,15 @@ def transform_return_boolean(node):  # (9)
     ast.copy_location(new_node, node)
     return new_node
 
-def transform_multi_assign(body): # (10)
+
+def transform_multi_assign(body):  # (10)
     new_stmts, temp_targets, temp_values, first_node, prev = [], [], [], None, []
     for stmt in body:
         if isinstance(stmt, ast.Assign):
             if dup_target(prev, stmt.value):
                 new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
-                temp_targets=[]
-                temp_values=[]
+                temp_targets = []
+                temp_values = []
                 first_node, prev = stmt, []
             if first_node is None:
                 first_node = stmt
@@ -130,26 +132,29 @@ def transform_multi_assign(body): # (10)
         else:
             if temp_targets:
                 new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
-                temp_targets=[]
-                temp_values=[]
+                temp_targets = []
+                temp_values = []
                 first_node, prev = None, []
             new_stmts.append(stmt)
     if temp_targets:
         new_stmts.append(merge_assign(first_node, temp_targets, temp_values))
     return new_stmts
 
-def merge_assign(first_node, temp_targets, temp_values): # (10)
-    new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())], value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
+
+def merge_assign(first_node, temp_targets, temp_values):  # (10)
+    new_assign = ast.Assign(targets=[ast.Tuple(elts=temp_targets, ctx=ast.Store())],
+                            value=ast.Tuple(elts=temp_values, ctx=ast.Load()))
     ast.copy_location(new_assign, first_node)
-    if len(temp_targets)==1:
+    if len(temp_targets) == 1:
         new_assign = first_node
     return new_assign
 
-def dup_target(prev, node): # (10)
+
+def dup_target(prev, node):  # (10)
     for target in ast.walk(node):
         if hasattr(target, 'id'):
             for id in prev:
-                if target.id==id:
+                if target.id == id:
                     return True
     return False
 
@@ -158,40 +163,65 @@ def perform_comprehension(body, dict_list, lineno=1):
     # 'append' for list, 'add' for set comprehension
     comprehension_map = {"append": [ast.ListComp, ast.Add()], "add": [ast.SetComp, ast.BitOr()]}
     updated_body = []
+    used_dict = set()
+    used_set = set()
     for stmt in body:
         stmt.lineno = lineno
+
         if isinstance(stmt, ast.For):
             # Gather comprehensions for all lists used in the loop
             comprehensions_to_add = []
+
             for node in stmt.body:
                 node.lineno = lineno + 1
                 if (isinstance(node, ast.Expr) and isinstance(node.value, ast.Call)
-                        and isinstance(node.value.func, ast.Attribute) and node.value.func.attr in comprehension_map):
+                        and isinstance(node.value.func, ast.Attribute)):
                     name = node.value.func.value.id
-                    comprehension = comprehension_map[node.value.func.attr][0](
-                        elt=node.value.args[0],
-                        generators=[ast.comprehension(
-                            target=stmt.target,
-                            iter=stmt.iter,
-                            ifs=[],
-                            is_async=0
-                        )]
-                    )
-                    comprehension_assignment = ast.AugAssign(
-                        target=ast.Name(id=name, ctx=ast.Store()),
-                        op=comprehension_map[node.value.func.attr][1],
-                        value=comprehension
-                    )
-                    comprehensions_to_add.append(ast.unparse(comprehension_assignment))
+                    if node.value.func.attr == "append":
+                        comprehension = ast.ListComp(
+                            elt=node.value.args[0],
+                            generators=[ast.comprehension(
+                                target=stmt.target,
+                                iter=stmt.iter,
+                                ifs=[],
+                                is_async=0
+                            )]
+                        )
+                        comprehension_assignment = ast.AugAssign(
+                            target=ast.Name(id=name, ctx=ast.Store()),
+                            op=ast.Add(),
+                            value=comprehension
+                        )
+                        comprehensions_to_add.append(ast.unparse(comprehension_assignment))
+                    elif node.value.func.attr == "add":
+                        if name in used_set:
+                            comprehensions_to_add = []
+                            break
+                        used_set.add(name)
+                        comprehension = ast.SetComp(
+                            elt=node.value.args[0],
+                            generators=[ast.comprehension(
+                                target=stmt.target,
+                                iter=stmt.iter,
+                                ifs=[],
+                                is_async=0
+                            )]
+                        )
+                        comprehension_assignment = ast.Assign(
+                            targets=[ast.Name(id=name, ctx=ast.Store())],
+                            value=comprehension
+                        )
+                        comprehension_assignment.lineno = lineno + 2
+                        comprehensions_to_add.append(ast.unparse(comprehension_assignment))
                 elif isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Subscript):
                     dict_name = node.targets[0].value.id
-                    print(dict_name)
-                    if dict_name not in dict_list:
-                        continue
+                    if dict_name not in dict_list or dict_name in used_dict:
+                        comprehensions_to_add = []
+                        break
+                    used_dict.add(dict_name)
                     key = node.targets[0].slice.value if isinstance(node.targets[0].slice, ast.Index) else node.targets[
                         0].slice
                     value = node.value
-                    temp_dict_name = f"temp_{dict_name}"
                     comprehension = ast.DictComp(
                         key=key,
                         value=value,
@@ -202,19 +232,12 @@ def perform_comprehension(body, dict_list, lineno=1):
                             is_async=0
                         )]
                     )
-                    comprehension.lineno = lineno + 2
                     comprehension_assignment = ast.Assign(
-                        targets=[ast.Name(id=temp_dict_name, ctx=ast.Store())],
+                        targets=[ast.Name(id=dict_name, ctx=ast.Store())],
                         value=comprehension
                     )
-                    update_call = ast.Expr(ast.Call(
-                        func=ast.Attribute(value=ast.Name(id=dict_name, ctx=ast.Load()), attr='update', ctx=ast.Load()),
-                        args=[ast.Name(id=temp_dict_name, ctx=ast.Load())],
-                        keywords=[]
-                    ))
-                    comprehension_assignment.lineno = lineno + 3
+                    comprehension_assignment.lineno = lineno + 2
                     comprehensions_to_add.append(ast.unparse(comprehension_assignment))
-                    comprehensions_to_add.append(ast.unparse(update_call))
                 else:
                     comprehensions_to_add = []
                     break
@@ -238,25 +261,26 @@ def transform_chaining_comparisons(node):
     }
     if isinstance(node, ast.BoolOp):
         for i in range(len(node.values)):
-            if isinstance(node.values[i],ast.BoolOp):
-                node.values[i]=transform_chaining_comparisons(node.values[i])
+            if isinstance(node.values[i], ast.BoolOp):
+                node.values[i] = transform_chaining_comparisons(node.values[i])
         while True:
-            broken=False
-            if type(node.op).__name__!="And":
+            broken = False
+            if type(node.op).__name__ != "And":
                 break
-            for i,cur_comp in enumerate(node.values):
-                for j,comp in enumerate(node.values):
-                    if i >= j or not isinstance(node.values[i],ast.Compare) or not isinstance(node.values[j],ast.Compare):
+            for i, cur_comp in enumerate(node.values):
+                for j, comp in enumerate(node.values):
+                    if i >= j or not isinstance(node.values[i], ast.Compare) or not isinstance(node.values[j],
+                                                                                               ast.Compare):
                         continue
                     if ast.unparse(cur_comp.left) == ast.unparse(comp.left):
                         cur_comp.comparators.reverse()
                         cur_comp.ops.reverse()
                         chained_comp = ast.Compare(
                             left=cur_comp.comparators[0],
-                            ops=[map1[type(x)]() for x in cur_comp.ops]+comp.ops,
-                            comparators=cur_comp.comparators[1:]+[cur_comp.left]+ comp.comparators
+                            ops=[map1[type(x)]() for x in cur_comp.ops] + comp.ops,
+                            comparators=cur_comp.comparators[1:] + [cur_comp.left] + comp.comparators
                         )
-                        if i>j:
+                        if i > j:
                             node.values.pop(i)
                             node.values.pop(j)
                             node.values.append(chained_comp)
@@ -269,10 +293,10 @@ def transform_chaining_comparisons(node):
                     elif ast.unparse(cur_comp.left) == ast.unparse(comp.comparators[-1]):
                         chained_comp = ast.Compare(
                             left=comp.left,
-                            ops=comp.ops+cur_comp.ops,
-                            comparators=comp.comparators+cur_comp.comparators
+                            ops=comp.ops + cur_comp.ops,
+                            comparators=comp.comparators + cur_comp.comparators
                         )
-                        if i>j:
+                        if i > j:
                             node.values.pop(i)
                             node.values.pop(j)
                             node.values.append(chained_comp)
@@ -285,10 +309,10 @@ def transform_chaining_comparisons(node):
                     elif ast.unparse(cur_comp.comparators[-1]) == ast.unparse(comp.left):
                         chained_comp = ast.Compare(
                             left=cur_comp.left,
-                            ops=cur_comp.ops+comp.ops,
-                            comparators=cur_comp.comparators+comp.comparators
+                            ops=cur_comp.ops + comp.ops,
+                            comparators=cur_comp.comparators + comp.comparators
                         )
-                        if i>j:
+                        if i > j:
                             node.values.pop(i)
                             node.values.pop(j)
                             node.values.append(chained_comp)
@@ -303,10 +327,10 @@ def transform_chaining_comparisons(node):
                         comp.ops.reverse()
                         chained_comp = ast.Compare(
                             left=cur_comp.left,
-                            ops=cur_comp.ops+[map1[type(x)]() for x in comp.ops],
-                            comparators=cur_comp.comparators+comp.comparators[1:]+[comp.left]
+                            ops=cur_comp.ops + [map1[type(x)]() for x in comp.ops],
+                            comparators=cur_comp.comparators + comp.comparators[1:] + [comp.left]
                         )
-                        if i>j:
+                        if i > j:
                             node.values.pop(i)
                             node.values.pop(j)
                             node.values.append(chained_comp)
@@ -329,6 +353,7 @@ def transform_equality_comparisons(node):
     if isinstance(node, ast.BoolOp) and isinstance(node.op, ast.Or):
         equalities = []
         left_name = None
+
         for value in node.values:
             if (isinstance(value, ast.Compare) and
                     len(value.ops) == 1 and
@@ -339,11 +364,14 @@ def transform_equality_comparisons(node):
                     left_name = value.left.id
                 elif left_name != value.left.id:
                     return node  # Different left values, do not transform
+
                 equalities.append(value.comparators[0])
             else:
                 return node  # Not a valid equality chain, do not transform
+
         if not equalities:
             return node
+
         # Create a new 'in' comparison
         in_comparison = ast.Compare(
             left=ast.Name(id=left_name, ctx=ast.Load()),
@@ -351,6 +379,7 @@ def transform_equality_comparisons(node):
             comparators=[ast.List(elts=equalities, ctx=ast.Load())]
         )
         return in_comparison
+
     return node
 
 
@@ -397,10 +426,10 @@ def transform_list_appends(body):
 
 
 def find_dict(node):
-    dict_list=[]
+    dict_list = []
     for stmt in node:
         if isinstance(stmt, ast.Assign):
-            if isinstance(stmt.value, (ast.Set,ast.Dict)):
+            if isinstance(stmt.value, (ast.Set, ast.Dict)):
                 dict_list.append(stmt.targets[0].id)
     return dict_list
 
@@ -408,9 +437,9 @@ def find_dict(node):
 class CodeReplacer(ast.NodeTransformer):
     def __init__(self):
         self.toItem = {}  # (8)
-        self.dict_list=[]
+        self.dict_list = []
 
-    def generic_visit(self, node): # 10. transform multiple assign
+    def generic_visit(self, node):  # 10. transform multiple assign
         if hasattr(node, 'body') and isinstance(node.body, list):
             node.body = transform_multi_assign(node.body)
         return super().generic_visit(node)
@@ -438,23 +467,24 @@ class CodeReplacer(ast.NodeTransformer):
         return self.generic_visit(node)
 
     def visit_FunctionDef(self, node):
-        self.dict_list+=find_dict(node.body)
+        self.dict_list = find_dict(node.body)
         self.generic_visit(node)
         node.body = perform_comprehension(node.body, self.dict_list)
         node.body = transform_list_appends(node.body)
         return node
 
     def visit_Module(self, node):
-        self.dict_list+=find_dict(node.body)
+        self.dict_list = find_dict(node.body)
         self.generic_visit(node)
         node.body = perform_comprehension(node.body, self.dict_list)
         node.body = transform_list_appends(node.body)
+        self.generic_visit(node)
         return node
 
     def visit_If(self, node):
         node.test = transform_equality_comparisons(node.test)
         node.test = transform_chaining_comparisons(node.test)
-        self.generic_visit(node) # to handle merge If over 3
+        self.generic_visit(node)  # to handle merge If over 3
         node = transform_If(node)  # 6, 7, 9
         return node
 
@@ -488,6 +518,7 @@ def main(ex_dir, updated_dir):
 
 
 if __name__ == '__main__':
+
     parser = argparse.ArgumentParser(description='Difference test with two folders.')
     parser.add_argument('-t1', '--target1', required=True)
     parser.add_argument('-t2', '--target2', required=True)
@@ -495,3 +526,4 @@ if __name__ == '__main__':
     original_folder = parse_args.target1
     refactored_folder = parse_args.target2
     main(original_folder, refactored_folder)
+

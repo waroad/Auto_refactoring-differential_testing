@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  31 MAY 2024 14:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  11 JUN 2024 16:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -217,6 +217,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip51
 )
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/tools\indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+)
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/geometry\geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
 
@@ -404,7 +407,7 @@ Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
 )
 LaTeX Font Info:    Trying to load font information for OT1+ptm on input line 5
-1.
+4.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
@@ -417,25 +420,25 @@ File: l3backend-pdftex.def 2023-03-30 L3 backend support: PDF output (pdfTeX)
 ) (report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-Package hyperref Info: Link coloring ON on input line 51.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 54.
+LaTeX Font Info:    ... okay on input line 54.
+Package hyperref Info: Link coloring ON on input line 54.
  (report.out) (report.out)
 \@outlinefile=\write3
 \openout3 = `report.out'.
@@ -499,19 +502,19 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/00miktex\epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2021/03/18 v2.0 Configuration of epstopdf for MiKTeX
 ))
-LaTeX Info: Redefining \microtypecontext on input line 51.
-Package microtype Info: Applying patch `item' on input line 51.
-Package microtype Info: Applying patch `toc' on input line 51.
-Package microtype Info: Applying patch `eqnum' on input line 51.
-Package microtype Info: Applying patch `footnote' on input line 51.
-Package microtype Info: Applying patch `verbatim' on input line 51.
+LaTeX Info: Redefining \microtypecontext on input line 54.
+Package microtype Info: Applying patch `item' on input line 54.
+Package microtype Info: Applying patch `toc' on input line 54.
+Package microtype Info: Applying patch `eqnum' on input line 54.
+Package microtype Info: Applying patch `footnote' on input line 54.
+Package microtype Info: Applying patch `verbatim' on input line 54.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
 Package microtype Info: Automatic font expansion enabled (level 2),
 (microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
 Package microtype Info: Using default expansion set `alltext-nott'.
-LaTeX Info: Redefining \showhyphens on input line 51.
+LaTeX Info: Redefining \showhyphens on input line 54.
 Package microtype Info: No adjustment of tracking.
 Package microtype Info: No adjustment of interword spacing.
 Package microtype Info: No adjustment of character kerning.
@@ -525,44 +528,35 @@ File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman
 (RS)
 )
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 54.
+(Font)              <12> on input line 57.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 54.
+(Font)              <8> on input line 57.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 54.
+(Font)              <6> on input line 57.
 
 
 LaTeX Warning: No \author given.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 58--59
-
- []
-
-
-Overfull \hbox (7.90895pt too wide) in paragraph at lines 61--61
+Overfull \hbox (7.90895pt too wide) in paragraph at lines 64--64
 []\OT1/ptm/b/n/12 (-20) Making Python Code Id-iomatic by Au-to-matic Refac-tor-
 ing Non-idiomatic
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 62--63
-
  []
 
 [1{C:/Users/Lee/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}{C:/Users/Lee/
 AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 ]
-(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
-File: lstlang1.sty 2023/02/27 1.9 listings language file
-)
-Underfull \hbox (badness 10000) in paragraph at lines 68--72
+Underfull \hbox (badness 10000) in paragraph at lines 77--78
 
  []
 
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 7
-2.
+(C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/listings\lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+)
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
+0.
+
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
@@ -570,8 +564,8 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             `pcr' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-LaTeX Font Info:    Trying to load font information for OT1+phv on input line 7
-3.
+LaTeX Font Info:    Trying to load font information for OT1+phv on input line 8
+1.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
@@ -581,122 +575,96 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 73.
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 8
-4.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 81.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 9
+3.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 84.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 93.
 
-Underfull \hbox (badness 10000) in paragraph at lines 84--87
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 94--96
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 106--108
+Underfull \hbox (badness 10000) in paragraph at lines 104--105
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 122--124
+Underfull \hbox (badness 10000) in paragraph at lines 118--119
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 136--137
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 136--138
+Underfull \hbox (badness 10000) in paragraph at lines 152--153
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 153--157
+Overfull \hbox (3.10411pt too wide) in paragraph at lines 175--176
+[]\OT1/ptm/m/n/10.95 (-20) Also, to merge 3 or more merge-able If state-ments, 
+we first im-ple-ment \OT1/ptm/b/n/10.95 (-20) generic[]visit\OT1/ptm/m/n/10.95 
+(-20) .(459) 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 175--176
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 171--173
+Underfull \hbox (badness 10000) in paragraph at lines 193--194
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 185--189
+Underfull \hbox (badness 10000) in paragraph at lines 213--214
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 200--202
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 212--214
+Underfull \hbox (badness 10000) in paragraph at lines 228--229
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 247--248
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 216--217
+Underfull \hbox (badness 10000) in paragraph at lines 249--250
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 218--222
-
- []
-
-<Anyproxy_to_proxies.PNG, id=198, 471.56175pt x 238.491pt>
-File: Anyproxy_to_proxies.PNG Graphic file (type png)
-<use Anyproxy_to_proxies.PNG>
-Package pdftex.def Info: Anyproxy_to_proxies.PNG  used on input line 224.
+[6]
+<images/Anyproxy_to_proxies.PNG, id=206, 471.56175pt x 238.491pt>
+File: images/Anyproxy_to_proxies.PNG Graphic file (type png)
+<use images/Anyproxy_to_proxies.PNG>
+Package pdftex.def Info: images/Anyproxy_to_proxies.PNG  used on input line 257
+.
 (pdftex.def)             Requested size: 284.52756pt x 143.9072pt.
-[6] [7 <./Anyproxy_to_proxies.PNG>]
-Underfull \hbox (badness 10000) in paragraph at lines 231--233
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 231--233
+Underfull \hbox (badness 10000) in paragraph at lines 264--265
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 245--246
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 255--256
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 257--258
-
- []
-
-[8]
-Underfull \hbox (badness 10000) in paragraph at lines 280--281
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 283--284
+Underfull \hbox (badness 10000) in paragraph at lines 277--278
 
  []
 
@@ -705,39 +673,65 @@ Underfull \hbox (badness 10000) in paragraph at lines 286--287
 
  []
 
+[7 <./images/Anyproxy_to_proxies.PNG>]
+<images/Evaluation.PNG, id=226, 482.40225pt x 315.579pt>
+File: images/Evaluation.PNG Graphic file (type png)
+<use images/Evaluation.PNG>
+Package pdftex.def Info: images/Evaluation.PNG  used on input line 315.
+(pdftex.def)             Requested size: 284.52756pt x 186.14183pt.
+ [8]
+Underfull \hbox (badness 10000) in paragraph at lines 323--324
 
-Underfull \hbox (badness 10000) in paragraph at lines 290--291
+ []
+
+<images/diff_result.png, id=249, 627.84563pt x 367.87437pt>
+File: images/diff_result.png Graphic file (type png)
+<use images/diff_result.png>
+Package pdftex.def Info: images/diff_result.png  used on input line 326.
+(pdftex.def)             Requested size: 284.52756pt x 166.70949pt.
+
+Underfull \hbox (badness 10000) in paragraph at lines 333--334
+
+ []
+
+[9 <./images/Evaluation.PNG> <./images/diff_result.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 336--337
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 293--294
+Underfull \hbox (badness 10000) in paragraph at lines 343--344
 
  []
 
-[9]
-Underfull \hbox (badness 10000) in paragraph at lines 296--297
+
+Underfull \hbox (badness 10000) in paragraph at lines 346--347
 
  []
 
-[10] (report.aux)
+[10]
+Underfull \hbox (badness 10000) in paragraph at lines 349--350
+
+ []
+
+[11] (report.aux)
 
 Package rerunfilecheck Warning: File `report.out' has changed.
 (rerunfilecheck)                Rerun to get outlines right
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: E5C97D7C2BD9E48E22AEAE21CC6B84D1;2637
-(rerunfilecheck)             After:  A718EC8841FD185848FAE3B41CDB86B8;3296.
+(rerunfilecheck)             Before: F2817C18264E058A18144BCE8572A356;3499
+(rerunfilecheck)             After:  389FBC3C1C818BDB8958E6AA1C37BC49;3669.
  ) 
 Here is how much of TeX's memory you used:
- 15735 strings out of 476331
- 248811 string characters out of 5788709
- 2128660 words of memory out of 5000000
- 35604 multiletter control sequences out of 15000+600000
- 536477 words of font info for 187 fonts, out of 8000000 for 9000
+ 15814 strings out of 476331
+ 250299 string characters out of 5788709
+ 2023660 words of memory out of 5000000
+ 35635 multiletter control sequences out of 15000+600000
+ 537997 words of font info for 213 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,76p,1005b,2056s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,76p,1005b,2052s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 sy10.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
 rb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
@@ -746,9 +740,9 @@ rro8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/
 uhvr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
 mb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr
 8a.pfb>
-Output written on report.pdf (10 pages, 153359 bytes).
+Output written on report.pdf (11 pages, 393600 bytes).
 PDF statistics:
- 321 PDF objects out of 1000 (max. 8388607)
- 165 named destinations out of 1000 (max. 500000)
- 36478 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 333 PDF objects out of 1000 (max. 8388607)
+ 167 named destinations out of 1000 (max. 500000)
+ 36496 words of extra memory for PDF output out of 42996 (max. 10000000)
 
