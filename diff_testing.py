@@ -5,6 +5,9 @@ from any_proxy import AnyProxy
 import os
 import subprocess
 import traceback
+import re
+import types
+import shutil
 
 def test_case_generate(test_cases_path, original_path, test_path, params, test_inputs, func_name):
     ori_file_name = os.path.basename(original_path)[:-3]
@@ -51,7 +54,18 @@ def test_case_generate(test_cases_path, original_path, test_path, params, test_i
                             tuple1[index] = input_val
                     input_dict[key] = tuple(tuple1)
                 elif val == set:
-                    pass
+                    set1 = []
+                    for input_key, input_val in input_dict.items():
+                        if input_key == key + "_length":
+                            while len(set1) < input_val.as_long():
+                                set1.append(0)
+                        if input_key.startswith(key + "__"):
+                            index = int(input_key.split("__")[1])
+                            while len(set1) <= index:
+                                set1.append(0)
+                            set1[index] = input_val
+                    input_dict[key] = set(set1)
+        
             input_list = [input_dict.get(name, 0) for name in params]
             input_list_str = map(str, input_list)
             input_str = ', '.join(input_list_str)
@@ -91,6 +105,8 @@ def test(f, name, *args):
         path_list.__pathcondition__ = []
         try:
             result = f(*args)
+        except IndexError:
+            pass
         except Exception as e:
             print(f"error in test {name}", e)
             traceback.print_exc()
@@ -103,21 +119,15 @@ def test(f, name, *args):
         for d in model.decls():
             temp_dict[d.name()] = model[d]
         test_inputs.append(temp_dict)
+        # print(path_list.__path__, path_list.__pathcondition__)
         while len(path_list.__path__) > 0 and not path_list.__path__[-1]:
             path_list.__path__.pop()
         if path_list.__path__ == []:
             return
         path_list.__path__[-1] = False
 
-def main():
+def main(original_folder, refactored_folder):
     global test_inputs
-    parser = argparse.ArgumentParser(description='Difference test with two folders.')
-    parser.add_argument('-t1', '--target1', required=True)
-    parser.add_argument('-t2', '--target2', required=True)
-    parse_args = parser.parse_args()
-    original_folder = parse_args.target1
-    refactored_folder = parse_args.target2
-
     original_files = []
     refactored_files = []
     if original_folder.endswith(".py"):
@@ -138,22 +148,28 @@ def main():
     refactored_files.sort()
 
     test_cases_path = os.path.join(os.getcwd(), 'test_cases')
+    if os.path.exists(test_cases_path):
+        shutil.rmtree(test_cases_path)
     os.makedirs(test_cases_path, exist_ok=True)
 
     for original_file in original_files:
         basename = os.path.basename(original_file)
         refactored_file = next((f for f in refactored_files if os.path.basename(f) == basename), None)
         if refactored_file and original_file.endswith('.py'):
-            with open(original_file, "r") as f:
+            with open(original_file, "r", encoding="utf-8") as f:
                 original_code = f.read()
+                original_code = re.sub(r'\bwhile\b', 'if', original_code)
             
             test_inputs = []
             functions = {}
             global_env = {}
-            exec(original_code, global_env)
+            try:
+                exec(original_code, global_env)
+            except Exception as e:
+                print(f"{e}, {original_file}")
 
             for name, func in global_env.items():
-                if callable(func):
+                if isinstance(func, types.FunctionType):
                     args = func.__code__.co_varnames[:func.__code__.co_argcount]
                     anyproxy_args = [AnyProxy(arg) for arg in args]
 
@@ -165,6 +181,16 @@ def main():
                     test_case_generate(test_cases_path, original_file, refactored_file, args, test_inputs, func.__name__)
                 
             test_refactored_code(original_file, refactored_file)
+    
+    result = subprocess.run(['pytest', test_cases_path], capture_output=True, text=True)
+    print(result.stdout)
+    print(result.stderr)
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description='Difference test with two folders.')
+    parser.add_argument('-t1', '--target1', required=True)
+    parser.add_argument('-t2', '--target2', required=True)
+    parse_args = parser.parse_args()
+    original_folder = parse_args.target1
+    refactored_folder = parse_args.target2
+    main(original_folder, refactored_folder)

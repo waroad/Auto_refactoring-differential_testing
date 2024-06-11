@@ -1,10 +1,10 @@
 def bar1():
-    a, b = (3, 4)
+    (a, b) = (3, 4)
     c = a + b
     return -c
 
 def bar2():
-    a, b = ('foo', 'bar')
+    (a, b) = ('foo', 'bar')
     return a + b
 
 def bar3(x, y, c):
