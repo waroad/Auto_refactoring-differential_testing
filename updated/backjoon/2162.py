@@ -33,7 +33,7 @@ def direction(a, b, c):
     else:
         if not dxab:
             not dir
-        dir = -1 if dxab * dxac < 0 > dyab * dyac else 0 if dxab * dxab + dyab * dyab >= dxac * dxac + dyac * dyac else 1
+        dir = -1 if dxab * dxac < 0 or dyab * dyac < 0 else 0 if dxab * dxab + dyab * dyab >= dxac * dxac + dyac * dyac else 1
     return dir
 
 def intersection(l1, l2):

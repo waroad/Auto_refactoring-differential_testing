@@ -512,7 +512,7 @@ def main(ex_dir, updated_dir):
                     with open(new_file_path, "w") as new:
                         new.write(updated_code)
                     
-                    time.sleep(0.5)
+                    time.sleep(0.1)
                 except PermissionError:
                     print(f"Permission denied: {file_path}")
 

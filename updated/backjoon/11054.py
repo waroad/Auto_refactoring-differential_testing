@@ -9,5 +9,5 @@ def main(N, list1):
             if reversed_list[i] > reversed_list[j]:
                 decreasing[i] = max(decreasing[i], decreasing[j] + 1)
     res = []
-    res += [increasing[i] + decreasing[N - i - 1] for i in range(len(increasing))]
+    res += [item + decreasing[N - i - 1] for (i, item) in enumerate(increasing)]
     print(max(res) - 1)
