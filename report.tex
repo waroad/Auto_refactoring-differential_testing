@@ -307,9 +307,11 @@ def test_refactored_code(original_path, test_path):
 
 \section{Evaluation}
 
+We evaluated our tool from two main perspectives. The first perspective is to determine whether the refactored code is more efficient to execute compared to the pre-refactored code. To assess this, we compared the execution times of various operations to observe any improvements in efficiency. The second perspective is to verify whether the refactored code consistently produces the same results as the original code. This aspect is crucial for ensuring the accuracy and reliability of the code. Thus, we examined whether the refactored code delivers performance enhancements while fully meeting the original functional requirements. Through this evaluation, we aimed to confirm the overall performance and reliability of our tool.
+
 \subsection{Efficiency}
 
-We evaluated our tool from two main perspectives. The first perspective was to determine whether the refactored code is more efficient to execute compared to the pre-refactored code. To assess this, we compared the execution times of various operations to observe any improvements in efficiency. The second perspective was to verify whether the refactored code consistently produces the same results as the original code. This aspect is crucial for ensuring the accuracy and reliability of the code. Thus, we examined whether the refactored code delivers performance enhancements while fully meeting the original functional requirements. Through this evaluation, we aimed to confirm the overall performance and reliability of our tool.
+Figure 2 compares the execution times of various operations before and after refactoring, indicating the efficiency gains achieved. If each is called before code and after code, both were executed 500 times and t-tested on the execution result. Overall, the refactoring has led to significant improvements in execution times across most operations. For example, the merge append operation exhibits a notable reduction in execution time, almost halving from the initial value. Similarly, other operations such as multiple assignments, testing empty collections, and chaining comparisons demonstrate substantial performance enhancements. These improvements illustrate the effectiveness of the refactoring process in optimizing code execution and enhancing overall efficiency.
 
 \begin{center}
 \includegraphics[width = 10cm]{images/Evaluation.PNG}
@@ -317,10 +319,9 @@ We evaluated our tool from two main perspectives. The first perspective was to d
 {Figure 2. Comparing Execution Time Before and After Refactoring}
 \end{center}
 
-Figure 2 compares the execution times of various operations before and after refactoring, indicating the efficiency gains achieved. If each is called before code and after code, both were executed 500 times and t-tested on the execution result. Overall, the refactoring has led to significant improvements in execution times across most operations. For example, the merge append operation exhibits a notable reduction in execution time, almost halving from the initial value. Similarly, other operations such as multiple assignments, testing empty collections, and chaining comparisons demonstrate substantial performance enhancements. These improvements illustrate the effectiveness of the refactoring process in optimizing code execution and enhancing overall efficiency.
-
 \subsection{Differential Testing}
-...\\
+
+Figure 3 shows the result of our differential testing in total 44 target pytest functions. The upper 8 files with integer are from baekjoon problem. Next 12 files starts with 'diff' are from our sample test codes we created based on the 10 refactoring targets. Last 5 files are from our CS453 assignment 4: mutation. The result shows that all 44 target functions produce the same results for the same input before and after refactoring. This means that all 44 functions passed differential testing without exception.
 
 \begin{center}
 \includegraphics[width = 10cm]{images/diff_result.png}
@@ -333,16 +334,19 @@ Figure 2 compares the execution times of various operations before and after ref
 One of the threats to validity in the development of our automated refactoring tool is the \textbf{potential failure to perfectly handle specific corner cases}. Although we attempted to cover all conceivable counterexamples theoretically, it is practically challenging to anticipate every scenario due to the limits of imagination. To overcome this limitation, we adopted an approach of applying automated refactoring to \textbf{existing Python codes}, examining the outcomes to identify and modify counterexamples. In particular, we utilized various code examples from programming problem platforms like \textbf{Baekjoon} to assess the applicability and usefulness of our tool. This process has allowed us to enhance the robustness of our refactoring tool in handling diverse real-world use cases.\\
 
 \subsection{Covering Other Type of Inputs}
-In the function testing part of the differential testing, we did not cover any type existed in Python. This is because there are limitations in the Z3 solver and challenges in type inference system of Python. The Z3 solver, while powerful, has limitations in handling complex user-defined types. Additionally, Python's dynamic typing and lack of type hints complicate accurate type inference. Therefore we were unable to implement code that covers all types. We can only create test cases for certain function which get specialized input parameters. These constraints may affect the generalizing. However, we expect that, with more cases' testing, the range of covering can be improved. \\
+In the function testing part of the differential testing, we did not cover any type existed in Python. This is because there are limitations in the Z3 solver and challenges in type inference system of Python. The Z3 solver, while powerful, has limitations in handling complex user-defined types. Additionally, Python's dynamic typing and lack of type hints complicate accurate type inference. Therefore we were unable to implement code that covers all types. We can only create test cases for certain function which get specialized input parameters. These constraints may affect the generalizing. However, we expect that, with more cases' testing, the range of covering can be improved.\\
 
 \subsection{File System Differential Testing}
 When performing differential testing to determine if program execution is identical, it is also necessary to verify that the file system used by the program is the same. This involves ensuring that the state of the files and directories accessed or modified by the program remains consistent between the original and refactored versions. If the file system differs, differences in program behavior may generate due to environmental discrepancies. However, our differential testing only verifies the consistency of function return values and standard outputs, lacking a mechanism to ensure the consistency of the file system state. We plan to implement this in the future to eliminate differences in program behavior caused by environmental inconsistencies.
 
 \section{Feedback}
-\subsection{Wild }
+\subsection{Benchmark Codes}
 ...\\
 
-\section{Discussion \& Conclusion}
+\subsection{Random Test Generation}
+...\\
+
+\section{Discussion}
 ...\\
 
 \section{References}

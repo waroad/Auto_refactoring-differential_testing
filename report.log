@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  11 JUN 2024 16:51
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  12 JUN 2024 16:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -647,7 +647,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 249--250
  []
 
 [6]
-<images/Anyproxy_to_proxies.PNG, id=206, 471.56175pt x 238.491pt>
+<images/Anyproxy_to_proxies.PNG, id=214, 471.56175pt x 238.491pt>
 File: images/Anyproxy_to_proxies.PNG Graphic file (type png)
 <use images/Anyproxy_to_proxies.PNG>
 Package pdftex.def Info: images/Anyproxy_to_proxies.PNG  used on input line 257
@@ -674,43 +674,44 @@ Underfull \hbox (badness 10000) in paragraph at lines 286--287
  []
 
 [7 <./images/Anyproxy_to_proxies.PNG>]
-<images/Evaluation.PNG, id=226, 482.40225pt x 315.579pt>
+<images/Evaluation.PNG, id=234, 482.40225pt x 315.579pt>
 File: images/Evaluation.PNG Graphic file (type png)
 <use images/Evaluation.PNG>
-Package pdftex.def Info: images/Evaluation.PNG  used on input line 315.
+Package pdftex.def Info: images/Evaluation.PNG  used on input line 317.
 (pdftex.def)             Requested size: 284.52756pt x 186.14183pt.
  [8]
-Underfull \hbox (badness 10000) in paragraph at lines 323--324
-
- []
-
-<images/diff_result.png, id=249, 627.84563pt x 367.87437pt>
+<images/diff_result.png, id=257, 627.84563pt x 367.87437pt>
 File: images/diff_result.png Graphic file (type png)
 <use images/diff_result.png>
-Package pdftex.def Info: images/diff_result.png  used on input line 326.
+Package pdftex.def Info: images/diff_result.png  used on input line 327.
 (pdftex.def)             Requested size: 284.52756pt x 166.70949pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 
  []
 
 [9 <./images/Evaluation.PNG> <./images/diff_result.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 343--344
+Underfull \hbox (badness 10000) in paragraph at lines 344--345
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 346--347
+Underfull \hbox (badness 10000) in paragraph at lines 347--348
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 350--351
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 349--350
+Underfull \hbox (badness 10000) in paragraph at lines 353--354
 
  []
 
@@ -721,14 +722,14 @@ Package rerunfilecheck Warning: File `report.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `report.out':
-(rerunfilecheck)             Before: F2817C18264E058A18144BCE8572A356;3499
-(rerunfilecheck)             After:  389FBC3C1C818BDB8958E6AA1C37BC49;3669.
+(rerunfilecheck)             Before: B072EA659817340932711C6B51A7C0C2;3719
+(rerunfilecheck)             After:  91B21751178CA8B32B9D19FC5369718C;3819.
  ) 
 Here is how much of TeX's memory you used:
- 15814 strings out of 476331
- 250299 string characters out of 5788709
- 2023660 words of memory out of 5000000
- 35635 multiletter control sequences out of 15000+600000
+ 15817 strings out of 476331
+ 250340 string characters out of 5788709
+ 2025660 words of memory out of 5000000
+ 35637 multiletter control sequences out of 15000+600000
  537997 words of font info for 213 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  75i,12n,76p,1005b,2052s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -740,9 +741,9 @@ rro8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/
 uhvr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
 mb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr
 8a.pfb>
-Output written on report.pdf (11 pages, 393600 bytes).
+Output written on report.pdf (11 pages, 394337 bytes).
 PDF statistics:
- 333 PDF objects out of 1000 (max. 8388607)
- 167 named destinations out of 1000 (max. 500000)
- 36496 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 340 PDF objects out of 1000 (max. 8388607)
+ 168 named destinations out of 1000 (max. 500000)
+ 36512 words of extra memory for PDF output out of 42996 (max. 10000000)
 
