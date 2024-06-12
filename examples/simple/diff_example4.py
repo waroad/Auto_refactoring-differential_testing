@@ -4,3 +4,4 @@ def main(a, b, c):
     A.append(a)
     A.append(b)
     A.append(c)
+    return A

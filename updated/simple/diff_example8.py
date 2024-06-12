@@ -3,3 +3,4 @@ def main(players):
         print(i, item)
         print(players[i - 1])
         players[i] = 1
+    return players
