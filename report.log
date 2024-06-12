@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  12 JUN 2024 23:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  13 JUN 2024 00:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -647,7 +647,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 249--250
  []
 
 [6]
-<images/Anyproxy_to_proxies.PNG, id=218, 471.56175pt x 238.491pt>
+<images/Anyproxy_to_proxies.PNG, id=214, 471.56175pt x 238.491pt>
 File: images/Anyproxy_to_proxies.PNG Graphic file (type png)
 <use images/Anyproxy_to_proxies.PNG>
 Package pdftex.def Info: images/Anyproxy_to_proxies.PNG  used on input line 257
@@ -674,13 +674,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 286--287
  []
 
 [7 <./images/Anyproxy_to_proxies.PNG>]
-<images/Evaluation.PNG, id=238, 482.40225pt x 315.579pt>
+<images/Evaluation.PNG, id=234, 482.40225pt x 315.579pt>
 File: images/Evaluation.PNG Graphic file (type png)
 <use images/Evaluation.PNG>
 Package pdftex.def Info: images/Evaluation.PNG  used on input line 317.
 (pdftex.def)             Requested size: 284.52756pt x 186.14183pt.
  [8]
-<images/diff_result.png, id=261, 627.84563pt x 367.87437pt>
+<images/diff_result.png, id=257, 627.84563pt x 367.87437pt>
 File: images/diff_result.png Graphic file (type png)
 <use images/diff_result.png>
 Package pdftex.def Info: images/diff_result.png  used on input line 327.
@@ -695,44 +695,43 @@ Underfull \hbox (badness 10000) in paragraph at lines 344--345
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 347--348
-
- []
-
 [10]
-
-! LaTeX Error: There's no line here to end.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.370 
-      
-? 
-[11]
-Underfull \hbox (badness 10000) in paragraph at lines 419--420
+Underfull \hbox (badness 10000) in paragraph at lines 348--349
 
  []
 
+<images/lc_result.png, id=268, 170.13562pt x 181.17688pt>
+File: images/lc_result.png Graphic file (type png)
+<use images/lc_result.png>
+Package pdftex.def Info: images/lc_result.png  used on input line 380.
+(pdftex.def)             Requested size: 142.26378pt x 151.50468pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 422--423
+Underfull \hbox (badness 10000) in paragraph at lines 385--386
 
  []
 
-[12] (report.aux)
+[11 <./images/lc_result.png>]
+Underfull \hbox (badness 10000) in paragraph at lines 388--389
+
+ []
+
+[12] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 459--460
+
+ []
+
+[14] (report.aux)
 Package rerunfilecheck Info: File `report.out' has not changed.
-(rerunfilecheck)             Checksum: 91B21751178CA8B32B9D19FC5369718C;3819.
+(rerunfilecheck)             Checksum: 0E718C6164C11BB860461B58DAFB0DA3;3943.
  ) 
 Here is how much of TeX's memory you used:
- 15933 strings out of 476331
- 252098 string characters out of 5788709
- 2196660 words of memory out of 5000000
- 35698 multiletter control sequences out of 15000+600000
- 537997 words of font info for 213 fonts, out of 8000000 for 9000
+ 15978 strings out of 476331
+ 252678 string characters out of 5788709
+ 2140660 words of memory out of 5000000
+ 35722 multiletter control sequences out of 15000+600000
+ 539240 words of font info for 221 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,12n,76p,1005b,2054s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,12n,76p,1005b,2052s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cm
 sy10.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
 rb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/courier/uc
@@ -741,9 +740,9 @@ rro8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/
 uhvr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
 mb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr
 8a.pfb>
-Output written on report.pdf (12 pages, 408380 bytes).
+Output written on report.pdf (14 pages, 429335 bytes).
 PDF statistics:
- 415 PDF objects out of 1000 (max. 8388607)
- 223 named destinations out of 1000 (max. 500000)
- 36520 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 431 PDF objects out of 1000 (max. 8388607)
+ 232 named destinations out of 1000 (max. 500000)
+ 38565 words of extra memory for PDF output out of 42996 (max. 10000000)
 

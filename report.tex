@@ -340,11 +340,52 @@ In the function testing part of the differential testing, we did not cover any t
 When performing differential testing to determine if program execution is identical, it is also necessary to verify that the file system used by the program is the same. This involves ensuring that the state of the files and directories accessed or modified by the program remains consistent between the original and refactored versions. If the file system differs, differences in program behavior may generate due to environmental discrepancies. However, our differential testing only verifies the consistency of function return values and standard outputs, lacking a mechanism to ensure the consistency of the file system state. We plan to implement this in the future to eliminate differences in program behavior caused by environmental inconsistencies.
 
 \section{Feedback}
-\subsection{Benchmark Codes}
-...\\
+\subsection{Analysis of Execution Time Improvement with Public Code}
+To analyze the performance of the automated refactor developed in this project, we applied it not only to self-generated files but also to various codes available on the internet. Specifically, we tested the refactor on codes from popular programming practice sites such as Baekjoon and LeetCode. Given that the primary target users of the automated refactor are beginner developers, we selected bronze-level (the lowest level) problems from Baekjoon and targeted Easy \& Medium problems from LeetCode, referencing actual codes written and passed by other users on these sites. These codes are stored in the examples/benchmark folder, with Baekjoon codes named in the format "bj\_'problem number'.py" and LeetCode codes in the format "leet\_'problem number'.py".\\
+
+\textbf{6.1.1 Baekjoon}
+
+To test how much the execution time improved for the refactored code, we selected solutions for three problems from Baekjoon: 1296, 2750, and 17608. For each problem, we took three solutions where refactoring led to performance improvements. Many solutions did not show significant performance improvements after refactoring, primarily because many of the codes already adhered to Pythonic coding practices, which are the target of the refactor, or because the syntax being refactored did not lead to notable performance gains.\\
+
+For the nine refactored codes created from the above three problems, we resubmitted them to Baekjoon and confirmed that they all passed, indicating that the refactoring was done correctly. Although the degree of improvement varied by problem, there was an overall performance improvement of approximately 3-15\%.
+
+\lstdefinestyle{terminal}{
+    backgroundcolor=\color{black},
+    basicstyle=\ttfamily\color{white},
+    keywordstyle=\color{cyan},
+    stringstyle=\color{green},
+    commentstyle=\color{red},
+    showstringspaces=false,
+    tabsize=4,
+    breaklines=true}
+\lstset{style=terminal}
+
+
+\begin{lstlisting}[style=terminal]
+Total time spent on 100 runs for original: 3.90 seconds
+Average time per run: 0.0390 seconds
+Total time spent on 100 runs for refactored: 3.39 seconds
+Average time per run: 0.0339 seconds
+ 1.1518 times faster
+
+Process finished with exit code 0
+\end{lstlisting}
+
+\textbf{6.1.2 Leetcode}
+
+We choose 11 leetcode problems: 8, 1093, 2239, 2418, 2592, 2606, 2708, 2770, 3024, 3136, 3168 that seem to include our refactoring targets. We apply a t-test for each target codes, similar to the simple samples of the evaluation part previously.\\
+Figure 4 shows the result of t-test. We set the recursion factor to 100 so that we have 100 sample results for each code. 5 examples(better) shows an exceptional performance increase of 10\% on average and up to 30\%. 4 examples(worse) shows a slight performance drop of about 2-4\%. 2 examples(unknown) shows statistically meaningless results.
+
+\begin{center}
+\includegraphics[width = 5cm]{images/lc_result.png}
+
+{Figure 4. Result of Leetcode Refactoring}
+\end{center}
+
+Currently, the scope of refactoring covered by this project is not extensive, so many Python codes available on the internet do not show significant performance improvements. However, as demonstrated above, some codes written by beginners showed both performance and readability improvements. As the range of refactorable cases is expanded in this project, it is expected to help more beginners by making more code Pythonic.\\
 
 \subsection{Random Test Generation}
-Here are examples of code to test the provided functions and code using random testing. We used 100 random inputs for testing. Similar to the symbolic execution approach, for execution tests, we compared the standard output and standard error. For function tests, we wrote code to compare the return values of the functions using pytest. While symbolic execution required significant computational effort and time to generate a small number of test cases, random testing was able to generate a much larger number of test cases in a shorter period. However, there is a possibility that random testing might not cover all the code, impacting its coverage effectiveness. \\
+Here are examples of code to test the provided functions and code using random testing. We used 100 random inputs for testing. Similar to the symbolic execution approach, for execution tests, we compared the standard output and standard error. For function tests, we wrote code to compare the return values of the functions using pytest. While symbolic execution required significant computational effort and time to generate a small number of test cases, random testing was able to generate a much larger number of test cases in a shorter period. However, there is a possibility that random testing might not cover all the code, impacting its coverage effectiveness.\\
 
 \textbf{Simple example}
 
@@ -395,8 +436,8 @@ def test_main(x, y):
     if x > y:
         x, y = y, x 
 
-    original_file = "examples/backjoon/1011.py"
-    updated_file = "updated/backjoon/1011.py" 
+    original_file = "examples/baekjoon/1011.py"
+    updated_file = "updated/baekjoon/1011.py" 
     
     original_stdout, original_stderr = execute_script(original_file, x, y)
     updated_stdout, updated_stderr = execute_script(updated_file, x, y)

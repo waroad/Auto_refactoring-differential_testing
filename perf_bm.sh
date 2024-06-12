@@ -23,9 +23,12 @@ if [[ ${#example_files[@]} -ne ${#updated_files[@]} ]]; then
 fi
 
 # File indices
-for ((i=0; i<${#example_files[@]}; i++)); do
-    example_file=${example_files[i]}
-    updated_file=${updated_files[i]}
+# for ((i=0; i<${#example_files[@]}; i++)); do
+for ((i=0; i<1; i++)); do
+    # example_file=${example_files[i]}
+    # updated_file=${updated_files[i]}
+    example_file=(examples/benchmark/2606.py)
+    updated_file=(updated/benchmark/2606.py)
     
     # Extract base file name without directory and extension
     base_name=$(basename $example_file .py)
