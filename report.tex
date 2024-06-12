@@ -331,7 +331,7 @@ Figure 3 shows the result of our differential testing in total 44 target pytest 
 
 \section{Threat to Validity}
 \subsection{Handling Corner Cases in Automated Refactoring}
-One of the threats to validity in the development of our automated refactoring tool is the \textbf{potential failure to perfectly handle specific corner cases}. Although we attempted to cover all conceivable counterexamples theoretically, it is practically challenging to anticipate every scenario due to the limits of imagination. To overcome this limitation, we adopted an approach of applying automated refactoring to \textbf{existing Python codes}, examining the outcomes to identify and modify counterexamples. In particular, we utilized various code examples from programming problem platforms like \textbf{Baekjoon} to assess the applicability and usefulness of our tool. This process has allowed us to enhance the robustness of our refactoring tool in handling diverse real-world use cases.\\
+One of the threats to validity in the development of our automated refactoring tool is the \textbf{potential failure to perfectly handle specific corner cases}. Although we attempted to cover all conceivable counterexamples theoretically, it is practically challenging to anticipate every scenario due to the limits of imagination. To overcome this limitation, we adopted an approach of applying automated refactoring to \textbf{existing Python codes}, examining the outcomes to identify and modify counterexamples. In particular, we utilized various code examples from programming problem platforms like \textbf{Baekjoon} to assess the applicability and usefulness of our tool. This process has allowed us to enhance the robustness of our refactoring tool in handling diverse real-world use cases.
 
 \subsection{Covering Other Type of Inputs}
 In the function testing part of the differential testing, we did not cover any type existed in Python. This is because there are limitations in the Z3 solver and challenges in type inference system of Python. The Z3 solver, while powerful, has limitations in handling complex user-defined types. Additionally, Python's dynamic typing and lack of type hints complicate accurate type inference. Therefore we were unable to implement code that covers all types. We can only create test cases for certain function which get specialized input parameters. These constraints may affect the generalizing. However, we expect that, with more cases' testing, the range of covering can be improved.\\
@@ -344,7 +344,76 @@ When performing differential testing to determine if program execution is identi
 ...\\
 
 \subsection{Random Test Generation}
-...\\
+Here are examples of code to test the provided functions and code using random testing. We used 100 random inputs for testing. Similar to the symbolic execution approach, for execution tests, we compared the standard output and standard error. For function tests, we wrote code to compare the return values of the functions using pytest. While symbolic execution required significant computational effort and time to generate a small number of test cases, random testing was able to generate a much larger number of test cases in a shorter period. However, there is a possibility that random testing might not cover all the code, impacting its coverage effectiveness. \\
+
+\textbf{Simple example}
+
+\begin{lstlisting}[language=python]
+import importlib.util
+import pytest
+from hypothesis import given, strategies as st
+
+ori_module_spec = importlib.util.spec_from_file_location('ori_module', './examples/simple/diff_example2.py')
+test_module_spec = importlib.util.spec_from_file_location('test_module', './updated/simple/diff_example2.py')
+ori_module = importlib.util.module_from_spec(ori_module_spec)
+test_module = importlib.util.module_from_spec(test_module_spec)
+ori_module_spec.loader.exec_module(ori_module)
+test_module_spec.loader.exec_module(test_module)
+
+@given(st.lists(st.tuples(st.integers(), st.integers(), st.integers(), st.integers()), min_size=100, max_size=100, unique=True))
+def test_if_expression_random(inputs):
+    for a, b, c, d in inputs:
+        assert ori_module.if_expression(a, b, c, d) == test_module.if_expression(a, b, c, d)
+\end{lstlisting}
+
+\\
+
+\textbf{Baekjoon example}
+
+\begin{lstlisting}[language=python]
+import subprocess
+import sys
+import warnings
+from hypothesis import given, settings, strategies as st
+from pytest import PytestAssertRewriteWarning
+
+warnings.filterwarnings("ignore", category=PytestAssertRewriteWarning)
+
+def execute_script(script_path, *args):
+    result = subprocess.run(
+        [sys.executable, script_path] + [str(arg) for arg in args],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+    )
+    return result.stdout.decode(), result.stderr.decode()
+
+def compare_outputs(original_output, updated_output):
+    return original_output == updated_output
+
+@settings(max_examples=100, deadline=None)
+@given(st.integers(min_value=1, max_value=100), st.integers(min_value=1, max_value=100))
+def test_main(x, y):
+    if x > y:
+        x, y = y, x 
+
+    original_file = "examples/backjoon/1011.py"
+    updated_file = "updated/backjoon/1011.py" 
+    
+    original_stdout, original_stderr = execute_script(original_file, x, y)
+    updated_stdout, updated_stderr = execute_script(updated_file, x, y)
+    
+    assert compare_outputs(original_stdout, updated_stdout), f"stdout differs for inputs: x={x}, y={y}"
+    assert compare_outputs(original_stderr, updated_stderr), f"stderr differs for inputs: x={x}, y={y}"
+
+if __name__ == "__main__":
+    import pytest
+    pytest.main()
+\end{lstlisting}
+
+Symbolic execution and random testing are two prominent testing methodologies, each with its own advantages and disadvantages. Symbolic execution offers high coverage and the ability to generate specific input values, making it beneficial for uncovering boundary conditions and logical errors. However, it faces scalability issues and challenges in handling complex environments, making it difficult to apply to large or intricate programs. On the other hand, random testing is simple to implement and highly scalable, but it may fall short in terms of coverage and efficiency, potentially missing critical paths or generating less meaningful test cases.
+
+When choosing a testing methodology, it's essential to consider the characteristics of the program and the goals of the testing process. For instance, symbolic execution may be more advantageous for identifying critical boundary conditions and logical errors, whereas random testing could be more suitable for quickly evaluating a wide range of input values. By appropriately combining both methodologies, one can establish a more effective and comprehensive testing strategy.
+
 
 \section{Discussion}
 ...\\
