@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Number of iterations
-ITERATIONS=50
+ITERATIONS=100
 
 # Function to measure time
 measure_time() {
@@ -15,8 +15,8 @@ measure_time() {
     done
 }
 
-example_files=(examples/success/*.py)
-updated_files=(updated/success/*.py)
+example_files=(examples/benchmark/*.py)
+updated_files=(updated/benchmark/*.py)
 if [[ ${#example_files[@]} -ne ${#updated_files[@]} ]]; then
     echo "The number of .py files in example_test/simple and updated_test/simple do not match."
     exit 1
@@ -30,8 +30,8 @@ for ((i=0; i<${#example_files[@]}; i++)); do
     # Extract base file name without directory and extension
     base_name=$(basename $example_file .py)
     
-    example_output="leetperf_original/${base_name}.txt"
-    updated_output="leetperf_updated/${base_name}.txt"
+    example_output="bm_original/${base_name}.txt"
+    updated_output="bm_updated/${base_name}.txt"
     
     echo "$updated_file start"
     measure_time $updated_file $updated_output

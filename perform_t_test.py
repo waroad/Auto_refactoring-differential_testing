@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # Sort files by name
     files_to_process.sort(key=lambda x: x[0])
 
-    success, fail, unknown = [], [], []
+    success, fail, unknown, percent = [], [], [], []
     for relative_path, example_times_file, updated_times_file in files_to_process:
         t_stat, p_value, mean1, mean2 = perform_t_test(example_times_file, updated_times_file)
         
@@ -58,21 +58,23 @@ if __name__ == "__main__":
             if t_stat > 0:
                 print("refactored code is significantly faster.")
                 success.append(relative_path)
+                percent.append(percentage_diff)
             else:
                 print("original code is significantly faster.")
                 fail.append(relative_path)
+                percent.append(percentage_diff)
         else:
             print("The difference is not statistically significant.")
             unknown.append(relative_path)
         print("")
 
-    print("<success>")
+    print("-----------<success>-----------")
     for r in success:
-        print(r)
-    print("<fail>")
+        print(r, f"{percent.pop(0)}%")
+    print("-----------<fail>--------------")
     for r in fail:
-        print(r)
-    print("<unknown>")
+        print(r, f"{percent.pop(0)}%")
+    print("----------<unknown>-----------")
     for r in unknown:
         print(r)
     
