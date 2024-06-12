@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  13 JUN 2024 00:06
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 23.4) (preloaded format=pdflatex 2023.9.10)  13 JUN 2024 00:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -538,7 +538,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Warning: No \author given.
 
 
-Overfull \hbox (7.90895pt too wide) in paragraph at lines 64--64
+Overfull \hbox (7.90895pt too wide) in paragraph at lines 72--72
 []\OT1/ptm/b/n/12 (-20) Making Python Code Id-iomatic by Au-to-matic Refac-tor-
 ing Non-idiomatic
  []
@@ -547,7 +547,7 @@ ing Non-idiomatic
 AppData/Local/Programs/MiKTeX/fonts/enc/dvips/base/8r.enc}
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 77--78
+Underfull \hbox (badness 10000) in paragraph at lines 85--86
 
  []
 
@@ -555,7 +555,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 77--78
 File: lstlang1.sty 2023/02/27 1.9 listings language file
 )
 LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 8
-0.
+8.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1pcr.fd
 File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
@@ -565,7 +565,7 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Trying to load font information for OT1+phv on input line 8
-1.
+9.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\ot1phv.fd
 File: ot1phv.fd 2020/03/25 scalable font definitions for OT1/phv.
@@ -575,148 +575,147 @@ Package microtype Info: Loading generic protrusion settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <9> not available
-(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 81.
-LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 9
-3.
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 89.
+LaTeX Font Info:    Trying to load font information for OMS+ptm on input line 1
+01.
 
 (C:\Users\Lee\AppData\Local\Programs\MiKTeX\tex/latex/psnfss\omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 93.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 101.
 
-Underfull \hbox (badness 10000) in paragraph at lines 93--94
+Underfull \hbox (badness 10000) in paragraph at lines 101--102
 
  []
 
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 104--105
+Underfull \hbox (badness 10000) in paragraph at lines 112--113
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 126--127
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 136--137
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
 
  []
 
 [3]
-Underfull \hbox (badness 10000) in paragraph at lines 152--153
+Underfull \hbox (badness 10000) in paragraph at lines 160--161
 
  []
 
 
-Overfull \hbox (3.10411pt too wide) in paragraph at lines 175--176
+Overfull \hbox (3.10411pt too wide) in paragraph at lines 183--184
 []\OT1/ptm/m/n/10.95 (-20) Also, to merge 3 or more merge-able If state-ments, 
 we first im-ple-ment \OT1/ptm/b/n/10.95 (-20) generic[]visit\OT1/ptm/m/n/10.95 
 (-20) .(459) 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 175--176
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 193--194
+Underfull \hbox (badness 10000) in paragraph at lines 183--184
 
  []
 
 [4]
-Underfull \hbox (badness 10000) in paragraph at lines 213--214
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 228--229
+Underfull \hbox (badness 10000) in paragraph at lines 221--222
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 236--237
 
  []
 
 [5]
-Underfull \hbox (badness 10000) in paragraph at lines 247--248
+Underfull \hbox (badness 10000) in paragraph at lines 255--256
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 249--250
+Underfull \hbox (badness 10000) in paragraph at lines 257--258
 
  []
 
 [6]
-<images/Anyproxy_to_proxies.PNG, id=214, 471.56175pt x 238.491pt>
+<images/Anyproxy_to_proxies.PNG, id=215, 471.56175pt x 238.491pt>
 File: images/Anyproxy_to_proxies.PNG Graphic file (type png)
 <use images/Anyproxy_to_proxies.PNG>
-Package pdftex.def Info: images/Anyproxy_to_proxies.PNG  used on input line 257
+Package pdftex.def Info: images/Anyproxy_to_proxies.PNG  used on input line 265
 .
 (pdftex.def)             Requested size: 284.52756pt x 143.9072pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 262--263
+Underfull \hbox (badness 10000) in paragraph at lines 270--271
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 264--265
+Underfull \hbox (badness 10000) in paragraph at lines 272--273
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 277--278
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 286--287
+Underfull \hbox (badness 10000) in paragraph at lines 285--286
 
  []
 
 [7 <./images/Anyproxy_to_proxies.PNG>]
-<images/Evaluation.PNG, id=234, 482.40225pt x 315.579pt>
+Underfull \hbox (badness 10000) in paragraph at lines 294--295
+
+ []
+
+[8]
+<images/Evaluation.PNG, id=257, 482.40225pt x 315.579pt>
 File: images/Evaluation.PNG Graphic file (type png)
 <use images/Evaluation.PNG>
-Package pdftex.def Info: images/Evaluation.PNG  used on input line 317.
+Package pdftex.def Info: images/Evaluation.PNG  used on input line 325.
 (pdftex.def)             Requested size: 284.52756pt x 186.14183pt.
- [8]
-<images/diff_result.png, id=257, 627.84563pt x 367.87437pt>
+<images/diff_result.png, id=258, 627.84563pt x 367.87437pt>
 File: images/diff_result.png Graphic file (type png)
 <use images/diff_result.png>
-Package pdftex.def Info: images/diff_result.png  used on input line 327.
+Package pdftex.def Info: images/diff_result.png  used on input line 335.
 (pdftex.def)             Requested size: 284.52756pt x 166.70949pt.
  [9 <./images/Evaluation.PNG> <./images/diff_result.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 337--338
+Underfull \hbox (badness 10000) in paragraph at lines 345--346
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 344--345
+Underfull \hbox (badness 10000) in paragraph at lines 352--353
 
  []
 
 [10]
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 356--357
 
  []
 
-<images/lc_result.png, id=268, 170.13562pt x 181.17688pt>
+<images/lc_result.png, id=269, 170.13562pt x 181.17688pt>
 File: images/lc_result.png Graphic file (type png)
 <use images/lc_result.png>
-Package pdftex.def Info: images/lc_result.png  used on input line 380.
+Package pdftex.def Info: images/lc_result.png  used on input line 388.
 (pdftex.def)             Requested size: 142.26378pt x 151.50468pt.
-
-Underfull \hbox (badness 10000) in paragraph at lines 385--386
-
- []
-
-[11 <./images/lc_result.png>]
-Underfull \hbox (badness 10000) in paragraph at lines 388--389
+[11]
+Underfull \hbox (badness 10000) in paragraph at lines 393--394
 
  []
 
-[12] [13]
-Underfull \hbox (badness 10000) in paragraph at lines 459--460
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--397
+
+ []
+
+[12 <./images/lc_result.png>] [13]
+Underfull \hbox (badness 10000) in paragraph at lines 467--468
 
  []
 
@@ -727,7 +726,7 @@ Package rerunfilecheck Info: File `report.out' has not changed.
 Here is how much of TeX's memory you used:
  15978 strings out of 476331
  252678 string characters out of 5788709
- 2140660 words of memory out of 5000000
+ 2162660 words of memory out of 5000000
  35722 multiletter control sequences out of 15000+600000
  539240 words of font info for 221 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -740,9 +739,9 @@ rro8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/helvetic/
 uhvr8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/ut
 mb8a.pfb><C:/Users/Lee/AppData/Local/Programs/MiKTeX/fonts/type1/urw/times/utmr
 8a.pfb>
-Output written on report.pdf (14 pages, 429335 bytes).
+Output written on report.pdf (14 pages, 430131 bytes).
 PDF statistics:
- 431 PDF objects out of 1000 (max. 8388607)
+ 432 PDF objects out of 1000 (max. 8388607)
  232 named destinations out of 1000 (max. 500000)
  38565 words of extra memory for PDF output out of 42996 (max. 10000000)
 
