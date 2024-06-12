@@ -49,7 +49,7 @@ def transform_Ifexp(node):
     new_node = node
     if isinstance(node.body[0], ast.Assign) and isinstance(node.orelse[0], ast.Assign):  # (7) Assign
         if (len(node.body[0].targets) == 1 and len(node.orelse[0].targets) == 1 and
-                isinstance(node.body[0].targets[0],ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name)):
+                isinstance(node.body[0].targets[0], ast.Name) and isinstance(node.orelse[0].targets[0], ast.Name)):
             if node.body[0].targets[0].id == node.orelse[0].targets[0].id:
                 new_exp = ast.IfExp(test=node.test, body=node.body[0].value, orelse=node.orelse[0].value)
                 new_node = ast.Assign(targets=node.body[0].targets, value=new_exp)
@@ -488,6 +488,7 @@ class CodeReplacer(ast.NodeTransformer):
         node = transform_If(node)  # 6, 7, 9
         return node
 
+
 def main(ex_dir, updated_dir):
     for root, dirs, files in os.walk(ex_dir):
         for file in files:
@@ -511,14 +512,13 @@ def main(ex_dir, updated_dir):
                     new_file_path = os.path.join(target_dir, file)
                     with open(new_file_path, "w") as new:
                         new.write(updated_code)
-                    
+
                     time.sleep(0.1)
                 except PermissionError:
                     print(f"Permission denied: {file_path}")
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser(description='Difference test with two folders.')
     parser.add_argument('-t1', '--target1', required=True)
     parser.add_argument('-t2', '--target2', required=True)
@@ -526,4 +526,3 @@ if __name__ == '__main__':
     original_folder = parse_args.target1
     refactored_folder = parse_args.target2
     main(original_folder, refactored_folder)
-
