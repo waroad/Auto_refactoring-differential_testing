@@ -273,13 +273,13 @@ Figure 1 illustrates how the AnyProxy class we implemented branches into specifi
 
 \begin{lstlisting}[language=python]
 def get_proxy(self, other):
-        if isinstance(other, (int, IntegerProxy)):
-            return IntegerProxy(Int(self.name)), other
-        elif isinstance(other, (float, FloatProxy)):
-            return FloatProxy(Real(self.name)), other
-        elif isinstance(other, (str, StringProxy)):
-            return StringProxy(String(self.name)), other
-        ...
+    if isinstance(other, (int, IntegerProxy)):
+        return IntegerProxy(Int(self.name)), other
+    elif isinstance(other, (float, FloatProxy)):
+        return FloatProxy(Real(self.name)), other
+    elif isinstance(other, (str, StringProxy)):
+        return StringProxy(String(self.name)), other
+    ...
 \end{lstlisting}
 
 2. Specific method call: When the AnyProxy object encounters a method that is unique to a specific type, it transforms into a proxy object for that type. For example, it the AnyProxy object calls 'append' method, which is unique to the list type, it differentiates into a ListProxy object. \\
@@ -366,8 +366,6 @@ For the nine refactored codes created from the above three problems, we resubmit
     showstringspaces=false,
     tabsize=4,
     breaklines=true}
-\lstset{style=terminal}
-
 
 \begin{lstlisting}[style=terminal]
 Total time spent on 100 runs for original: 3.90 seconds
@@ -391,6 +389,7 @@ Figure 4 shows the result of t-test. We set the recursion factor to 100 so that 
 \end{center}
 
 Currently, the scope of refactoring covered by this project is not extensive, so many Python codes available on the internet do not show significant performance improvements. However, as demonstrated above, some codes written by beginners showed both performance and readability improvements. As the range of refactorable cases is expanded in this project, it is expected to help more beginners by making more code Pythonic.\\
+
 
 \subsection{Random Test Generation}
 Here are examples of code to test the provided functions and code using random testing. We used 100 random inputs for testing. Similar to the symbolic execution approach, for execution tests, we compared the standard output and standard error. For function tests, we wrote code to compare the return values of the functions using pytest. While symbolic execution required significant computational effort and time to generate a small number of test cases, random testing was able to generate a much larger number of test cases in a shorter period. However, there is a possibility that random testing might not cover all the code, impacting its coverage effectiveness.\\
@@ -464,6 +463,12 @@ When choosing a testing methodology, it's essential to consider the characterist
 
 
 \section{Discussion}
-...\\
+In this project, we developed an automated refactoring tool to enhance the readability and performance of Python code by making it more idiomatic.Differential testing ensured that the functionality of the code remained unchanged post-refactoring.
+
+Our evaluation indicated that the refactored code generally showed improved performance, confirming the effectiveness of Pythonic idioms in optimizing code. The tool's application to various codes from platforms like Baekjoon and LeetCode demonstrated its versatility and potential to assist developers of different skill levels.
+
+However, handling all possible corner cases remains a challenge, and future work should focus on expanding the range of refactorings to cover more scenarios. The dynamic typing nature of Python also posed difficulties in certain refactorings, particularly those involving user-defined types, suggesting a need for enhanced type inference capabilities. Furthermore, our differential testing framework currently does not account for changes in the file system state, highlighting the need to incorporate file system state checks for comprehensive verification. While symbolic execution was effective in generating test inputs, it struggled with scalability for larger codebases. Combining symbolic execution with random testing could provide a more balanced approach, leveraging the strengths of both methods.
+
+Overall, while our tool shows promise in improving code quality and assisting developers, further enhancements are necessary to address the identified limitations.
 
 \end{document}
